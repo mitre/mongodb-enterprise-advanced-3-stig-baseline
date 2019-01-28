@@ -1,0 +1,111 @@
+#not done
+control "V-81845" do
+  title "MongoDB must enforce approved authorizations for logical access to
+  information and system resources in accordance with applicable access control
+  policies."
+  desc  "MongoDB must enforce approved authorizations for logical access to
+  information and system resources in accordance with applicable access control
+  policies."
+  impact 0.5
+  tag "gtitle": "SRG-APP-000033-DB-000084"
+  tag "gid": "V-81845"
+  tag "rid": "SV-96559r1_rule"
+  tag "stig_id": "MD3X-00-000020"
+  tag "fix_id": "F-88695r2_fix"
+  tag "cci": ["CCI-000213"]
+  tag "nist": ['AC-3', 'Rev_4']
+  tag "nist": ["Rev_4"]
+  tag "false_negatives": nil
+  tag "false_positives": nil
+  tag "documentable": false
+  tag "mitigations": nil
+  tag "severity_override_guidance": false
+  tag "potential_impacts": nil
+  tag "third_party_tools": nil
+  tag "mitigation_controls": nil
+  tag "responsibility": nil
+  tag "ia_controls": nil
+  tag "check": "Review the system documentation to determine the required
+  levels of protection for DBMS server securables by type of login. Review the
+  permissions actually in place on the server. If the actual permissions do not
+  match the documented requirements, this is a finding.
+
+  MongoDB commands to view roles in a particular database:
+
+  db.getRoles(
+  {
+  rolesInfo: 1,
+  showPrivileges:true,
+  showBuiltinRoles: true
+  }
+  )"
+  tag "fix": "Use createRole(), updateRole(), dropRole(), grantRole()
+  statements to add and remove permissions on server-level securables, bringing
+  them into line with the documented requirements.
+
+  MongoDB commands for role management can be found here:
+  https://docs.mongodb.com/v3.4/reference/method/js-role-management/"
+
+  
+  a = []
+  b = []
+  dbnames = []
+  mongo_user = attribute('user')
+  mongo_password = attribute('password')
+  
+  get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
+  
+  get_databases.each do |db|
+    if db.include? "databases"
+    
+       a.push(db)
+       get_databases.delete(db)
+    end
+  
+  end
+
+  get_databases.each do |db|
+    
+    loc_colon = db.index('"')
+    names = db[0, loc_colon]
+    dbnames.push(names)
+  end
+
+  dbnames.each do |dbs|
+
+    users = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
+      users.each do |t|
+   
+        loc_colon = t.index(':')
+
+        user = t[loc_colon+3..-1]
+    
+        loc_quote = user.index('"')
+     
+        username = user[0,loc_quote]
+
+
+         roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"}, {roles: 1, _id: false, distinct: 1})'").stdout.strip.split(":")
+  puts "here are the database roles for each user"
+  puts "#{dbs}"
+  puts "#{username}"
+  puts "#{roles}"
+
+
+        allowed_db = dbs
+       describe "Database users of database: #{dbs}" do
+         subject {username}
+         it {should be_in attribute("#{allowed_db}_db_users")}
+       end
+     end
+
+
+  end
+  
+  
+
+
+
+
+end
+
