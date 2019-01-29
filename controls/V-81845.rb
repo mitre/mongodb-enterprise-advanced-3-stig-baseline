@@ -1,4 +1,4 @@
-#not done
+
 control "V-81845" do
   title "MongoDB must enforce approved authorizations for logical access to
   information and system resources in accordance with applicable access control
@@ -45,23 +45,23 @@ control "V-81845" do
 
   MongoDB commands for role management can be found here:
   https://docs.mongodb.com/v3.4/reference/method/js-role-management/"
-
   
   a = []
   b = []
+  testing = []
   dbnames = []
   mongo_user = attribute('user')
   mongo_password = attribute('password')
+  dbrole = []
   
   get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
   
-  get_databases.each do |db|
+  get_databases.each do |db| 
     if db.include? "databases"
     
        a.push(db)
        get_databases.delete(db)
     end
-  
   end
 
   get_databases.each do |db|
@@ -84,28 +84,19 @@ control "V-81845" do
      
         username = user[0,loc_quote]
 
+        getdb_roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"}, {roles: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
+  
+        getdb_roles.each do |r|
+          remove_role = r.index('[')
+          rr = r[remove_role..-1]
 
-         roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"}, {roles: 1, _id: false, distinct: 1})'").stdout.strip.split(":")
-  puts "here are the database roles for each user"
-  puts "#{dbs}"
-  puts "#{username}"
-  puts "#{roles}"
-
-
-        allowed_db = dbs
-       describe "Database users of database: #{dbs}" do
-         subject {username}
-         it {should be_in attribute("#{allowed_db}_db_users")}
-       end
-     end
-
-
+        allowed_role = username
+        describe "The database role for user: #{username}" do
+          subject {rr}
+          it {should be_in attribute("#{allowed_role}_allowed_role")}
+        end
+      end
+    end
   end
-  
-  
-
-
-
-
 end
 

@@ -54,5 +54,10 @@ control "V-81925" do
   collection. Existing collections can also be modified with document validation
   rules. Use the \"validator\" option to create or update a collection with the
   desired validation rules."
+  describe 'A manual review is required to ensure when invalid inputs are received, MongoDB behaves in a predictable
+  and documented manner that reflects organizational and system objectives' do
+  skip 'A manual review is required to ensure when invalid inputs are received, MongoDB behaves in a predictable
+  and documented manner that reflects organizational and system objectives'
+  end
 end
 

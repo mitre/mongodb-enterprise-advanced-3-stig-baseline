@@ -1,4 +1,4 @@
-
+ 
 control "V-81863" do
   title "MongoDB must uniquely identify and authenticate organizational users
   (or processes acting on behalf of organizational users)."

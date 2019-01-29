@@ -39,3 +39,26 @@ attributes:
     description: 'List of authorized users of the admn database'
     type: array
     default: ["config_admin"]
+
+  - name: myUserAdmin_allowed_role
+    description: 'List of authorized users of the admn database'
+    type: array
+    default: ['[ { "role" : "userAdminAnyDatabase", "db" : "admin" } ] }']
+
+
+  - name: mongoadmin_allowed_role
+    description: 'List of authorized users of the admn database'
+    type: array
+    default: ['[ { "role" : "userAdminAnyDatabase", "db" : "admin" } ] }']
+
+  - name: appAdmin_allowed_role
+    description: 'List of authorized users of the admn database'
+    type: array
+    default: ['[ { "role" : "readWrite", "db" : "config" }, { "role" : "clusterAdmin", "db" : "admin" } ] }']
+
+  - name: accountAdmin01_allowed_role
+    description: 'List of authorized users of the admn database'
+    type: array
+    default: ['[ { "role" : "clusterAdmin", "db" : "admin" }, { "role" : "readAnyDatabase", "db" : "admin" }, { "role" : "readWrite", "db" : "config" } ] }
+']
+

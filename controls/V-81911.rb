@@ -1,4 +1,4 @@
-#not complete
+
 control "V-81911" do
   title "MongoDB must enforce access restrictions associated with changes to
   the configuration of MongoDB or database(s)."
@@ -71,5 +71,57 @@ control "V-81911" do
 
   To grant a role to a user use the db.grantRolesToUser() method.
   https://docs.mongodb.com/v3.4/reference/method/db.grantRolesToUser/"
+  a = []
+  b = []
+  testing = []
+  dbnames = []
+  mongo_user = attribute('user')
+  mongo_password = attribute('password')
+  dbrole = []
+  
+  get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
+  
+  get_databases.each do |db|
+    if db.include? "databases"
+    
+       a.push(db)
+       get_databases.delete(db)
+    end
+  end
+
+  get_databases.each do |db|
+    
+    loc_colon = db.index('"')
+    names = db[0, loc_colon]
+    dbnames.push(names)
+  end
+
+  dbnames.each do |dbs|
+
+    users = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
+      users.each do |t|
+   
+        loc_colon = t.index(':')
+
+        user = t[loc_colon+3..-1]
+    
+        loc_quote = user.index('"')
+     
+        username = user[0,loc_quote]
+
+        getdb_roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"}, {roles: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
+  
+        getdb_roles.each do |r|
+          remove_role = r.index('[')
+          rr = r[remove_role..-1]
+
+        allowed_role = username
+        describe "The database role for user: #{username}" do
+          subject {rr}
+          it {should be_in attribute("#{allowed_role}_allowed_role")}
+        end
+      end
+    end
+  end
 end
 
