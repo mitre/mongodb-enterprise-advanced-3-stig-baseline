@@ -64,15 +64,6 @@ control "V-81919" do
 
   https://docs.mongodb.com/v3.4/core/security-encryption-at-rest/
   https://docs.mongodb.com/v3.4/tutorial/configure-encryption/"
-  describe 'A manual review is required to ensure MongoDB implements cryptographic mechanisms to prevent
-  unauthorized modification of organization-defined information at rest (to
-  include, at a minimum, PII and classified information) on organization-defined
-  information system components' do
-    skip 'A manual review is required to ensure MongoDB implements cryptographic mechanisms to prevent
-  unauthorized modification of organization-defined information at rest (to
-  include, at a minimum, PII and classified information) on organization-defined
-  information system components' 
-  end
 
   describe yaml(attribute('mongod_conf'),) do
     its(["kmip", "serverName"]) { should_not be_nil }
