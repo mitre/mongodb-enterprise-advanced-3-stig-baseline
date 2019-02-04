@@ -1,4 +1,3 @@
-
 control "V-81873" do
   title "MongoDB must map the PKI-authenticated identity to an associated user
   account."

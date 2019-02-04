@@ -61,53 +61,15 @@ control "V-81867" do
 
   Additionally, SSL/TLS must be on as documented here:
   https://docs.mongodb.com/v3.4/tutorial/configure-ssl/"
-  a = []
-  b = []
-  testing = []
-  dbnames = []
-  mongo_user = attribute('user')
-  mongo_password = attribute('password')
-  dbrole = []
-  
-  get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
-  
-  get_databases.each do |db| 
-    if db.include? "databases"
-    
-       a.push(db)
-       get_databases.delete(db)
-    end
+  describe 'A manual review is required to ensure if passwords are used for authentication, MongoDB stores only
+    hashed, salted representations of passwords.' do
+    skip 'A manual review is required to ensure if passwords are used for authentication, MongoDB stores only
+    hashed, salted representations of passwords.' 
   end
-
-  get_databases.each do |db|
-    
-    loc_colon = db.index('"')
-    names = db[0, loc_colon]
-    dbnames.push(names)
+  describe yaml(attribute('mongod_conf'),) do
+    its(["security", "authorization"]) { should cmp "enabled" }
   end
-
-  dbnames.each do |dbs|
-    users = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-      users.each do |t|
-   
-        loc_colon = t.index(':')
-
-        user = t[loc_colon+3..-1]
-    
-        loc_quote = user.index('"')
-     
-        username = user[0,loc_quote]
-
-        getdb_roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"},{credentials: 1, _id: false})'").stdout.strip.split("\n")
-        
-        getdb_roles.each do |r|
-        
-          describe "The credential meachanim used for user: #{username}" do
-            subject {r}
-            it { should include "SCRAM-SHA-1"}
-          end
-        end 
-    end
+  describe yaml(attribute('mongod_conf'),) do
+    its(["security", "clusterAuthMode"]) { should cmp "x509" }
   end
 end
-

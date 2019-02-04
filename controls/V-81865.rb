@@ -1,4 +1,3 @@
-
 control "V-81865" do
   title "If DBMS authentication, using passwords, is employed, MongoDB must
   enforce the DoD standards for password complexity and lifetime."
@@ -50,10 +49,60 @@ control "V-81865" do
   OR
   Configure MongoDB Kerberos authentication where Kerberos is configured to
   enforce password complexity and lifetime."
-  describe 'A manual review is required to ensure MongoDB
-  enforces the DoD standards for password complexity and lifetime.' do
-  skip 'A manual review is required to ensure MongoDB
-  enforces the DoD standards for password complexity and lifetime.'
+
+  a = []
+  b = []
+  testing = []
+  dbnames = []
+  mongo_user = attribute('user')
+  mongo_password = attribute('password')
+  dbrole = []
+  
+  get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
+  
+  get_databases.each do |db| 
+    if db.include? "databases"
+    
+       a.push(db)
+       get_databases.delete(db)
+    end
   end
+
+  get_databases.each do |db|
+    
+    loc_colon = db.index('"')
+    names = db[0, loc_colon]
+    dbnames.push(names)
+  end
+
+  dbnames.each do |dbs|
+    users = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
+      users.each do |t|
+   
+        loc_colon = t.index(':')
+
+        user = t[loc_colon+3..-1]
+    
+        loc_quote = user.index('"')
+     
+        username = user[0,loc_quote]
+
+        getdb_roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"},{credentials: 1, _id: false})'").stdout.strip.split("\n")
+        
+        getdb_roles.each do |r|
+        
+          describe "The credential meachanim used for user: #{username}" do
+            subject {r}
+            it { should_not include "SCRAM-SHA1"}
+          end
+
+          
+        end 
+    end
+  end
+     describe yaml(attribute('mongod_conf')) do
+      its(["security", "ldap"]) { should be nil }
+     end
+
 end
 

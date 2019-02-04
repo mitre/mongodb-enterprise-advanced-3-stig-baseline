@@ -61,14 +61,33 @@ control "V-81861" do
   enabled: false
   JSONPEnabled: false
   RESTInterfaceEnabled: false"
-  describe yaml(attribute('mongod_conf')) do
-    its(["net","http", "enabled"]) { should cmp "false" }
+
+  mongo_conf_file = attribute('mongod_conf')
+  describe.one do
+    describe yaml("#{mongo_conf_file}") do
+      its(["net","http", "enabled"]) { should cmp "false" }
+    end
+    describe yaml("#{mongo_conf_file}") do
+      its(["net","http", "enabled"]) { should be_nil }
+    end
   end
-  describe yaml(attribute('mongod_conf')) do
-    its(["net","http", "JSONPEnabled"]) { should cmp "false" }
+
+  describe.one do
+    describe yaml("#{mongo_conf_file}") do
+      its(["net","http", "JSONPEnabled"]) { should cmp "false" }
+    end
+    describe yaml("#{mongo_conf_file}") do
+      its(["net","http", "JSONPEnabled"]) { should be_nil }
+    end
   end
-  describe yaml(attribute('mongod_conf')) do
-    its(["net","http", "RESTInterfaceEnabled"]) { should cmp "false" }
+
+  describe.one do
+    describe yaml("#{mongo_conf_file}") do
+      its(["net","http", "RESTInterfaceEnabled"]) { should cmp "false" }
+    end
+    describe yaml("#{mongo_conf_file}") do
+      its(["net","http", "RESTInterfaceEnabled"]) { should be_nil }
+    end
   end
 end
 

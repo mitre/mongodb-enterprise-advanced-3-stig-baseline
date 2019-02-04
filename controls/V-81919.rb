@@ -73,5 +73,24 @@ control "V-81919" do
   include, at a minimum, PII and classified information) on organization-defined
   information system components' 
   end
+
+  describe yaml(attribute('mongod_conf'),) do
+    its(["kmip", "serverName"]) { should_not be_nil }
+  end
+  describe yaml(attribute('mongod_conf'),) do
+    its(["kmip", "port"]) { should_not be_nil }
+  end
+  describe yaml(attribute('mongod_conf'),) do
+    its(["kmip", "port"]) { should_not be_nil }
+  end
+  describe yaml(attribute('mongod_conf'),) do
+    its(["kmip", "serverCAFile"]) { should_not be_nil }
+  end
+  describe yaml(attribute('mongod_conf'),) do
+    its(["kmip", "clientCertificateFile"]) { should_not be_nil }
+  end
+  describe yaml(attribute('mongod_conf'),) do
+    its(["enableEncryption"]) { should cmp "true" }
+  end
 end
 

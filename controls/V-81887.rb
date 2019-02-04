@@ -52,7 +52,7 @@ control "V-81887" do
     its('owner') { should eq 'mongod' }
     its('group') { should eq 'mongod' }
   end
-  describe file('/var/lib/mongo') do
+  describe directory('/var/lib/mongo') do
     its('mode') { should cmp >= 0755 }
     its('owner') { should eq 'mongod' }
     its('group') { should eq 'mongod' }

@@ -98,5 +98,8 @@ control "V-81847" do
   describe yaml(attribute('mongod_conf'),) do
     its(["auditLog", "destination"]) { should cmp "syslog" }
   end
+  describe yaml(attribute('mongod_conf'),) do
+    its(["auditLog", "filter"]) { should be_nil }
+  end
 end
 

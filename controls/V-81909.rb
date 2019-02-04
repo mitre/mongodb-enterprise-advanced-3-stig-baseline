@@ -1,4 +1,3 @@
-
 control "V-81909" do
   title "MongoDB must prohibit user installation of logic modules (stored
   procedures, functions, triggers, views, etc.) without explicit privileged

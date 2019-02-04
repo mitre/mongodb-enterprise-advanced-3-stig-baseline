@@ -1,4 +1,3 @@
-
 control "V-81857" do
   title "The role(s)/group(s) used to modify database structure (including but
   not necessarily limited to tables, indexes, storage, etc.) and logic modules

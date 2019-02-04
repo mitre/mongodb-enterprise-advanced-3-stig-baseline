@@ -51,12 +51,11 @@ control "V-81901" do
   1. Restart the mongod instance as a standalone.
   2. Perform the configure auditing task on the standalone instance.
   3. Restart the mongod instance as a member of the replica set."
-  describe 'A manual review is required to ensure MongoDB provides the means for individuals in authorized roles to
-  change the auditing to be performed on all application components, based on all
-  selectable event criteria within organization-defined time thresholds.' do
-    skip 'A manual review is required to ensure MongoDB provides the means for individuals in authorized roles to
-  change the auditing to be performed on all application components, based on all
-  selectable event criteria within organization-defined time thresholds.'
+  describe yaml(attribute('mongod_conf'),) do
+    its(["auditLog", "destination"]) { should cmp "syslog" }
+  end
+  describe yaml(attribute('mongod_conf'),) do
+    its(["auditLog", "filter"]) { should be_nil }
   end
 end
 

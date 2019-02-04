@@ -41,17 +41,14 @@ control "V-81917" do
   <path_to_certificate_pem_file> -text | grep -i \"issuer\").
 
   If there is any issuer present in the certificate that is not a DoD approved
-  certificate authority, this is a finding."
+  certificate authority, this is a finding." 
   tag "fix": "Remove any certificate that was not issued by an approved DoD
   certificate authority. Contact the organization's certificate issuer and
   request a new certificate that is issued by a valid DoD certificate
   authorities."
-  describe 'A manual review is required to ensure that only DoD-approved external PKIs have been evaluated to ensure that
-  they have security controls and identity vetting procedures in place which are
-  sufficient for DoD systems to rely on the identity asserted in the certificate' do 
-    skip 'A manual review is required to ensure that only DoD-approved external PKIs have been evaluated to ensure that
-  they have security controls and identity vetting procedures in place which are
-  sufficient for DoD systems to rely on the identity asserted in the certificate'
+  describe 'The mongodb ssl certificate issuer' do
+    subject {command("openssl x509 -in /etc/ssl/mongodb.pem -text | grep -i 'issuer'").stdout }
+    it { should include 'DoD'}
   end
 end
 
