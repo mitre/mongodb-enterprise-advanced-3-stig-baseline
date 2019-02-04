@@ -61,11 +61,6 @@ control "V-81867" do
 
   Additionally, SSL/TLS must be on as documented here:
   https://docs.mongodb.com/v3.4/tutorial/configure-ssl/"
-  describe 'A manual review is required to ensure if passwords are used for authentication, MongoDB stores only
-    hashed, salted representations of passwords.' do
-    skip 'A manual review is required to ensure if passwords are used for authentication, MongoDB stores only
-    hashed, salted representations of passwords.' 
-  end
   describe yaml(attribute('mongod_conf'),) do
     its(["security", "authorization"]) { should cmp "enabled" }
   end
