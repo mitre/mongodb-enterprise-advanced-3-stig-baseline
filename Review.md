@@ -1,13 +1,13 @@
 | Check          | Sub-check                                                                         | Who | Completion Date *** | Issue #'s |
 |----------------|-----------------------------------------------------------------------------------|-----|-----------------|-----------|
-|Logical checks| Proper profile directory structure	[1]						|||
-||JSON output review (e.g., pass/fail on ,<br>hardened, not hardened, edge cases, etc.)|||
-||InSpec syntax checker|||
+|Logical checks| Proper profile directory structure	[1]						|Mo|04/02/2019|*|
+||JSON output review (e.g., pass/fail on ,<br>hardened, not hardened, edge cases, etc.)|Mo|04/02/2019|*|
+||InSpec syntax checker|Mo|04/02/2019|#2|
 ||Local commands focused on target not the runner [2]|||
 |Quality checks|Alignment (including tagging) to original<br> standard (i.e. STIG, CIS Benchmark, NIST Tags)|||
 ||Control robustness (can the control be improved to make it less brittle - not necessarily a blocker on initial releases)|||
 ||Descriptive output for findings details (review JSON for findings information that may be confusing to SCA like NilCLass, etc.)|||
-||Documentation quality (i.e. README)<br> novice level instructions including prerequisites|||
+||Documentation quality (i.e. README)<br> novice level instructions including prerequisites|Mo|04/02/2019|#1|
 ||Consistency across other profile conventions |||
 ||Spelling, grammar,linting (e.g., rubocop, etc.)|||
 ||Removing debugging documentation and code|||
