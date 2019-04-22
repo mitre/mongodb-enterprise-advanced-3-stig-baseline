@@ -1,7 +1,7 @@
-control "V-81849" do
+control 'V-81849' do
   title "The audit information produced by MongoDB must be protected from
   unauthorized read access."
-  desc  "If audit data were to become compromised, then competent forensic
+  desc "If audit data were to become compromised, then competent forensic
   analysis and discovery of the true source of potentially malicious system
   activity is difficult, if not impossible, to achieve. In addition, access to
   audit records provides information an attacker could potentially use to his or
@@ -27,14 +27,14 @@ control "V-81849" do
   activity.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000118-DB-000059"
-  tag "satisfies": ["SRG-APP-000118-DB-000059", "SRG-APP-000119-DB-000060",
-  "SRG-APP-000120-DB-000061"]
-  tag "gid": "V-81849"
-  tag "rid": "SV-96563r1_rule"
-  tag "stig_id": "MD3X-00-000190"
-  tag "fix_id": "F-88699r1_fix"
-  tag "cci": ["CCI-000162", "CCI-000163", "CCI-000164"]
+  tag "gtitle": 'SRG-APP-000118-DB-000059'
+  tag "satisfies": ['SRG-APP-000118-DB-000059', 'SRG-APP-000119-DB-000060',
+                    'SRG-APP-000120-DB-000061']
+  tag "gid": 'V-81849'
+  tag "rid": 'SV-96563r1_rule'
+  tag "stig_id": 'MD3X-00-000190'
+  tag "fix_id": 'F-88699r1_fix'
+  tag "cci": ['CCI-000162', 'CCI-000163', 'CCI-000164']
   tag "nist": ['AU-9', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -112,4 +112,3 @@ control "V-81849" do
     its('group') { should eq 'mongod' }
   end
 end
-

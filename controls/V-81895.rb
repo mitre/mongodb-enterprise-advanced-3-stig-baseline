@@ -1,7 +1,7 @@
-control "V-81895" do
+control 'V-81895' do
   title "MongoDB must reveal detailed error messages only to the ISSO, ISSM,
   SA, and DBA."
-  desc  "If MongoDB provides too much information in error logs and
+  desc "If MongoDB provides too much information in error logs and
   administrative messages to the screen, this could lead to compromise. The
   structure and content of error messages need to be carefully considered by the
   organization and development team. The extent to which the information system
@@ -36,12 +36,12 @@ control "V-81895" do
   addressed, and must document what has been discovered.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000267-DB-000163"
-  tag "gid": "V-81895"
-  tag "rid": "SV-96609r1_rule"
-  tag "stig_id": "MD3X-00-000530"
-  tag "fix_id": "F-88745r1_fix"
-  tag "cci": ["CCI-001314"]
+  tag "gtitle": 'SRG-APP-000267-DB-000163'
+  tag "gid": 'V-81895'
+  tag "rid": 'SV-96609r1_rule'
+  tag "stig_id": 'MD3X-00-000530'
+  tag "fix_id": 'F-88745r1_fix'
+  tag "cci": ['CCI-001314']
   tag "nist": ['SI-11 b', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -78,7 +78,6 @@ control "V-81895" do
 
   Stop/start (restart) any mongod or mongos using the MongoDB configuration file."
   describe yaml(attribute('mongod_conf')) do
-    its(["security", "redactClientLogData"]) { should cmp "true" }
+    its(%w{security redactClientLogData}) { should cmp 'true' }
   end
 end
-

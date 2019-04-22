@@ -1,7 +1,7 @@
-control "V-81913" do
+control 'V-81913' do
   title "MongoDB must require users to reauthenticate when organization-defined
   circumstances or situations require reauthentication."
-  desc  "The DoD standard for authentication of an interactive user is the
+  desc "The DoD standard for authentication of an interactive user is the
   presentation of a Common Access Card (CAC) or other physical token bearing a
   valid, current, DoD-issued Public Key Infrastructure (PKI) certificate, coupled
   with a Personal Identification Number (PIN) to be entered by the user at the
@@ -29,12 +29,12 @@ control "V-81913" do
   privilege escalation and role changes.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000389-DB-000372"
-  tag "gid": "V-81913"
-  tag "rid": "SV-96627r1_rule"
-  tag "stig_id": "MD3X-00-000700"
-  tag "fix_id": "F-88763r1_fix"
-  tag "cci": ["CCI-002038"]
+  tag "gtitle": 'SRG-APP-000389-DB-000372'
+  tag "gid": 'V-81913'
+  tag "rid": 'SV-96627r1_rule'
+  tag "stig_id": 'MD3X-00-000700'
+  tag "fix_id": 'F-88763r1_fix'
+  tag "cci": ['CCI-002038']
   tag "nist": ['IA-11', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -58,4 +58,3 @@ control "V-81913" do
   circumstances or situations require reauthentication.'
   end
 end
-

@@ -1,7 +1,7 @@
-control "V-81889" do
+control 'V-81889' do
   title "MongoDB must check the validity of all data inputs except those
   specifically identified by the organization."
-  desc  "Invalid user input occurs when a user inserts data or characters into
+  desc "Invalid user input occurs when a user inserts data or characters into
   an application's data entry fields and the application is unprepared to process
   that data. This results in unanticipated application behavior, potentially
   leading to an application or information system compromise. Invalid user input
@@ -31,12 +31,12 @@ control "V-81889" do
   addressed, and must document what has been discovered.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000251-DB-000160"
-  tag "gid": "V-81889"
-  tag "rid": "SV-96603r1_rule"
-  tag "stig_id": "MD3X-00-000490"
-  tag "fix_id": "F-88739r1_fix"
-  tag "cci": ["CCI-001310"]
+  tag "gtitle": 'SRG-APP-000251-DB-000160'
+  tag "gid": 'V-81889'
+  tag "rid": 'SV-96603r1_rule'
+  tag "stig_id": 'MD3X-00-000490'
+  tag "fix_id": 'F-88739r1_fix'
+  tag "cci": ['CCI-001310']
   tag "nist": ['SI-10', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -73,7 +73,6 @@ control "V-81889" do
   documentation page at
   https://docs.mongodb.com/manual/core/document-validation/."
   describe yaml(attribute('mongod_conf')) do
-    its(["security", "javascriptEnabled"]) { should cmp "false" }
+    its(%w{security javascriptEnabled}) { should cmp 'false' }
   end
 end
-

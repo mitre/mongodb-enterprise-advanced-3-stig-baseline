@@ -1,5 +1,5 @@
-control "V-81851" do
-  title "MongoDB must protect its audit features from unauthorized access."
+control 'V-81851' do
+  title 'MongoDB must protect its audit features from unauthorized access.'
   desc  "Protecting audit data also includes identifying and protecting the
   tools used to view and manipulate log data.
 
@@ -22,14 +22,14 @@ control "V-81851" do
   could also manipulate logs to hide evidence of malicious activity.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000121-DB-000202"
-  tag "satisfies": ["SRG-APP-000121-DB-000202", "SRG-APP-000122-DB-000203",
-  "SRG-APP-000122-DB-000204"]
-  tag "gid": "V-81851"
-  tag "rid": "SV-96565r1_rule"
-  tag "stig_id": "MD3X-00-000220"
-  tag "fix_id": "F-88701r1_fix"
-  tag "cci": ["CCI-001493", "CCI-001494", "CCI-001495"]
+  tag "gtitle": 'SRG-APP-000121-DB-000202'
+  tag "satisfies": ['SRG-APP-000121-DB-000202', 'SRG-APP-000122-DB-000203',
+                    'SRG-APP-000122-DB-000204']
+  tag "gid": 'V-81851'
+  tag "rid": 'SV-96565r1_rule'
+  tag "stig_id": 'MD3X-00-000220'
+  tag "fix_id": 'F-88701r1_fix'
+  tag "cci": ['CCI-001493', 'CCI-001494', 'CCI-001495']
   tag "nist": ['AU-9', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -78,4 +78,3 @@ control "V-81851" do
     its('group') { should eq 'mongod' }
   end
 end
-

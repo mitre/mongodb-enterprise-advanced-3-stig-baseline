@@ -1,7 +1,7 @@
-control "V-81905" do
+control 'V-81905' do
   title "MongoDB must allocate audit record storage capacity in accordance with
   site audit record storage requirements."
-  desc  "In order to ensure sufficient storage capacity for the audit logs,
+  desc "In order to ensure sufficient storage capacity for the audit logs,
   MongoDB must be able to allocate audit record storage capacity. Although
   another requirement (SRG-APP-000515-DB-000318) mandates that audit data be
   off-loaded to a centralized log management system, it remains necessary to
@@ -23,12 +23,12 @@ control "V-81905" do
   ability to reuse the space formerly occupied by off-loaded records.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000357-DB-000316"
-  tag "gid": "V-81905"
-  tag "rid": "SV-96619r1_rule"
-  tag "stig_id": "MD3X-00-000620"
-  tag "fix_id": "F-88755r3_fix"
-  tag "cci": ["CCI-001849"]
+  tag "gtitle": 'SRG-APP-000357-DB-000316'
+  tag "gid": 'V-81905'
+  tag "rid": 'SV-96619r1_rule'
+  tag "stig_id": 'MD3X-00-000620'
+  tag "fix_id": 'F-88755r3_fix'
+  tag "cci": ['CCI-001849']
   tag "nist": ['AU-4', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -65,7 +65,6 @@ control "V-81905" do
   Allocate sufficient space to the storage volume hosting the file identified in
   the MongoDB configuration \"auditLog.path\" to support audit file peak demand."
   describe yaml(attribute('mongod_conf')) do
-    its(["auditLog", "destination"]) { should_not cmp "file" }
+    its(%w{auditLog destination}) { should_not cmp 'file' }
   end
 end
-

@@ -1,8 +1,8 @@
-control "V-81927" do
+control 'V-81927' do
   title "MongoDB must obscure feedback of authentication information during the
   authentication process to protect the information from possible
   exploitation/use by unauthorized individuals."
-  desc  "The DoD standard for authentication is DoD-approved PKI certificates.
+  desc "The DoD standard for authentication is DoD-approved PKI certificates.
 
       Normally, with PKI authentication, the interaction with the user for
   authentication will be handled by a software component separate from MongoDB,
@@ -30,12 +30,12 @@ control "V-81927" do
   addressed, and must document what has been discovered.
   "
   impact 0.7
-  tag "gtitle": "SRG-APP-000178-DB-000083"
-  tag "gid": "V-81927"
-  tag "rid": "SV-96641r1_rule"
-  tag "stig_id": "MD3X-00-000800"
-  tag "fix_id": "F-88777r1_fix"
-  tag "cci": ["CCI-000206"]
+  tag "gtitle": 'SRG-APP-000178-DB-000083'
+  tag "gid": 'V-81927'
+  tag "rid": 'SV-96641r1_rule'
+  tag "stig_id": 'MD3X-00-000800'
+  tag "fix_id": 'F-88777r1_fix'
+  tag "cci": ['CCI-000206']
   tag "nist": ['IA-6', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -74,10 +74,9 @@ control "V-81927" do
   viewing/capture and document they have been trained."
   describe 'A manual review is required to ensure MongoDB obscures the feedback of authentication information during the
   authentication process to protect the information from possible
-  exploitation/use by unauthorized individuals.' do 
+  exploitation/use by unauthorized individuals.' do
     skip 'A manual review is required to ensure MongoDB obscures the feedback of authentication information during the
     authentication process to protect the information from possible
     exploitation/use by unauthorized individuals.'
   end
 end
-

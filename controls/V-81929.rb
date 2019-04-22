@@ -1,8 +1,8 @@
-control "V-81929" do
+control 'V-81929' do
   title "MongoDB must be configured in accordance with the security
   configuration settings based on DoD security configuration and implementation
   guidance, including STIGs, NSA configuration guides, CTOs, DTMs, and IAVMs."
-  desc  "Configuring MongoDB to implement organization-wide security
+  desc "Configuring MongoDB to implement organization-wide security
   implementation guides and security checklists ensures compliance with federal
   standards and establishes a common security baseline across DoD that reflects
   the most restrictive security posture consistent with operational requirements.
@@ -13,12 +13,12 @@ control "V-81929" do
   sources.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000516-DB-000363"
-  tag "gid": "V-81929"
-  tag "rid": "SV-96643r1_rule"
-  tag "stig_id": "MD3X-00-001100"
-  tag "fix_id": "F-88779r1_fix"
-  tag "cci": ["CCI-000366"]
+  tag "gtitle": 'SRG-APP-000516-DB-000363'
+  tag "gid": 'V-81929'
+  tag "rid": 'SV-96643r1_rule'
+  tag "stig_id": 'MD3X-00-001100'
+  tag "fix_id": 'F-88779r1_fix'
+  tag "cci": ['CCI-000366']
   tag "nist": ['CM-6 b', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -49,4 +49,3 @@ control "V-81929" do
     guidance, including STIGs, NSA configuration guides, CTOs, DTMs, and IAVMs.'
   end
 end
-

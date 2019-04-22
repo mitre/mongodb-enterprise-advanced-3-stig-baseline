@@ -1,7 +1,7 @@
-control "V-81881" do
+control 'V-81881' do
   title "MongoDB must fail to a secure state if system initialization fails,
   shutdown fails, or aborts fail."
-  desc  "Failure to a known state can address safety or security in accordance
+  desc "Failure to a known state can address safety or security in accordance
   with the mission/business needs of the organization.
 
       Failure to a known secure state helps prevent a loss of confidentiality,
@@ -30,13 +30,13 @@ control "V-81881" do
   naturally. The term abort refers to both requested and unexpected terminations.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000225-DB-000153"
-  tag "satisfies": ["SRG-APP-000225-DB-000153", "SRG-APP-000226-DB-000147"]
-  tag "gid": "V-81881"
-  tag "rid": "SV-96595r1_rule"
-  tag "stig_id": "MD3X-00-000420"
-  tag "fix_id": "F-88731r1_fix"
-  tag "cci": ["CCI-001190", "CCI-001665"]
+  tag "gtitle": 'SRG-APP-000225-DB-000153'
+  tag "satisfies": ['SRG-APP-000225-DB-000153', 'SRG-APP-000226-DB-000147']
+  tag "gid": 'V-81881'
+  tag "rid": 'SV-96595r1_rule'
+  tag "stig_id": 'MD3X-00-000420'
+  tag "fix_id": 'F-88731r1_fix'
+  tag "cci": ['CCI-001190', 'CCI-001665']
   tag "nist": ['SC-24', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -74,7 +74,6 @@ control "V-81881" do
 
   Stop/start (restart) any or all mongod processes."
   describe yaml(attribute('mongod_conf')) do
-    its(["storage","journal", "enabled"]) { should cmp "true" }
+    its(%w{storage journal enabled}) { should cmp 'true' }
   end
 end
-

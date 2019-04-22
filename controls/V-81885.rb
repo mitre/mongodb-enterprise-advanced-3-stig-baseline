@@ -1,7 +1,7 @@
-control "V-81885" do
+control 'V-81885' do
   title "Database contents must be protected from unauthorized and unintended
   information transfer by enforcement of a data-transfer policy."
-  desc  "Applications, including DBMSs, must prevent unauthorized and
+  desc "Applications, including DBMSs, must prevent unauthorized and
   unintended information transfer via shared system resources.
 
     Data used for the development and testing of applications often involves
@@ -14,12 +14,12 @@ control "V-81885" do
   location without the proper controls.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000243-DB-000128"
-  tag "gid": "V-81885"
-  tag "rid": "SV-96599r1_rule"
-  tag "stig_id": "MD3X-00-000460"
-  tag "fix_id": "F-88735r1_fix"
-  tag "cci": ["CCI-001090"]
+  tag "gtitle": 'SRG-APP-000243-DB-000128'
+  tag "gid": 'V-81885'
+  tag "rid": 'SV-96599r1_rule'
+  tag "stig_id": 'MD3X-00-000460'
+  tag "fix_id": 'F-88735r1_fix'
+  tag "cci": ['CCI-001090']
   tag "nist": ['SC-4', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -48,8 +48,7 @@ control "V-81885" do
   locations."
   describe 'A manual review is required to ensure that database contents are protected from unauthorized and unintended
   information transfer by enforcement of a data-transfer policy.' do
-  skip 'A manual review is required to ensure that database contents are protected from unauthorized and unintended
-  information transfer by enforcement of a data-transfer policy.'
+    skip 'A manual review is required to ensure that database contents are protected from unauthorized and unintended
+    information transfer by enforcement of a data-transfer policy.'
   end
 end
-

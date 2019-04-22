@@ -1,7 +1,7 @@
-control "V-81859" do
+control 'V-81859' do
   title "Unused database components, DBMS software, and database objects must
   be removed."
-  desc  "Information systems are capable of providing a wide variety of
+  desc "Information systems are capable of providing a wide variety of
   functions and services. Some of the functions and services, provided by
   default, may not be necessary to support essential organizational operations
   (e.g., key missions, functions).
@@ -13,12 +13,12 @@ control "V-81859" do
   only essential capabilities.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000141-DB-000091"
-  tag "gid": "V-81859"
-  tag "rid": "SV-96573r1_rule"
-  tag "stig_id": "MD3X-00-000280"
-  tag "fix_id": "F-88709r1_fix"
-  tag "cci": ["CCI-000381"]
+  tag "gtitle": 'SRG-APP-000141-DB-000091'
+  tag "gid": 'V-81859'
+  tag "rid": 'SV-96573r1_rule'
+  tag "stig_id": 'MD3X-00-000280'
+  tag "fix_id": 'F-88709r1_fix'
+  tag "cci": ['CCI-000381']
   tag "nist": ['CM-7 a', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -62,10 +62,9 @@ control "V-81859" do
   if !mongodb_installed_packages.empty?
     mongodb_installed_packages.each do |package|
       describe "The installed mongodb package: #{package}" do
-        subject {package}
+        subject { package }
         it { should be_in attribute('mongodb_packages_used') }
       end
     end
   end
 end
-

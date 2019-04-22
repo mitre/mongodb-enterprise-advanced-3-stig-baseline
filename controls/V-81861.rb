@@ -1,7 +1,7 @@
-control "V-81861" do
+control 'V-81861' do
   title "Unused database components that are integrated in MongoDB and cannot
   be uninstalled must be disabled."
-  desc  "Information systems are capable of providing a wide variety of
+  desc "Information systems are capable of providing a wide variety of
   functions and services. Some of the functions and services, provided by
   default, may not be necessary to support essential organizational operations
   (e.g., key missions, functions).
@@ -22,13 +22,13 @@ control "V-81861" do
   user/role permissions.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000141-DB-000092"
-  tag "satisfies": ["SRG-APP-000141-DB-000092", "SRG-APP-000142-DB-000094"]
-  tag "gid": "V-81861"
-  tag "rid": "SV-96575r1_rule"
-  tag "stig_id": "MD3X-00-000290"
-  tag "fix_id": "F-88711r1_fix"
-  tag "cci": ["CCI-000381", "CCI-000382"]
+  tag "gtitle": 'SRG-APP-000141-DB-000092'
+  tag "satisfies": ['SRG-APP-000141-DB-000092', 'SRG-APP-000142-DB-000094']
+  tag "gid": 'V-81861'
+  tag "rid": 'SV-96575r1_rule'
+  tag "stig_id": 'MD3X-00-000290'
+  tag "fix_id": 'F-88711r1_fix'
+  tag "cci": ['CCI-000381', 'CCI-000382']
   tag "nist": ['CM-7 b', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -64,30 +64,29 @@ control "V-81861" do
 
   mongo_conf_file = attribute('mongod_conf')
   describe.one do
-    describe yaml("#{mongo_conf_file}") do
-      its(["net","http", "enabled"]) { should cmp "false" }
+    describe yaml(mongo_conf_file.to_s) do
+      its(%w{net http enabled}) { should cmp 'false' }
     end
-    describe yaml("#{mongo_conf_file}") do
-      its(["net","http", "enabled"]) { should be_nil }
-    end
-  end
-
-  describe.one do
-    describe yaml("#{mongo_conf_file}") do
-      its(["net","http", "JSONPEnabled"]) { should cmp "false" }
-    end
-    describe yaml("#{mongo_conf_file}") do
-      its(["net","http", "JSONPEnabled"]) { should be_nil }
+    describe yaml(mongo_conf_file.to_s) do
+      its(%w{net http enabled}) { should be_nil }
     end
   end
 
   describe.one do
-    describe yaml("#{mongo_conf_file}") do
-      its(["net","http", "RESTInterfaceEnabled"]) { should cmp "false" }
+    describe yaml(mongo_conf_file.to_s) do
+      its(%w{net http JSONPEnabled}) { should cmp 'false' }
     end
-    describe yaml("#{mongo_conf_file}") do
-      its(["net","http", "RESTInterfaceEnabled"]) { should be_nil }
+    describe yaml(mongo_conf_file.to_s) do
+      its(%w{net http JSONPEnabled}) { should be_nil }
+    end
+  end
+
+  describe.one do
+    describe yaml(mongo_conf_file.to_s) do
+      its(%w{net http RESTInterfaceEnabled}) { should cmp 'false' }
+    end
+    describe yaml(mongo_conf_file.to_s) do
+      its(%w{net http RESTInterfaceEnabled}) { should be_nil }
     end
   end
 end
-

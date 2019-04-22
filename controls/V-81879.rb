@@ -1,7 +1,7 @@
-control "V-81879" do
+control 'V-81879' do
   title "MongoDB must maintain the authenticity of communications sessions by
   guarding against man-in-the-middle attacks that guess at Session ID values."
-  desc  "One class of man-in-the-middle, or session hijacking, attack involves
+  desc "One class of man-in-the-middle, or session hijacking, attack involves
   the adversary guessing at valid session identifiers based on patterns in
   identifiers already known.
 
@@ -15,12 +15,12 @@ control "V-81879" do
   demonstrated to be effective.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000224-DB-000384"
-  tag "gid": "V-81879"
-  tag "rid": "SV-96593r1_rule"
-  tag "stig_id": "MD3X-00-000410"
-  tag "fix_id": "F-88729r1_fix"
-  tag "cci": ["CCI-001188"]
+  tag "gtitle": 'SRG-APP-000224-DB-000384'
+  tag "gid": 'V-81879'
+  tag "rid": 'SV-96593r1_rule'
+  tag "stig_id": 'MD3X-00-000410'
+  tag "fix_id": 'F-88729r1_fix'
+  tag "cci": ['CCI-001188']
   tag "nist": ['SC-23', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -47,7 +47,6 @@ control "V-81879" do
 
   Stop/start (restart) and mongod or mongos using the MongoDB configuration file."
   describe yaml(attribute('mongod_conf')) do
-    its(["net","ssl", "mode"]) { should cmp "requireSSL" }
+    its(%w{net ssl mode}) { should cmp 'requireSSL' }
   end
 end
-

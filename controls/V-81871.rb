@@ -1,7 +1,7 @@
-control "V-81871" do
+control 'V-81871' do
   title "MongoDB must enforce authorized access to all PKI private keys
   stored/utilized by MongoDB."
-  desc  "The DoD standard for authentication is DoD-approved PKI certificates.
+  desc "The DoD standard for authentication is DoD-approved PKI certificates.
   PKI certificate-based authentication is performed by requiring the certificate
   holder to cryptographically prove possession of the corresponding private key.
 
@@ -23,12 +23,12 @@ control "V-81871" do
   unauthorized actions.
   "
   impact 0.7
-  tag "gtitle": "SRG-APP-000176-DB-000068"
-  tag "gid": "V-81871"
-  tag "rid": "SV-96585r1_rule"
-  tag "stig_id": "MD3X-00-000360"
-  tag "fix_id": "F-88721r1_fix"
-  tag "cci": ["CCI-000186"]
+  tag "gtitle": 'SRG-APP-000176-DB-000068'
+  tag "gid": 'V-81871'
+  tag "rid": 'SV-96585r1_rule'
+  tag "stig_id": 'MD3X-00-000360'
+  tag "fix_id": 'F-88721r1_fix'
+  tag "cci": ['CCI-000186']
   tag "nist": ['IA-5 (2) (b)', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil

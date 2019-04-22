@@ -1,4 +1,4 @@
-control "V-81893" do
+control 'V-81893' do
   title "MongoDB must provide non-privileged users with error messages that
   provide information necessary for corrective actions without revealing
   information that could be exploited by adversaries."
@@ -32,12 +32,12 @@ control "V-81893" do
   addressed, and must document what has been discovered.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000266-DB-000162"
-  tag "gid": "V-81893"
-  tag "rid": "SV-96607r1_rule"
-  tag "stig_id": "MD3X-00-000520"
-  tag "fix_id": "F-88743r1_fix"
-  tag "cci": ["CCI-001312"]
+  tag "gtitle": 'SRG-APP-000266-DB-000162'
+  tag "gid": 'V-81893'
+  tag "rid": 'SV-96607r1_rule'
+  tag "stig_id": 'MD3X-00-000520'
+  tag "fix_id": 'F-88743r1_fix'
+  tag "cci": ['CCI-001312']
   tag "nist": ['SI-11 a', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -73,4 +73,3 @@ control "V-81893" do
   information that could be exploited by adversaries.'
   end
 end
-

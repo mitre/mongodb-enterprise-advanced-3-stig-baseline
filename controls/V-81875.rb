@@ -1,7 +1,7 @@
-control "V-81875" do
+control 'V-81875' do
   title "MongoDB must use NIST FIPS 140-2-validated cryptographic modules for
   cryptographic operations."
-  desc  "Use of weak or not validated cryptographic algorithms undermines the
+  desc "Use of weak or not validated cryptographic algorithms undermines the
   purposes of utilizing encryption and digital signatures to protect data. Weak
   algorithms can be easily broken and not validated cryptographic modules may not
   implement algorithms correctly. Unapproved cryptographic modules or algorithms
@@ -21,15 +21,15 @@ control "V-81875" do
   encryption modules.
   "
   impact 0.7
-  tag "gtitle": "SRG-APP-000179-DB-000114"
-  tag "satisfies": ["SRG-APP-000179-DB-000114", "SRG-APP-000514-DB-000381",
-  "SRG-APP-000514-DB-000382", "SRG-APP-000514-DB-000383",
-  "SRG-APP-000416-DB-000380"]
-  tag "gid": "V-81875"
-  tag "rid": "SV-96589r1_rule"
-  tag "stig_id": "MD3X-00-000380"
-  tag "fix_id": "F-88725r1_fix"
-  tag "cci": ["CCI-000803", "CCI-002450"]
+  tag "gtitle": 'SRG-APP-000179-DB-000114'
+  tag "satisfies": ['SRG-APP-000179-DB-000114', 'SRG-APP-000514-DB-000381',
+                    'SRG-APP-000514-DB-000382', 'SRG-APP-000514-DB-000383',
+                    'SRG-APP-000416-DB-000380']
+  tag "gid": 'V-81875'
+  tag "rid": 'SV-96589r1_rule'
+  tag "stig_id": 'MD3X-00-000380'
+  tag "fix_id": 'F-88725r1_fix'
+  tag "cci": ['CCI-000803', 'CCI-002450']
   tag "nist": ['IA-7', 'Rev_4']
   tag "nist": ['SC-13', 'Rev_4']
   tag "false_negatives": nil
@@ -80,7 +80,6 @@ control "V-81875" do
   system documentation for the procedure to install, configure, and test FIPS
   mode."
   describe yaml(attribute('mongod_conf')) do
-    its(["net","ssl", "FIPSMode"]) { should cmp "true" }
+    its(%w{net ssl FIPSMode}) { should cmp 'true' }
   end
 end
-

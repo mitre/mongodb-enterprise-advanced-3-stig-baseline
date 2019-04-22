@@ -1,8 +1,8 @@
-control "V-81855" do
+control 'V-81855' do
   title "Database software, including DBMS configuration files, must be stored
   in dedicated directories, or DASD pools, separate from the host OS and other
   applications."
-  desc  "When dealing with change control issues, it should be noted any
+  desc "When dealing with change control issues, it should be noted any
   changes to the hardware, software, and/or firmware components of the
   information system and/or application can potentially have significant effects
   on the overall security of the system.
@@ -20,12 +20,12 @@ control "V-81855" do
   protection between applications.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000133-DB-000199"
-  tag "gid": "V-81855"
-  tag "rid": "SV-96569r1_rule"
-  tag "stig_id": "MD3X-00-000260"
-  tag "fix_id": "F-88705r1_fix"
-  tag "cci": ["CCI-001499"]
+  tag "gtitle": 'SRG-APP-000133-DB-000199'
+  tag "gid": 'V-81855'
+  tag "rid": 'SV-96569r1_rule'
+  tag "stig_id": 'MD3X-00-000260'
+  tag "fix_id": 'F-88705r1_fix'
+  tag "cci": ['CCI-001499']
   tag "nist": ['CM-5 (6)', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -63,4 +63,3 @@ control "V-81855" do
   applications'
   end
 end
-

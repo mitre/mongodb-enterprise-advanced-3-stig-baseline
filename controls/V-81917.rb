@@ -1,8 +1,8 @@
-control "V-81917" do
+control 'V-81917' do
   title "MongoDB must only accept end entity certificates issued by DoD PKI or
   DoD-approved PKI Certification Authorities (CAs) for the establishment of all
   encrypted sessions."
-  desc  "Only DoD-approved external PKIs have been evaluated to ensure that
+  desc "Only DoD-approved external PKIs have been evaluated to ensure that
   they have security controls and identity vetting procedures in place which are
   sufficient for DoD systems to rely on the identity asserted in the certificate.
   PKIs lacking sufficient security controls and identity vetting procedures risk
@@ -16,12 +16,12 @@ control "V-81917" do
   rather than for the network packet.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000427-DB-000385"
-  tag "gid": "V-81917"
-  tag "rid": "SV-96631r1_rule"
-  tag "stig_id": "MD3X-00-000730"
-  tag "fix_id": "F-88767r1_fix"
-  tag "cci": ["CCI-002470"]
+  tag "gtitle": 'SRG-APP-000427-DB-000385'
+  tag "gid": 'V-81917'
+  tag "rid": 'SV-96631r1_rule'
+  tag "stig_id": 'MD3X-00-000730'
+  tag "fix_id": 'F-88767r1_fix'
+  tag "cci": ['CCI-002470']
   tag "nist": ['SC-23', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -41,14 +41,13 @@ control "V-81917" do
   <path_to_certificate_pem_file> -text | grep -i \"issuer\").
 
   If there is any issuer present in the certificate that is not a DoD approved
-  certificate authority, this is a finding." 
+  certificate authority, this is a finding."
   tag "fix": "Remove any certificate that was not issued by an approved DoD
   certificate authority. Contact the organization's certificate issuer and
   request a new certificate that is issued by a valid DoD certificate
   authorities."
   describe 'The mongodb ssl certificate issuer' do
-    subject {command("openssl x509 -in /etc/ssl/mongodb.pem -text | grep -i 'issuer'").stdout }
-    it { should include 'DoD'}
+    subject { command("openssl x509 -in /etc/ssl/mongodb.pem -text | grep -i 'issuer'").stdout }
+    it { should include 'DoD' }
   end
 end
-

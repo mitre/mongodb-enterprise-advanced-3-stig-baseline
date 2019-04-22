@@ -1,8 +1,8 @@
-control "V-81909" do
+control 'V-81909' do
   title "MongoDB must prohibit user installation of logic modules (stored
   procedures, functions, triggers, views, etc.) without explicit privileged
   status."
-  desc  "Allowing regular users to install software, without explicit
+  desc "Allowing regular users to install software, without explicit
   privileges, creates the risk that untested or potentially malicious software
   will be installed on the system. Explicit privileges (escalated or
   administrative privileges) provide the regular user with explicit capabilities
@@ -25,12 +25,12 @@ control "V-81909" do
   procedures, functions, triggers, views, etc.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000378-DB-000365"
-  tag "gid": "V-81909"
-  tag "rid": "SV-96623r1_rule"
-  tag "stig_id": "MD3X-00-000650"
-  tag "fix_id": "F-88759r1_fix"
-  tag "cci": ["CCI-001812"]
+  tag "gtitle": 'SRG-APP-000378-DB-000365'
+  tag "gid": 'V-81909'
+  tag "rid": 'SV-96623r1_rule'
+  tag "stig_id": 'MD3X-00-000650'
+  tag "fix_id": 'F-88759r1_fix'
+  tag "cci": ['CCI-001812']
   tag "nist": ['CM-11 (2)', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -65,25 +65,22 @@ control "V-81909" do
 
   Create, as needed, new role(s) with associated privileges."
   a = []
-  b = []
-  testing = []
   dbnames = []
   mongo_user = attribute('user')
   mongo_password = attribute('password')
-  dbrole = []
-  
+
   get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
-  
+
   get_databases.each do |db|
-    if db.include? "databases"
-    
-       a.push(db)
-       get_databases.delete(db)
+    if db.include? 'databases'
+
+      a.push(db)
+      get_databases.delete(db)
     end
   end
 
   get_databases.each do |db|
-    
+
     loc_colon = db.index('"')
     names = db[0, loc_colon]
     dbnames.push(names)
@@ -99,30 +96,29 @@ control "V-81909" do
     dbnames.each do |dbs|
 
       users = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-        users.each do |t|
-     
-          loc_colon = t.index(':')
+      users.each do |t|
 
-          user = t[loc_colon+3..-1]
-      
-          loc_quote = user.index('"')
-       
-          username = user[0,loc_quote]
+        loc_colon = t.index(':')
 
-          getdb_roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"}, {roles: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-    
-          getdb_roles.each do |r|
-            remove_role = r.index('[')
-            rr = r[remove_role..-1]
+        user = t[loc_colon+3..-1]
+
+        loc_quote = user.index('"')
+
+        username = user[0, loc_quote]
+
+        getdb_roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"}, {roles: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
+
+        getdb_roles.each do |r|
+          remove_role = r.index('[')
+          rr = r[remove_role..-1]
 
           allowed_role = username
           describe "The database role for user: #{username}" do
-            subject {rr}
-            it {should be_in attribute("#{allowed_role}_allowed_role")}
+            subject { rr }
+            it { should be_in attribute("#{allowed_role}_allowed_role") }
           end
         end
       end
     end
   end
 end
-

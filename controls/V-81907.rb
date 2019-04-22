@@ -1,4 +1,4 @@
-control "V-81907" do
+control 'V-81907' do
   title "MongoDB must provide a warning to appropriate support staff when
   allocated audit record storage volume reaches 75% of maximum audit record
   storage capacity."
@@ -17,12 +17,12 @@ control "V-81907" do
   DBA/SA.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000359-DB-000319"
-  tag "gid": "V-81907"
-  tag "rid": "SV-96621r1_rule"
-  tag "stig_id": "MD3X-00-000630"
-  tag "fix_id": "F-88757r2_fix"
-  tag "cci": ["CCI-001855"]
+  tag "gtitle": 'SRG-APP-000359-DB-000319'
+  tag "gid": 'V-81907'
+  tag "rid": 'SV-96621r1_rule'
+  tag "stig_id": 'MD3X-00-000630'
+  tag "fix_id": 'F-88757r2_fix'
+  tag "cci": ['CCI-001855']
   tag "nist": ['AU-5 (1)', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -54,7 +54,6 @@ control "V-81907" do
   Configure the required alert in the monitoring software to send an alert where
   storage volume holding the auditLog file utilization reaches 75%."
   describe yaml(attribute('mongod_conf')) do
-    its(["auditLog", "destination"]) { should_not cmp "file" }
+    its(%w{auditLog destination}) { should_not cmp 'file' }
   end
 end
-

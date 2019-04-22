@@ -1,7 +1,7 @@
-control "V-81883" do
+control 'V-81883' do
   title "MongoDB must protect the confidentiality and integrity of all
   information at rest."
-  desc  "This control is intended to address the confidentiality and integrity
+  desc "This control is intended to address the confidentiality and integrity
   of information at rest in non-mobile devices and covers user information and
   system information. Information at rest refers to the state of information when
   it is located on a secondary storage device (e.g., disk drive, tape drive)
@@ -16,12 +16,12 @@ control "V-81883" do
   the data will be open to compromise and unauthorized modification.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000231-DB-000154"
-  tag "gid": "V-81883"
-  tag "rid": "SV-96597r1_rule"
-  tag "stig_id": "MD3X-00-000440"
-  tag "fix_id": "F-88733r1_fix"
-  tag "cci": ["CCI-001199"]
+  tag "gtitle": 'SRG-APP-000231-DB-000154'
+  tag "gid": 'V-81883'
+  tag "rid": 'SV-96597r1_rule'
+  tag "stig_id": 'MD3X-00-000440'
+  tag "fix_id": 'F-88733r1_fix'
+  tag "cci": ['CCI-001199']
   tag "nist": ['SC-28', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -60,7 +60,6 @@ control "V-81883" do
   Stop/start (restart) and mongod process using either the MongoDB configuration
   file or that contains the \"--enableEncryption\" option."
   describe yaml(attribute('mongod_conf')) do
-    its(["security", "enableEncryption"]) { should cmp "true" }
+    its(%w{security enableEncryption}) { should cmp 'true' }
   end
 end
-

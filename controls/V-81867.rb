@@ -1,7 +1,7 @@
-control "V-81867" do
+control 'V-81867' do
   title "If passwords are used for authentication, MongoDB must store only
   hashed, salted representations of passwords."
-  desc  "The DoD standard for authentication is DoD-approved PKI certificates.
+  desc "The DoD standard for authentication is DoD-approved PKI certificates.
   Authentication based on User ID and Password may be used only when it is
   not possible to employ a PKI certificate, and requires AO approval.
     In such cases, database passwords stored in clear text, using reversible
@@ -10,12 +10,12 @@ control "V-81867" do
   hashes when stored internally or externally to MongoDB.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000171-DB-000074"
-  tag "gid": "V-81867"
-  tag "rid": "SV-96581r1_rule"
-  tag "stig_id": "MD3X-00-000330"
-  tag "fix_id": "F-88717r1_fix"
-  tag "cci": ["CCI-000196"]
+  tag "gtitle": 'SRG-APP-000171-DB-000074'
+  tag "gid": 'V-81867'
+  tag "rid": 'SV-96581r1_rule'
+  tag "stig_id": 'MD3X-00-000330'
+  tag "fix_id": 'F-88717r1_fix'
+  tag "cci": ['CCI-000196']
   tag "nist": ['IA-5', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -61,10 +61,10 @@ control "V-81867" do
 
   Additionally, SSL/TLS must be on as documented here:
   https://docs.mongodb.com/v3.4/tutorial/configure-ssl/"
-  describe yaml(attribute('mongod_conf'),) do
-    its(["security", "authorization"]) { should cmp "enabled" }
+  describe yaml(attribute('mongod_conf')) do
+    its(%w{security authorization}) { should cmp 'enabled' }
   end
-  describe yaml(attribute('mongod_conf'),) do
-    its(["security", "clusterAuthMode"]) { should cmp "x509" }
+  describe yaml(attribute('mongod_conf')) do
+    its(%w{security clusterAuthMode}) { should cmp 'x509' }
   end
 end

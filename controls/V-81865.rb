@@ -1,7 +1,7 @@
-control "V-81865" do
+control 'V-81865' do
   title "If DBMS authentication, using passwords, is employed, MongoDB must
   enforce the DoD standards for password complexity and lifetime."
-  desc  "OS/enterprise authentication and identification must be used
+  desc "OS/enterprise authentication and identification must be used
   (SQL2-00-023600). Native DBMS authentication may be used only when
   circumstances make it unavoidable; and must be documented and AO-approved.
 
@@ -16,12 +16,12 @@ control "V-81865" do
   available configuration parameters or custom code.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000164-DB-000401"
-  tag "gid": "V-81865"
-  tag "rid": "SV-96579r1_rule"
-  tag "stig_id": "MD3X-00-000320"
-  tag "fix_id": "F-88715r1_fix"
-  tag "cci": ["CCI-000192"]
+  tag "gtitle": 'SRG-APP-000164-DB-000401'
+  tag "gid": 'V-81865'
+  tag "rid": 'SV-96579r1_rule'
+  tag "stig_id": 'MD3X-00-000320'
+  tag "fix_id": 'F-88715r1_fix'
+  tag "cci": ['CCI-000192']
   tag "nist": ['IA-5', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -51,25 +51,22 @@ control "V-81865" do
   enforce password complexity and lifetime."
 
   a = []
-  b = []
-  testing = []
   dbnames = []
   mongo_user = attribute('user')
   mongo_password = attribute('password')
-  dbrole = []
-  
+
   get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
-  
-  get_databases.each do |db| 
-    if db.include? "databases"
-    
-       a.push(db)
-       get_databases.delete(db)
+
+  get_databases.each do |db|
+    if db.include? 'databases'
+
+      a.push(db)
+      get_databases.delete(db)
     end
   end
 
   get_databases.each do |db|
-    
+
     loc_colon = db.index('"')
     names = db[0, loc_colon]
     dbnames.push(names)
@@ -77,32 +74,30 @@ control "V-81865" do
 
   dbnames.each do |dbs|
     users = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-      users.each do |t|
-   
-        loc_colon = t.index(':')
+    users.each do |t|
 
-        user = t[loc_colon+3..-1]
-    
-        loc_quote = user.index('"')
-     
-        username = user[0,loc_quote]
+      loc_colon = t.index(':')
 
-        getdb_roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"},{credentials: 1, _id: false})'").stdout.strip.split("\n")
-        
-        getdb_roles.each do |r|
-        
-          describe "The credential meachanim used for user: #{username}" do
-            subject {r}
-            it { should_not include "SCRAM-SHA1"}
-          end
+      user = t[loc_colon+3..-1]
 
-          
-        end 
+      loc_quote = user.index('"')
+
+      username = user[0, loc_quote]
+
+      getdb_roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"},{credentials: 1, _id: false})'").stdout.strip.split("\n")
+
+      getdb_roles.each do |r|
+
+        describe "The credential meachanim used for user: #{username}" do
+          subject { r }
+          it { should_not include 'SCRAM-SHA1' }
+        end
+
+      end
     end
   end
-     describe yaml(attribute('mongod_conf')) do
-      its(["security", "ldap"]) { should be nil }
-     end
+  describe yaml(attribute('mongod_conf')) do
+    its(%w{security ldap}) { should be nil }
+  end
 
 end
-

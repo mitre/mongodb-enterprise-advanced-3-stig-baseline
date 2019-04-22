@@ -1,7 +1,7 @@
- control "V-81863" do
+control 'V-81863' do
   title "MongoDB must uniquely identify and authenticate organizational users
   (or processes acting on behalf of organizational users)."
-  desc  "To assure accountability and prevent unauthenticated access,
+  desc "To assure accountability and prevent unauthenticated access,
   organizational users must be identified and authenticated to prevent potential
   misuse and compromise of the system.
 
@@ -19,12 +19,12 @@
   accountability of individual activity.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000148-DB-000103"
-  tag "gid": "V-81863"
-  tag "rid": "SV-96577r1_rule"
-  tag "stig_id": "MD3X-00-000310"
-  tag "fix_id": "F-88713r1_fix"
-  tag "cci": ["CCI-000764"]
+  tag "gtitle": 'SRG-APP-000148-DB-000103'
+  tag "gid": 'V-81863'
+  tag "rid": 'SV-96577r1_rule'
+  tag "stig_id": 'MD3X-00-000310'
+  tag "fix_id": 'F-88713r1_fix'
+  tag "cci": ['CCI-000764']
   tag "nist": ['IA-2', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -75,24 +75,23 @@
   any mongod or mongos process using this MongoDB configuration file."
 
   a = []
-  b = []
   dbnames = []
   mongo_user = attribute('user')
   mongo_password = attribute('password')
-  
+
   get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
-  
+
   get_databases.each do |db|
-    if db.include? "databases"
-    
-       a.push(db)
-       get_databases.delete(db)
+    if db.include? 'databases'
+
+      a.push(db)
+      get_databases.delete(db)
     end
-  
+
   end
 
   get_databases.each do |db|
-    
+
     loc_colon = db.index('"')
     names = db[0, loc_colon]
     dbnames.push(names)
@@ -101,23 +100,23 @@
   dbnames.each do |dbs|
 
     users = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-      users.each do |t|
-   
-        loc_colon = t.index(':')
+    users.each do |t|
 
-        user = t[loc_colon+3..-1]
-    
-        loc_quote = user.index('"')
-     
-        username = user[0,loc_quote]
-        allowed_db = dbs
-       describe "Database users of database: #{dbs}" do
-         subject {username}
-         it {should be_in attribute("#{allowed_db}_db_users")}
-       end
-     end
+      loc_colon = t.index(':')
+
+      user = t[loc_colon+3..-1]
+
+      loc_quote = user.index('"')
+
+      username = user[0, loc_quote]
+      allowed_db = dbs
+      describe "Database users of database: #{dbs}" do
+        subject { username }
+        it { should be_in attribute("#{allowed_db}_db_users") }
+      end
+    end
   end
   describe yaml(attribute('mongod_conf')) do
-    its(["security", "authorization"]) { should cmp "enabled" }
+    its(%w{security authorization}) { should cmp 'enabled' }
   end
 end

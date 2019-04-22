@@ -1,4 +1,4 @@
-control "V-81853" do
+control 'V-81853' do
   title "MongoDB software installation account must be restricted to authorized
   users."
   desc  "When dealing with change control issues, it should be noted any
@@ -20,12 +20,12 @@ control "V-81853" do
   to only those persons who are qualified and authorized to use them.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000133-DB-000198"
-  tag "gid": "V-81853"
-  tag "rid": "SV-96567r1_rule"
-  tag "stig_id": "MD3X-00-000250"
-  tag "fix_id": "F-88703r1_fix"
-  tag "cci": ["CCI-001499"]
+  tag "gtitle": 'SRG-APP-000133-DB-000198'
+  tag "gid": 'V-81853'
+  tag "rid": 'SV-96567r1_rule'
+  tag "stig_id": 'MD3X-00-000250'
+  tag "fix_id": 'F-88703r1_fix'
+  tag "cci": ['CCI-001499']
   tag "nist": ['CM-5 (6)', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -49,4 +49,3 @@ control "V-81853" do
     skip 'A manual review is required to ensure there are procedures in place to restrict and track the use of the DBMS software installation account'
   end
 end
-

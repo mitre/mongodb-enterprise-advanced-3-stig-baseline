@@ -1,7 +1,7 @@
-control "V-81887" do
+control 'V-81887' do
   title "MongoDB must prevent unauthorized and unintended information transfer
   via shared system resources."
-  desc  "The purpose of this control is to prevent information, including
+  desc "The purpose of this control is to prevent information, including
   encrypted representations of information, produced by the actions of a prior
   user/role (or the actions of a process acting on behalf of a prior user/role)
   from being available to any current user/role (or current process) that obtains
@@ -10,13 +10,13 @@ control "V-81887" do
   Control of information in shared resources is also referred to as object reuse.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000243-DB-000373"
-  tag "satisfies": ["SRG-APP-000243-DB-000373", "SRG-APP-000243-DB-000374"]
-  tag "gid": "V-81887"
-  tag "rid": "SV-96601r1_rule"
-  tag "stig_id": "MD3X-00-000470"
-  tag "fix_id": "F-88737r1_fix"
-  tag "cci": ["CCI-001090"]
+  tag "gtitle": 'SRG-APP-000243-DB-000373'
+  tag "satisfies": ['SRG-APP-000243-DB-000373', 'SRG-APP-000243-DB-000374']
+  tag "gid": 'V-81887'
+  tag "rid": 'SV-96601r1_rule'
+  tag "stig_id": 'MD3X-00-000470'
+  tag "fix_id": 'F-88737r1_fix'
+  tag "cci": ['CCI-001090']
   tag "nist": ['SC-4', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -58,4 +58,3 @@ control "V-81887" do
     its('group') { should eq 'mongod' }
   end
 end
-

@@ -1,17 +1,17 @@
-control "V-81873" do
+control 'V-81873' do
   title "MongoDB must map the PKI-authenticated identity to an associated user
   account."
-  desc  "The DoD standard for authentication is DoD-approved PKI certificates.
+  desc "The DoD standard for authentication is DoD-approved PKI certificates.
   Once a PKI certificate has been validated, it must be mapped to a DBMS user
   account for the authenticated identity to be meaningful to MongoDB and useful
   for authorization decisions."
   impact 0.5
-  tag "gtitle": "SRG-APP-000177-DB-000069"
-  tag "gid": "V-81873"
-  tag "rid": "SV-96587r1_rule"
-  tag "stig_id": "MD3X-00-000370"
-  tag "fix_id": "F-88723r1_fix"
-  tag "cci": ["CCI-000187"]
+  tag "gtitle": 'SRG-APP-000177-DB-000069'
+  tag "gid": 'V-81873'
+  tag "rid": 'SV-96587r1_rule'
+  tag "stig_id": 'MD3X-00-000370'
+  tag "fix_id": 'F-88723r1_fix'
+  tag "cci": ['CCI-000187']
   tag "nist": ['IA-5', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -100,4 +100,3 @@ control "V-81873" do
     account'
   end
 end
-

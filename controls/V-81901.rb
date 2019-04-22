@@ -1,8 +1,8 @@
-control "V-81901" do
+control 'V-81901' do
   title "MongoDB must provide the means for individuals in authorized roles to
   change the auditing to be performed on all application components, based on all
   selectable event criteria within organization-defined time thresholds."
-  desc  "If authorized individuals do not have the ability to modify auditing
+  desc "If authorized individuals do not have the ability to modify auditing
   parameters in response to a changing threat environment, the organization may
   not be able to effectively respond, and important forensic information may be
   lost.
@@ -16,12 +16,12 @@ control "V-81901" do
   real time, within minutes, or within hours.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000353-DB-000324"
-  tag "gid": "V-81901"
-  tag "rid": "SV-96615r1_rule"
-  tag "stig_id": "MD3X-00-000590"
-  tag "fix_id": "F-88751r1_fix"
-  tag "cci": ["CCI-001914"]
+  tag "gtitle": 'SRG-APP-000353-DB-000324'
+  tag "gid": 'V-81901'
+  tag "rid": 'SV-96615r1_rule'
+  tag "stig_id": 'MD3X-00-000590'
+  tag "fix_id": 'F-88751r1_fix'
+  tag "cci": ['CCI-001914']
   tag "nist": ['AU-12', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -51,11 +51,10 @@ control "V-81901" do
   1. Restart the mongod instance as a standalone.
   2. Perform the configure auditing task on the standalone instance.
   3. Restart the mongod instance as a member of the replica set."
-  describe yaml(attribute('mongod_conf'),) do
-    its(["auditLog", "destination"]) { should cmp "syslog" }
+  describe yaml(attribute('mongod_conf')) do
+    its(%w{auditLog destination}) { should cmp 'syslog' }
   end
-  describe yaml(attribute('mongod_conf'),) do
-    its(["auditLog", "filter"]) { should be_nil }
+  describe yaml(attribute('mongod_conf')) do
+    its(%w{auditLog filter}) { should be_nil }
   end
 end
-

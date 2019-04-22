@@ -1,7 +1,7 @@
-control "V-81923" do
+control 'V-81923' do
   title "MongoDB must maintain the confidentiality and integrity of information
   during reception."
-  desc  "Information can be either unintentionally or maliciously disclosed or
+  desc "Information can be either unintentionally or maliciously disclosed or
   modified during reception, including, for example, during aggregation, at
   protocol transformation points, and during packing/unpacking. These
   unauthorized disclosures or modifications compromise the confidentiality or
@@ -17,12 +17,12 @@ control "V-81923" do
   must leverage protection mechanisms.
   "
   impact 0.5
-  tag "gtitle": "SRG-APP-000442-DB-000379"
-  tag "gid": "V-81923"
-  tag "rid": "SV-96637r1_rule"
-  tag "stig_id": "MD3X-00-000770"
-  tag "fix_id": "F-88773r2_fix"
-  tag "cci": ["CCI-002422"]
+  tag "gtitle": 'SRG-APP-000442-DB-000379'
+  tag "gid": 'V-81923'
+  tag "rid": 'SV-96637r1_rule'
+  tag "stig_id": 'MD3X-00-000770'
+  tag "fix_id": 'F-88773r2_fix'
+  tag "cci": ['CCI-002422']
   tag "nist": ['SC-8 (2)', 'Rev_4']
   tag "false_negatives": nil
   tag "false_positives": nil
@@ -65,10 +65,9 @@ control "V-81923" do
   Start/stop (restart) all mongod or mongos instances using the MongoDB
   configuration file (default location: /etc/mongod.conf)."
   describe yaml(attribute('mongod_conf')) do
-    its(["net","ssl", "mode"]) { should cmp "requireSSL" }
+    its(%w{net ssl mode}) { should cmp 'requireSSL' }
   end
   describe yaml(attribute('mongod_conf')) do
-    its(["net","ssl", "PEMKeyFile"]) { should cmp "/etc/ssl/mongodb.pem" }
+    its(%w{net ssl PEMKeyFile}) { should cmp '/etc/ssl/mongodb.pem' }
   end
 end
-
