@@ -89,29 +89,37 @@ control "V-81909" do
     dbnames.push(names)
   end
 
-  dbnames.each do |dbs|
+  if dbnames.empty?
+    describe 'There are no mongo databases, therefore for this control is NA' do
+      skip 'There are no mongo databases, therefore for this control is NA'
+    end
+  end
 
-    users = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-      users.each do |t|
-   
-        loc_colon = t.index(':')
+  if !dbnames.empty?
+    dbnames.each do |dbs|
 
-        user = t[loc_colon+3..-1]
-    
-        loc_quote = user.index('"')
+      users = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
+        users.each do |t|
      
-        username = user[0,loc_quote]
+          loc_colon = t.index(':')
 
-        getdb_roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"}, {roles: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-  
-        getdb_roles.each do |r|
-          remove_role = r.index('[')
-          rr = r[remove_role..-1]
+          user = t[loc_colon+3..-1]
+      
+          loc_quote = user.index('"')
+       
+          username = user[0,loc_quote]
 
-        allowed_role = username
-        describe "The database role for user: #{username}" do
-          subject {rr}
-          it {should be_in attribute("#{allowed_role}_allowed_role")}
+          getdb_roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"}, {roles: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
+    
+          getdb_roles.each do |r|
+            remove_role = r.index('[')
+            rr = r[remove_role..-1]
+
+          allowed_role = username
+          describe "The database role for user: #{username}" do
+            subject {rr}
+            it {should be_in attribute("#{allowed_role}_allowed_role")}
+          end
         end
       end
     end

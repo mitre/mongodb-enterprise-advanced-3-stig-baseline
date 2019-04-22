@@ -53,10 +53,18 @@ control "V-81859" do
   package."
   mongodb_installed_packages = command('rpm -qa | grep mongodb').stdout.strip.split("\n")
 
-  mongodb_installed_packages.each do |package|
-    describe "The installed mongodb package: #{package}" do
-      subject {package}
-      it { should be_in attribute('mongodb_packages_used') }
+  if mongodb_installed_packages.empty?
+    describe 'There are no mongo database packages installed, therefore for this control is NA' do
+      skip 'There are no mongo database packages installed, therefore for this control is NA'
+    end
+  end
+
+  if !mongodb_installed_packages.empty?
+    mongodb_installed_packages.each do |package|
+      describe "The installed mongodb package: #{package}" do
+        subject {package}
+        it { should be_in attribute('mongodb_packages_used') }
+      end
     end
   end
 end
