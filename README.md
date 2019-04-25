@@ -15,9 +15,9 @@ Latest versions and installation options are available at the [InSpec](http://in
 
 Runs this profile over winrm to the host at IP address <hostip> as a privileged user account (i.e., an account with administrative privileges), reporting results to both the command line interface (cli) and to a machine-readable JSON file. 
     
-The following is an example of using this command. 
-
-    inspec exec https://github.com/mitre/mongodb-enterprise-advanced-stig-baseline/archive/master.tar.gz -t winrm://$winhostip --user 'Administrator' --password=Pa55w0rd --reporter cli json:mongodb-enterprise-advanced-stig-results.json
+inspec exec https://github.com/mitre/mongodb-enterprise-advanced-stig-baseline/archive/master.tar.gz -t ssh://<hostip> --user '<admin-account>' --password=<password> --reporter cli json:<filename>.json
+    
+Runs this profile over ssh to the host at IP address hostip as a privileged user account (i.e., an account with administrative privileges), reporting results to both the command line interface (cli) and to a machine-readable JSON file.
 
 ## Viewing the JSON Results
 
