@@ -78,13 +78,13 @@ control 'V-81871' do
   \"chown mongodb:mongodb /etc/ssl/mongodbca.pem\"
   \"chmod 600 /etc/ssl/mongodbca.pem\""
   describe file('/etc/ssl/mongodb.pem') do
-    it { should_not be_more_permissive_than('0600') } 
+    its('mode') { should cmp <= 0600 }
     its('owner') { should eq 'mongod' }
     its('group') { should eq 'mongod' }
   end
 
   describe file('/etc/ssl/mongodbca.pem') do
-    it { should_not be_more_permissive_than('0600') } 
+    its('mode') { should cmp <= 0600 }
     its('owner') { should eq 'mongod' }
     its('group') { should eq 'mongod' }
   end
