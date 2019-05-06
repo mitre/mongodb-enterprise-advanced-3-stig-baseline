@@ -107,7 +107,7 @@ control 'V-81849' do
   /var/lib/mongo"
   mongodb_auditlog_dir = command('dirname /var/lib/mongo/auditLog.bson').stdout.strip
   describe file(mongodb_auditlog_dir) do
-    its('mode') { should cmp >= 0700 }
+    it { should_not be_more_permissive_than('0700') } 
     its('owner') { should eq 'mongod' }
     its('group') { should eq 'mongod' }
   end

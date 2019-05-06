@@ -48,12 +48,12 @@ control 'V-81887' do
   chown -R mongod:mongod/var/lib/mongo
   chmod -R 755/var/lib/mongo"
   describe file(attribute('mongod_conf')) do
-    its('mode') { should cmp >= 0755 }
+    it { should_not be_more_permissive_than('0755') } 
     its('owner') { should eq 'mongod' }
     its('group') { should eq 'mongod' }
   end
   describe directory('/var/lib/mongo') do
-    its('mode') { should cmp >= 0755 }
+    it { should_not be_more_permissive_than('0755') } 
     its('owner') { should eq 'mongod' }
     its('group') { should eq 'mongod' }
   end

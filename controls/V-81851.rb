@@ -73,7 +73,7 @@ control 'V-81851' do
   > chgrp mongod /etc/mongod.conf
   > chmod 700 /etc/mongod.conf"
   describe file(attribute('mongod_conf')) do
-    its('mode') { should cmp >= 0700 }
+    it { should_not be_more_permissive_than('0700') } 
     its('owner') { should eq 'mongod' }
     its('group') { should eq 'mongod' }
   end
