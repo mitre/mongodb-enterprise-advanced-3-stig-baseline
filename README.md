@@ -3,7 +3,7 @@
 InSpec profile to validate the secure configuration of MongoDB Enterprised Advanced 3, against [DISA](https://iase.disa.mil/stigs/)'s **MongoDB Enterprise Advanced 3.x Security Technical Implementation Guide (STIG) Version 1, Release 1**.
 
 ## Getting Started  
-It is intended and recommended that InSpec run this profile from a __"runner"__ host (such as a DevOps orchestration server, an administrative management system, or a developer's workstation/laptop) against the target remotely over __winrm__.
+It is intended and recommended that InSpec run this profile from a __"runner"__ host (such as a DevOps orchestration server, an administrative management system, or a developer's workstation/laptop) against the target remotely over __ssh__.
 
 __For the best security of the runner, always install on the runner the _latest version_ of InSpec and supporting Ruby language components.__ 
 
@@ -11,9 +11,9 @@ Latest versions and installation options are available at the [InSpec](http://in
 
 ## Running This Profile
 
-    inspec exec https://github.com/mitre/mongodb-enterprise-advanced-stig-baseline/archive/master.tar.gz -t winrm://<hostip> --user '<admin-account>' --password=<password> --reporter cli json:<filename>.json
+    inspec exec https://github.com/mitre/mongodb-enterprise-advanced-stig-baseline/archive/master.tar.gz -t ssh://<hostip> --user '<admin-account>' --password=<password> --reporter cli json:<filename>.json
 
-Runs this profile over winrm to the host at IP address <hostip> as a privileged user account (i.e., an account with administrative privileges), reporting results to both the command line interface (cli) and to a machine-readable JSON file. 
+Runs this profile over ssh to the host at IP address <hostip> as a privileged user account (i.e., an account with administrative privileges), reporting results to both the command line interface (cli) and to a machine-readable JSON file. 
     
     inspec exec https://github.com/mitre/mongodb-enterprise-advanced-stig-baseline/archive/master.tar.gz -t ssh://<hostip> --user '<admin-account>' --password=<password> --reporter cli json:<filename>.json
     
