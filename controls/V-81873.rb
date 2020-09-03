@@ -6,13 +6,14 @@ control 'V-81873' do
   account for the authenticated identity to be meaningful to MongoDB and useful
   for authorization decisions."
   impact 0.5
-  tag "gtitle": 'SRG-APP-000177-DB-000069'
-  tag "gid": 'V-81873'
-  tag "rid": 'SV-96587r1_rule'
-  tag "stig_id": 'MD3X-00-000370'
-  tag "fix_id": 'F-88723r1_fix'
-  tag "cci": ['CCI-000187']
-  tag "nist": ['IA-5', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000177-DB-000069"
+  tag "gid": "V-81873"
+  tag "rid": "SV-96587r1_rule"
+  tag "stig_id": "MD3X-00-000370"
+  tag "fix_id": "F-88723r1_fix"
+  tag "cci": ["CCI-000187"]
+  tag "nist": ["IA-5", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -23,7 +24,7 @@ control 'V-81873' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "To authenticate with a client certificate, you must first add
+  desc "check": "To authenticate with a client certificate, you must first add
   the value of the subject from the client certificate as a MongoDB user.
 
   Each unique x.509 client certificate corresponds to a single MongoDB user; i.e.
@@ -40,7 +41,7 @@ control 'V-81873' do
 
   If the output shows a Relative Distinguished Name (RDN) for users that are not
   authorized, this is a finding."
-  tag "fix": "Add x.509 Certificate subject as an authorized user.
+  desc "fix": "Add x.509 Certificate subject as an authorized user.
 
   To authenticate with a client certificate, you must first add the value of the
   subject from the client certificate as a MongoDB user.

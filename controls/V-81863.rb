@@ -19,13 +19,14 @@ control 'V-81863' do
   accountability of individual activity.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000148-DB-000103'
-  tag "gid": 'V-81863'
-  tag "rid": 'SV-96577r1_rule'
-  tag "stig_id": 'MD3X-00-000310'
-  tag "fix_id": 'F-88713r1_fix'
-  tag "cci": ['CCI-000764']
-  tag "nist": ['IA-2', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000148-DB-000103"
+  tag "gid": "V-81863"
+  tag "rid": "SV-96577r1_rule"
+  tag "stig_id": "MD3X-00-000310"
+  tag "fix_id": "F-88713r1_fix"
+  tag "cci": ["CCI-000764"]
+  tag "nist": ["IA-2", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -36,7 +37,7 @@ control 'V-81863' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "To view another user’s information, you must have the
+  desc "check": "To view another user’s information, you must have the
   \"viewUser\" action on the other user’s database.
 
   For each database in the system, run the following command:
@@ -56,7 +57,7 @@ control 'V-81863' do
   authorization: \"enabled\"
 
   If this parameter is not present, this is a finding."
-  tag "fix": "Prereq: To drop a user from a database, must have the
+  desc "fix": "Prereq: To drop a user from a database, must have the
   \"dropUser\" action on the database.
 
   For any user not a member of an appropriate organization and has access to a
@@ -76,8 +77,8 @@ control 'V-81863' do
 
   a = []
   dbnames = []
-  mongo_user = attribute('user')
-  mongo_password = attribute('password')
+  mongo_user = input('user')
+  mongo_password = input('password')
 
   get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
 
@@ -116,7 +117,7 @@ control 'V-81863' do
       end
     end
   end
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{security authorization}) { should cmp 'enabled' }
   end
 end

@@ -21,17 +21,18 @@ control 'V-81875' do
   encryption modules.
   "
   impact 0.7
-  tag "gtitle": 'SRG-APP-000179-DB-000114'
-  tag "satisfies": ['SRG-APP-000179-DB-000114', 'SRG-APP-000514-DB-000381',
-                    'SRG-APP-000514-DB-000382', 'SRG-APP-000514-DB-000383',
-                    'SRG-APP-000416-DB-000380']
-  tag "gid": 'V-81875'
-  tag "rid": 'SV-96589r1_rule'
-  tag "stig_id": 'MD3X-00-000380'
-  tag "fix_id": 'F-88725r1_fix'
-  tag "cci": ['CCI-000803', 'CCI-002450']
-  tag "nist": ['IA-7', 'Rev_4']
-  tag "nist": ['SC-13', 'Rev_4']
+  tag "severity": "high"
+  tag "gtitle": "SRG-APP-000179-DB-000114"
+  tag "satisfies": ["SRG-APP-000179-DB-000114", "SRG-APP-000514-DB-000381",
+                    "SRG-APP-000514-DB-000382", "SRG-APP-000514-DB-000383",
+                    "SRG-APP-000416-DB-000380"]
+  tag "gid": "V-81875"
+  tag "rid": "SV-96589r1_rule"
+  tag "stig_id": "MD3X-00-000380"
+  tag "fix_id": "F-88725r1_fix"
+  tag "cci": ["CCI-000803", "CCI-002450"]
+  tag "nist": ["IA-7", "Rev_4"]
+  tag "nist": ["SC-13", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -42,7 +43,7 @@ control 'V-81875' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "If MongoDB is deployed in a classified environment:
+  desc "check": "If MongoDB is deployed in a classified environment:
 
   In the MongoDB database configuration file (default location:
   /etc/mongod.conf), search for and review the following parameters:
@@ -65,7 +66,7 @@ control 'V-81875' do
   cat /proc/sys/crypto/fips_enabled
 
   If the above command does not return \"1\", this is a finding."
-  tag "fix": "Enable FIPS 140-2 mode for MongoDB Enterprise.
+  desc "fix": "Enable FIPS 140-2 mode for MongoDB Enterprise.
 
   Edit the MongoDB database configuration file (default location:
   /etc/mongod.conf) to contain the following parameter setting:
@@ -79,7 +80,7 @@ control 'V-81875' do
   For the operating system finding, please refer to the appropriate operating
   system documentation for the procedure to install, configure, and test FIPS
   mode."
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{net ssl FIPSMode}) { should cmp 'true' }
   end
 end

@@ -23,13 +23,14 @@ control 'V-81871' do
   unauthorized actions.
   "
   impact 0.7
-  tag "gtitle": 'SRG-APP-000176-DB-000068'
-  tag "gid": 'V-81871'
-  tag "rid": 'SV-96585r1_rule'
-  tag "stig_id": 'MD3X-00-000360'
-  tag "fix_id": 'F-88721r1_fix'
-  tag "cci": ['CCI-000186']
-  tag "nist": ['IA-5 (2) (b)', 'Rev_4']
+  tag "severity": "high"
+  tag "gtitle": "SRG-APP-000176-DB-000068"
+  tag "gid": "V-81871"
+  tag "rid": "SV-96585r1_rule"
+  tag "stig_id": "MD3X-00-000360"
+  tag "fix_id": "F-88721r1_fix"
+  tag "cci": ["CCI-000186"]
+  tag "nist": ["IA-5 (2) (b)", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -40,7 +41,7 @@ control 'V-81871' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "In the MongoDB database configuration file (default location:
+  desc "check": "In the MongoDB database configuration file (default location:
   /etc/mongod.conf), review the following parameters:
 
   net:
@@ -56,26 +57,26 @@ control 'V-81871' do
   ls -al /etc/mongod.conf
 
   typical output:
-  -rw------- 1 mongodb mongodb 566 Apr 26 20:20 /etc/mongod.conf
+  -rw------- 1 mongod mongod 566 Apr 26 20:20 /etc/mongod.conf
 
-  If the user owner is not \"mongodb\", this is a finding.
+  If the user owner is not \"mongod\", this is a finding.
 
-  If the group owner is not \"mongodb\", this is a finding.
+  If the group owner is not \"mongod\", this is a finding.
 
   If the file is more permissive than \"600\", this is a finding.
 
   Verify ownership, group ownership, and permissions on the file given for CAFile
   (default 'ca.pem').
 
-  If the user owner is not \"mongodb\", this is a finding.
+  If the user owner is not \"mongod\", this is a finding.
 
-  If the group owner is not \"mongodb\", this is a finding.
+  If the group owner is not \"mongod\", this is a finding.
 
   IF the file is more permissive than \"600\", this is a finding."
-  tag "fix": "Run these commands:
-  \"chown mongodb:mongodb /etc/ssl/mongodb.pem\"
+  desc "fix": "Run these commands:
+  \"chown mongod:mongod /etc/ssl/mongodb.pem\"
   \"chmod 600 /etc/ssl/mongodb.pem\"
-  \"chown mongodb:mongodb /etc/ssl/mongodbca.pem\"
+  \"chown mongod:mongod /etc/ssl/mongodbca.pem\"
   \"chmod 600 /etc/ssl/mongodbca.pem\""
   describe file('/etc/ssl/mongodb.pem') do
     its('mode') { should cmp <= 0600 }

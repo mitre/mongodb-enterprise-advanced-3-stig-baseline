@@ -15,13 +15,14 @@ control 'V-81921' do
   infrastructure must leverage transmission protection mechanisms.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000441-DB-000378'
-  tag "gid": 'V-81921'
-  tag "rid": 'SV-96635r1_rule'
-  tag "stig_id": 'MD3X-00-000760'
-  tag "fix_id": 'F-88771r1_fix'
-  tag "cci": ['CCI-002420']
-  tag "nist": ['SC-8 (2)', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000441-DB-000378"
+  tag "gid": "V-81921"
+  tag "rid": "SV-96635r1_rule"
+  tag "stig_id": "MD3X-00-000760"
+  tag "fix_id": "F-88771r1_fix"
+  tag "cci": ["CCI-002420"]
+  tag "nist": ["SC-8 (2)", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -32,7 +33,7 @@ control 'V-81921' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Review the system information/specification for information
+  desc "check": "Review the system information/specification for information
   indicating a strict requirement for data integrity and confidentiality when
   data is being prepared to be transmitted.
 
@@ -47,7 +48,7 @@ control 'V-81921' do
   PEMKeyFile: /etc/ssl/mongodb.pem
 
   If net.ssl.mode is not set to \"requireSSL\", this is a finding."
-  tag "fix": "Stop the MongoDB instance if it is running. Obtain a certificate
+  desc "fix": "Stop the MongoDB instance if it is running. Obtain a certificate
   from a valid DoD certificate authority to be used for encrypted data
   transmission. Modify the MongoDB configuration file with ssl configuration
   options such as:
@@ -62,10 +63,10 @@ control 'V-81921' do
 
   Start/stop (restart) all mongod or mongos instances using the MongoDB
   configuration file (default location: /etc/mongod.conf)."
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{net ssl mode}) { should cmp 'requireSSL' }
   end
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{net ssl PEMKeyFile}) { should cmp '/etc/ssl/mongodb.pem' }
   end
 end

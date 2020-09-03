@@ -29,14 +29,15 @@ control 'V-81891' do
   addressed, and must document what has been discovered.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000251-DB-000391'
-  tag "satisfies": ['SRG-APP-000251-DB-000391', 'SRG-APP-000251-DB-000392']
-  tag "gid": 'V-81891'
-  tag "rid": 'SV-96605r1_rule'
-  tag "stig_id": 'MD3X-00-000500'
-  tag "fix_id": 'F-88741r1_fix'
-  tag "cci": ['CCI-001310']
-  tag "nist": ['SI-10', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000251-DB-000391"
+  tag "satisfies": ["SRG-APP-000251-DB-000391", "SRG-APP-000251-DB-000392"]
+  tag "gid": "V-81891"
+  tag "rid": "SV-96605r1_rule"
+  tag "stig_id": "MD3X-00-000500"
+  tag "fix_id": "F-88741r1_fix"
+  tag "cci": ["CCI-001310"]
+  tag "nist": ["SI-10", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -47,7 +48,7 @@ control 'V-81891' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "MongoDB operations permit arbitrary JavaScript expressions to
+  desc "check": "MongoDB operations permit arbitrary JavaScript expressions to
   be run directly on the server.
 
   If the following parameter is not present or not set as show below in the
@@ -56,14 +57,14 @@ control 'V-81891' do
 
   security:
   javascriptEnabled: \"false\""
-  tag "fix": "Disable the \"javascriptEnabled\" option.
+  desc "fix": "Disable the \"javascriptEnabled\" option.
 
   Edit the MongoDB configuration file (default location: /etc/mongod.conf\" to
   include the following:
 
   security:
   javascriptEnabled: false"
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{security javascriptEnabled}) { should cmp 'false' }
   end
 end

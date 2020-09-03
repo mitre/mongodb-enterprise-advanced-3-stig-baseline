@@ -6,14 +6,15 @@ control 'V-81845' do
   information and system resources in accordance with applicable access control
   policies."
   impact 0.5
-  tag "gtitle": 'SRG-APP-000033-DB-000084'
-  tag "gid": 'V-81845'
-  tag "rid": 'SV-96559r1_rule'
-  tag "stig_id": 'MD3X-00-000020'
-  tag "fix_id": 'F-88695r2_fix'
-  tag "cci": ['CCI-000213']
-  tag "nist": ['AC-3', 'Rev_4']
-  tag "nist": ['Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000033-DB-000084"
+  tag "gid": "V-81845"
+  tag "rid": "SV-96559r1_rule"
+  tag "stig_id": "MD3X-00-000020"
+  tag "fix_id": "F-88695r2_fix"
+  tag "cci": ["CCI-000213"]
+  tag "nist": ["AC-3", "Rev_4"]
+  tag "nist": ["Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -24,7 +25,7 @@ control 'V-81845' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Review the system documentation to determine the required
+  desc "check": "Review the system documentation to determine the required
   levels of protection for DBMS server securables by type of login. Review the
   permissions actually in place on the server. If the actual permissions do not
   match the documented requirements, this is a finding.
@@ -38,7 +39,7 @@ control 'V-81845' do
   showBuiltinRoles: true
   }
   )"
-  tag "fix": "Use createRole(), updateRole(), dropRole(), grantRole()
+  desc "fix": "Use createRole(), updateRole(), dropRole(), grantRole()
   statements to add and remove permissions on server-level securables, bringing
   them into line with the documented requirements.
 
@@ -47,8 +48,8 @@ control 'V-81845' do
 
   a = []
   dbnames = []
-  mongo_user = attribute('user')
-  mongo_password = attribute('password')
+  mongo_user = input('user')
+  mongo_password = input('password')
 
   get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
 

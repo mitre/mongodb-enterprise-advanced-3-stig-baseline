@@ -20,13 +20,14 @@ control 'V-81855' do
   protection between applications.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000133-DB-000199'
-  tag "gid": 'V-81855'
-  tag "rid": 'SV-96569r1_rule'
-  tag "stig_id": 'MD3X-00-000260'
-  tag "fix_id": 'F-88705r1_fix'
-  tag "cci": ['CCI-001499']
-  tag "nist": ['CM-5 (6)', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000133-DB-000199"
+  tag "gid": "V-81855"
+  tag "rid": "SV-96569r1_rule"
+  tag "stig_id": "MD3X-00-000260"
+  tag "fix_id": "F-88705r1_fix"
+  tag "cci": ["CCI-001499"]
+  tag "nist": ["CM-5 (6)", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -37,7 +38,7 @@ control 'V-81855' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Review the MongoDB software library directory and note other
+  desc "check": "Review the MongoDB software library directory and note other
   root directories located on the same disk directory or any subdirectories.
 
   If any non-MongoDB software directories exist on the disk directory, examine or
@@ -51,7 +52,7 @@ control 'V-81855' do
 
   If other applications are located in the same directory as the MongoDB database
   this is a finding."
-  tag "fix": "Install all applications on directories separate from the MongoDB
+  desc "fix": "Install all applications on directories separate from the MongoDB
   software library directory. Relocate any directories or reinstall other
   application software that currently shares the MongoDB software library
   directory."

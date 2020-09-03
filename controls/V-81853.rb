@@ -20,13 +20,14 @@ control 'V-81853' do
   to only those persons who are qualified and authorized to use them.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000133-DB-000198'
-  tag "gid": 'V-81853'
-  tag "rid": 'SV-96567r1_rule'
-  tag "stig_id": 'MD3X-00-000250'
-  tag "fix_id": 'F-88703r1_fix'
-  tag "cci": ['CCI-001499']
-  tag "nist": ['CM-5 (6)', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000133-DB-000198"
+  tag "gid": "V-81853"
+  tag "rid": "SV-96567r1_rule"
+  tag "stig_id": "MD3X-00-000250"
+  tag "fix_id": "F-88703r1_fix"
+  tag "cci": ["CCI-001499"]
+  tag "nist": ["CM-5 (6)", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -37,13 +38,13 @@ control 'V-81853' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Review procedures for controlling, granting access to, and
+  desc "check": "Review procedures for controlling, granting access to, and
   tracking use of the DBMS software installation account.
 
   If access or use of this account is not restricted to the minimum number of
   personnel required or if unauthorized access to the account has been granted,
   this is a finding."
-  tag "fix": "Develop, document, and implement procedures to restrict and track
+  desc "fix": "Develop, document, and implement procedures to restrict and track
   use of the DBMS software installation account."
   describe 'A manual review is required to ensure there are procedures in place to restrict and track the use of the DBMS software installation account' do
     skip 'A manual review is required to ensure there are procedures in place to restrict and track the use of the DBMS software installation account'

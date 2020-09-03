@@ -36,13 +36,14 @@ control 'V-81895' do
   addressed, and must document what has been discovered.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000267-DB-000163'
-  tag "gid": 'V-81895'
-  tag "rid": 'SV-96609r1_rule'
-  tag "stig_id": 'MD3X-00-000530'
-  tag "fix_id": 'F-88745r1_fix'
-  tag "cci": ['CCI-001314']
-  tag "nist": ['SI-11 b', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000267-DB-000163"
+  tag "gid": "V-81895"
+  tag "rid": "SV-96609r1_rule"
+  tag "stig_id": "MD3X-00-000530"
+  tag "fix_id": "F-88745r1_fix"
+  tag "cci": ["CCI-001314"]
+  tag "nist": ["SI-11 b", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -53,7 +54,7 @@ control 'V-81895' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "A mongod or mongos running with
+  desc "check": "A mongod or mongos running with
   \"security.redactClientLogData\" redacts any message accompanying a given log
   event before logging.
 
@@ -69,7 +70,7 @@ control 'V-81895' do
   redactClientLogData: \"true\"
 
   If this parameter is not present, this is a finding."
-  tag "fix": "Edit the MongoDB configuration file (default location:
+  desc "fix": "Edit the MongoDB configuration file (default location:
   /etc/mongod.conf) and add the following parameter \"redactClientLogData\" in
   the security section of that file:
 
@@ -77,7 +78,7 @@ control 'V-81895' do
   redactClientLogData: \"true\"
 
   Stop/start (restart) any mongod or mongos using the MongoDB configuration file."
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{security redactClientLogData}) { should cmp 'true' }
   end
 end

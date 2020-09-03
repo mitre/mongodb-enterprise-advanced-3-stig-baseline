@@ -1,0 +1,31 @@
+mongod_conf: '/etc/mongod.conf'
+mongodb_packages_used: [
+  'mongodb-org-tools-4.0.5-1.el7.x86_64',
+  'mongodb-org-server-4.0.5-1.el7.x86_64',
+  'mongodb-org-shell-4.0.5-1.el7.x86_64',
+  'mongodb-org-4.0.5-1.el7.x86_64',
+  'mongodb-org-mongos-4.0.5-1.el7.x86_64']
+
+user: 'mongoadmin'
+password: 'mongoadmin'
+
+admin_db_users: ["mongodb_admin"]
+config_db_users: ["config_admin"]
+myUserAdmin_allowed_role: ['[ 
+  { "role" : "userAdminAnyDatabase", "db" : "admin" } 
+  ] }']
+
+mongoadmin_allowed_role: ['[ { 
+  "role" : "userAdminAnyDatabase", 
+  "db" : "admin" 
+  } ] }']
+appAdmin_allowed_role: ['[
+   { "role" : "readWrite", "db" : "config" }, 
+   { "role" : "clusterAdmin", "db" : "admin" } 
+   ] }']
+accountAdmin01_allowed_role: ['[ 
+  { "role" : "clusterAdmin", "db" : "admin" }, 
+  { "role" : "readAnyDatabase", "db" : "admin" }, 
+  { "role" : "readWrite", "db" : "config" } 
+  ] }
+  ']

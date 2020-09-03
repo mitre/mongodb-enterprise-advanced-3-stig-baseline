@@ -17,13 +17,14 @@ control 'V-81923' do
   must leverage protection mechanisms.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000442-DB-000379'
-  tag "gid": 'V-81923'
-  tag "rid": 'SV-96637r1_rule'
-  tag "stig_id": 'MD3X-00-000770'
-  tag "fix_id": 'F-88773r2_fix'
-  tag "cci": ['CCI-002422']
-  tag "nist": ['SC-8 (2)', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000442-DB-000379"
+  tag "gid": "V-81923"
+  tag "rid": "SV-96637r1_rule"
+  tag "stig_id": "MD3X-00-000770"
+  tag "fix_id": "F-88773r2_fix"
+  tag "cci": ["CCI-002422"]
+  tag "nist": ["SC-8 (2)", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -34,7 +35,7 @@ control 'V-81923' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "If the data owner does not have a strict requirement for
+  desc "check": "If the data owner does not have a strict requirement for
   ensuring data integrity and confidentiality is maintained at every step of the
   data transfer and handling process, this is not a finding.
 
@@ -48,7 +49,7 @@ control 'V-81923' do
   PEMKeyFile: /etc/ssl/mongodb.pem
 
   If net.ssl.mode is not set to \"requireSSL\", this is a finding."
-  tag "fix": "Obtain a certificate from a valid DoD certificate authority to be
+  desc "fix": "Obtain a certificate from a valid DoD certificate authority to be
   used for encrypted data transmission.
 
   Modify the MongoDB configuration file (default location: /etc/mongod.conf) with
@@ -64,10 +65,10 @@ control 'V-81923' do
 
   Start/stop (restart) all mongod or mongos instances using the MongoDB
   configuration file (default location: /etc/mongod.conf)."
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{net ssl mode}) { should cmp 'requireSSL' }
   end
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{net ssl PEMKeyFile}) { should cmp '/etc/ssl/mongodb.pem' }
   end
 end

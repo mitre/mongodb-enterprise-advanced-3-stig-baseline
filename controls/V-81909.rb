@@ -25,13 +25,14 @@ control 'V-81909' do
   procedures, functions, triggers, views, etc.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000378-DB-000365'
-  tag "gid": 'V-81909'
-  tag "rid": 'SV-96623r1_rule'
-  tag "stig_id": 'MD3X-00-000650'
-  tag "fix_id": 'F-88759r1_fix'
-  tag "cci": ['CCI-001812']
-  tag "nist": ['CM-11 (2)', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000378-DB-000365"
+  tag "gid": "V-81909"
+  tag "rid": "SV-96623r1_rule"
+  tag "stig_id": "MD3X-00-000650"
+  tag "fix_id": "F-88759r1_fix"
+  tag "cci": ["CCI-001812"]
+  tag "nist": ["CM-11 (2)", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -42,7 +43,7 @@ control 'V-81909' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "If MongoDB supports only software development, experimentation,
+  desc "check": "If MongoDB supports only software development, experimentation,
   and/or developer-level testing (that is, excluding production systems,
   integration testing, stress testing, and user acceptance testing), this is not
   a finding.
@@ -57,7 +58,7 @@ control 'V-81909' do
 
   If any such permissions exist and are not documented and approved, this is a
   finding."
-  tag "fix": "Revoke any roles with unnecessary privileges to privileged
+  desc "fix": "Revoke any roles with unnecessary privileges to privileged
   functionality by executing the revoke command.
 
   Revoke any unnecessary privileges from any roles by executing the revoke
@@ -66,8 +67,8 @@ control 'V-81909' do
   Create, as needed, new role(s) with associated privileges."
   a = []
   dbnames = []
-  mongo_user = attribute('user')
-  mongo_password = attribute('password')
+  mongo_user = input('user')
+  mongo_password = input('password')
 
   get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
 

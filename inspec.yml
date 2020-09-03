@@ -6,16 +6,16 @@ copyright_email: you@example.com
 license: Apache-2.0 
 summary: "This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
 version: 0.1.0
-attributes:
+inputs:
   - name: mongod_conf
     description: 'MongoDB configuration file'
     type: 'string'
-    default: '/etc/mongod.conf'
+    value: '/etc/mongod.conf'
 
   - name: mongodb_packages_used
     description: 'List of mongodb packages used'
     type: array
-    default: ['mongodb-org-tools-4.0.5-1.el7.x86_64',
+    value: ['mongodb-org-tools-4.0.5-1.el7.x86_64',
               'mongodb-org-server-4.0.5-1.el7.x86_64',
               'mongodb-org-shell-4.0.5-1.el7.x86_64',
               'mongodb-org-4.0.5-1.el7.x86_64',
@@ -23,42 +23,42 @@ attributes:
   - name: user
     description: 'User to log into the mongo database'
     type: string
-    default: 'mongoadmin'
+    value: 'mongoadmin'
 
   - name: password
     description: 'password to log into the mongo database'
     type: string
-    default: 'mongoadmin'
+    value: 'mongoadmin'
 
   - name: admin_db_users
     description: 'List of authorized users of the admn database'
     type: array
-    default: ["mongodb_admin"]
+    value: ["mongodb_admin"]
 
   - name: config_db_users
     description: 'List of authorized users of the admn database'
     type: array
-    default: ["config_admin"]
+    value: ["config_admin"]
 
   - name: myUserAdmin_allowed_role
     description: 'List of authorized users of the admn database'
     type: array
-    default: ['[ { "role" : "userAdminAnyDatabase", "db" : "admin" } ] }']
+    value: ['[ { "role" : "userAdminAnyDatabase", "db" : "admin" } ] }']
 
 
   - name: mongoadmin_allowed_role
     description: 'List of authorized users of the admn database'
     type: array
-    default: ['[ { "role" : "userAdminAnyDatabase", "db" : "admin" } ] }']
+    value: ['[ { "role" : "userAdminAnyDatabase", "db" : "admin" } ] }']
 
   - name: appAdmin_allowed_role
     description: 'List of authorized users of the admn database'
     type: array
-    default: ['[ { "role" : "readWrite", "db" : "config" }, { "role" : "clusterAdmin", "db" : "admin" } ] }']
+    value: ['[ { "role" : "readWrite", "db" : "config" }, { "role" : "clusterAdmin", "db" : "admin" } ] }']
 
   - name: accountAdmin01_allowed_role
     description: 'List of authorized users of the admn database'
     type: array
-    default: ['[ { "role" : "clusterAdmin", "db" : "admin" }, { "role" : "readAnyDatabase", "db" : "admin" }, { "role" : "readWrite", "db" : "config" } ] }
+    value: ['[ { "role" : "clusterAdmin", "db" : "admin" }, { "role" : "readAnyDatabase", "db" : "admin" }, { "role" : "readWrite", "db" : "config" } ] }
 ']
 

@@ -21,17 +21,18 @@ control 'V-81877' do
   organizations, and the Nation.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000180-DB-000115'
-  tag "satisfies": ['SRG-APP-000180-DB-000115', 'SRG-APP-000211-DB-000122',
-                    'SRG-APP-000211-DB-000124']
-  tag "gid": 'V-81877'
-  tag "rid": 'SV-96591r1_rule'
-  tag "stig_id": 'MD3X-00-000390'
-  tag "fix_id": 'F-88727r2_fix'
-  tag "cci": ['CCI-000804', 'CCI-001082', 'CCI-001084']
-  tag "nist": ['IA-8', 'Rev_4']
-  tag "nist": ['SC-2', 'Rev_4']
-  tag "nist": ['SC-3', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000180-DB-000115"
+  tag "satisfies": ["SRG-APP-000180-DB-000115", "SRG-APP-000211-DB-000122",
+                    "SRG-APP-000211-DB-000124"]
+  tag "gid": "V-81877"
+  tag "rid": "SV-96591r1_rule"
+  tag "stig_id": "MD3X-00-000390"
+  tag "fix_id": "F-88727r2_fix"
+  tag "cci": ["CCI-000804", "CCI-001082", "CCI-001084"]
+  tag "nist": ["IA-8", "Rev_4"]
+  tag "nist": ["SC-2", "Rev_4"]
+  tag "nist": ["SC-3", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -42,7 +43,7 @@ control 'V-81877' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "MongoDB grants access to data and commands through role-based
+  desc "check": "MongoDB grants access to data and commands through role-based
   authorization and provides built-in roles that provide the different levels of
   access commonly needed in a database system. You can additionally create
   user-defined roles.
@@ -77,7 +78,7 @@ control 'V-81877' do
   the role does not inherit from other roles, the two fields are the same.
 
   If a user has a role with inappropriate privileges, this is a finding."
-  tag "fix": "Prereq: To view a user's roles, must have the \"viewUser\"
+  desc "fix": "Prereq: To view a user's roles, must have the \"viewUser\"
   privilege.
 
   Connect to MongoDB.
@@ -94,8 +95,8 @@ control 'V-81877' do
   To grant a role to a user use the db.grantRolesToUser() method."
   a = []
   dbnames = []
-  mongo_user = attribute('user')
-  mongo_password = attribute('password')
+  mongo_user = input('user')
+  mongo_password = input('password')
 
   get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
 

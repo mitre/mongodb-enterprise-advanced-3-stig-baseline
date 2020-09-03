@@ -22,14 +22,15 @@ control 'V-81919' do
 
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000428-DB-000386'
-  tag "satisfies": ['SRG-APP-000428-DB-000386', 'SRG-APP-000429-DB-000387']
-  tag "gid": 'V-81919'
-  tag "rid": 'SV-96633r1_rule'
-  tag "stig_id": 'MD3X-00-000740'
-  tag "fix_id": 'F-88769r1_fix'
-  tag "cci": ['CCI-002475']
-  tag "nist": ['SC-28', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000428-DB-000386"
+  tag "satisfies": ["SRG-APP-000428-DB-000386", "SRG-APP-000429-DB-000387"]
+  tag "gid": "V-81919"
+  tag "rid": "SV-96633r1_rule"
+  tag "stig_id": "MD3X-00-000740"
+  tag "fix_id": "F-88769r1_fix"
+  tag "cci": ["CCI-002475"]
+  tag "nist": ["SC-28", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -40,7 +41,7 @@ control 'V-81919' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Review the documentation and/or specification for the
+  desc "check": "Review the documentation and/or specification for the
   organization-defined information.
 
   If any data is PII, classified or is deemed by the organization to be encrypted
@@ -59,28 +60,28 @@ control 'V-81919' do
 
   Items in the <> above and starting with kmip* are specific to the KMIP
   appliance and need to be set according to the KMIP appliance configuration."
-  tag "fix": "Configure MongoDB to use the Encrypted Storage Engine and a KMIP
+  desc "fix": "Configure MongoDB to use the Encrypted Storage Engine and a KMIP
   appliance as documented here:
 
   https://docs.mongodb.com/v3.4/core/security-encryption-at-rest/
   https://docs.mongodb.com/v3.4/tutorial/configure-encryption/"
 
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{kmip serverName}) { should_not be_nil }
   end
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{kmip port}) { should_not be_nil }
   end
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{kmip port}) { should_not be_nil }
   end
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{kmip serverCAFile}) { should_not be_nil }
   end
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{kmip clientCertificateFile}) { should_not be_nil }
   end
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(['enableEncryption']) { should cmp 'true' }
   end
 end

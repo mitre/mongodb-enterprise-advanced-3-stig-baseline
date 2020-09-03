@@ -23,13 +23,14 @@ control 'V-81905' do
   ability to reuse the space formerly occupied by off-loaded records.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000357-DB-000316'
-  tag "gid": 'V-81905'
-  tag "rid": 'SV-96619r1_rule'
-  tag "stig_id": 'MD3X-00-000620'
-  tag "fix_id": 'F-88755r3_fix'
-  tag "cci": ['CCI-001849']
-  tag "nist": ['AU-4', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000357-DB-000316"
+  tag "gid": "V-81905"
+  tag "rid": "SV-96619r1_rule"
+  tag "stig_id": "MD3X-00-000620"
+  tag "fix_id": "F-88755r3_fix"
+  tag "cci": ["CCI-001849"]
+  tag "nist": ["AU-4", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -40,7 +41,7 @@ control 'V-81905' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Investigate whether there have been any incidents where MongoDB
+  desc "check": "Investigate whether there have been any incidents where MongoDB
   ran out of audit log space since the last time the space was allocated or other
   corrective measures were taken.
 
@@ -59,12 +60,12 @@ control 'V-81905' do
   identify how the \"auditlog.destination\" is configured.
 
   When the \"auditlog.destination\" is \"file\", this is a finding."
-  tag "fix": "View the mongodb configuration file (default location:
+  desc "fix": "View the mongodb configuration file (default location:
   /etc/mongod.conf) and view the \"auditlog.path\" to identify the storage volume.
 
   Allocate sufficient space to the storage volume hosting the file identified in
   the MongoDB configuration \"auditLog.path\" to support audit file peak demand."
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{auditLog destination}) { should_not cmp 'file' }
   end
 end

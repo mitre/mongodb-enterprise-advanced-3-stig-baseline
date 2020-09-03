@@ -27,15 +27,16 @@ control 'V-81849' do
   activity.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000118-DB-000059'
-  tag "satisfies": ['SRG-APP-000118-DB-000059', 'SRG-APP-000119-DB-000060',
-                    'SRG-APP-000120-DB-000061']
-  tag "gid": 'V-81849'
-  tag "rid": 'SV-96563r1_rule'
-  tag "stig_id": 'MD3X-00-000190'
-  tag "fix_id": 'F-88699r1_fix'
-  tag "cci": ['CCI-000162', 'CCI-000163', 'CCI-000164']
-  tag "nist": ['AU-9', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000118-DB-000059"
+  tag "satisfies": ["SRG-APP-000118-DB-000059", "SRG-APP-000119-DB-000060",
+                    "SRG-APP-000120-DB-000061"]
+  tag "gid": "V-81849"
+  tag "rid": "SV-96563r1_rule"
+  tag "stig_id": "MD3X-00-000190"
+  tag "fix_id": "F-88699r1_fix"
+  tag "cci": ["CCI-000162", "CCI-000163", "CCI-000164"]
+  tag "nist": ["AU-9", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -46,7 +47,7 @@ control 'V-81849' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Verify User ownership, Group ownership, and permissions on the
+  desc "check": "Verify User ownership, Group ownership, and permissions on the
   \"<MongoDB auditLog directory>\":
 
   > ls –ald <MongoDB auditLog data directory>
@@ -78,7 +79,7 @@ control 'V-81849' do
   the output will be the \"<MongoDB auditLog directory>\"
 
   /var/lib/mongo"
-  tag "fix": "Run these commands:
+  desc "fix": "Run these commands:
 
   \"chown mongod <MongoDB auditLog directory>\"
   \"chgrp mongod <MongoDB auditLog directory>\"

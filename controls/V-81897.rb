@@ -24,15 +24,16 @@ control 'V-81897' do
   product, a third-party product, or custom application code.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000311-DB-000308'
-  tag "satisfies": ['SRG-APP-000311-DB-000308', 'SRG-APP-000313-DB-000309',
-                    'SRG-APP-000313-DB-000310']
-  tag "gid": 'V-81897'
-  tag "rid": 'SV-96611r1_rule'
-  tag "stig_id": 'MD3X-00-000540'
-  tag "fix_id": 'F-88747r1_fix'
-  tag "cci": ['CCI-002262', 'CCI-002263', 'CCI-002264']
-  tag "nist": ['AC-16 a', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000311-DB-000308"
+  tag "satisfies": ["SRG-APP-000311-DB-000308", "SRG-APP-000313-DB-000309",
+                    "SRG-APP-000313-DB-000310"]
+  tag "gid": "V-81897"
+  tag "rid": "SV-96611r1_rule"
+  tag "stig_id": "MD3X-00-000540"
+  tag "fix_id": "F-88747r1_fix"
+  tag "cci": ["CCI-002262", "CCI-002263", "CCI-002264"]
+  tag "nist": ["AC-16 a", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -43,7 +44,7 @@ control 'V-81897' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "MongoDB supports role-based access control at the collection
+  desc "check": "MongoDB supports role-based access control at the collection
   level. If enabled, the database process should be started with
   \"security.authorization:enabled\" in the config file or with \"--auth\" in the
   command line.
@@ -64,7 +65,7 @@ control 'V-81897' do
 
   If desired and aggregation queries in the application code are not using the
   $redact stage with appropriate logic, this is a finding."
-  tag "fix": "Follow the documentation page to setup
+  desc "fix": "Follow the documentation page to setup
   RBAC:https://docs.mongodb.com/manual/core/authorization/.
 
   For the required collections, create specific read-only views that allow access

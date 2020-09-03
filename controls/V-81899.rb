@@ -31,15 +31,16 @@ control 'V-81899' do
   use of discretionary access control.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000328-DB-000301'
-  tag "satisfies": ['SRG-APP-000328-DB-000301', 'SRG-APP-000340-DB-000304']
-  tag "gid": 'V-81899'
-  tag "rid": 'SV-96613r1_rule'
-  tag "stig_id": 'MD3X-00-000570'
-  tag "fix_id": 'F-88749r1_fix'
-  tag "cci": ['CCI-002165', 'CCI-002235']
-  tag "nist": ['AC-3 (4)', 'Rev_4']
-  tag "nist": ['AC-6 (10)', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000328-DB-000301"
+  tag "satisfies": ["SRG-APP-000328-DB-000301", "SRG-APP-000340-DB-000304"]
+  tag "gid": "V-81899"
+  tag "rid": "SV-96613r1_rule"
+  tag "stig_id": "MD3X-00-000570"
+  tag "fix_id": "F-88749r1_fix"
+  tag "cci": ["CCI-002165", "CCI-002235"]
+  tag "nist": ["AC-3 (4)", "Rev_4"]
+  tag "nist": ["AC-6 (10)", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -50,13 +51,13 @@ control 'V-81899' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Review the system documentation to obtain the definition of the
+  desc "check": "Review the system documentation to obtain the definition of the
   database/DBMS functionality considered privileged in the context of the system
   in question.
 
   If any functionality considered privileged has access privileges granted to
   non-privileged users, this is a finding."
-  tag "fix": "Revoke any roles with unnecessary privileges to privileged
+  desc "fix": "Revoke any roles with unnecessary privileges to privileged
   functionality by executing the revoke command as documented here:
   https://docs.mongodb.com/v3.4/reference/method/db.revokeRolesFromUser/
 
@@ -69,8 +70,8 @@ control 'V-81899' do
   https://docs.mongodb.com/v3.4/reference/command/createRole/"
   a = []
   dbnames = []
-  mongo_user = attribute('user')
-  mongo_password = attribute('password')
+  mongo_user = input('user')
+  mongo_password = input('password')
 
   get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
 

@@ -16,13 +16,14 @@ control 'V-81901' do
   real time, within minutes, or within hours.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000353-DB-000324'
-  tag "gid": 'V-81901'
-  tag "rid": 'SV-96615r1_rule'
-  tag "stig_id": 'MD3X-00-000590'
-  tag "fix_id": 'F-88751r1_fix'
-  tag "cci": ['CCI-001914']
-  tag "nist": ['AU-12', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000353-DB-000324"
+  tag "gid": "V-81901"
+  tag "rid": "SV-96615r1_rule"
+  tag "stig_id": "MD3X-00-000590"
+  tag "fix_id": "F-88751r1_fix"
+  tag "cci": ["CCI-001914"]
+  tag "nist": ["AU-12", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -33,7 +34,7 @@ control 'V-81901' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "The MongoDB auditing facility allows authorized administrators
+  desc "check": "The MongoDB auditing facility allows authorized administrators
   and users track system activity. Once auditing is configured and enabled,
   changes to the audit events and filters require restarting the mongod (and
   mongos, if applicable) instances. This can be done with zero down time by
@@ -43,7 +44,7 @@ control 'V-81901' do
 
   If replica sets or the rolling maintenance approach is not used for the
   procedure by the application owner, this is a finding."
-  tag "fix": "Use the rolling maintenance procedure.
+  desc "fix": "Use the rolling maintenance procedure.
 
   For each member of a replica set, starting with a secondary member, perform the
   following sequence of events, ending with the primary:
@@ -51,10 +52,10 @@ control 'V-81901' do
   1. Restart the mongod instance as a standalone.
   2. Perform the configure auditing task on the standalone instance.
   3. Restart the mongod instance as a member of the replica set."
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{auditLog destination}) { should cmp 'syslog' }
   end
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{auditLog filter}) { should be_nil }
   end
 end

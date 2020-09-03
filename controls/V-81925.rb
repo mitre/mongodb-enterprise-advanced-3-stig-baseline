@@ -20,13 +20,14 @@ control 'V-81925' do
   addressed, and must document what has been discovered.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000447-DB-000393'
-  tag "gid": 'V-81925'
-  tag "rid": 'SV-96639r1_rule'
-  tag "stig_id": 'MD3X-00-000780'
-  tag "fix_id": 'F-88775r1_fix'
-  tag "cci": ['CCI-002754']
-  tag "nist": ['SI-10 (3)', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000447-DB-000393"
+  tag "gid": "V-81925"
+  tag "rid": "SV-96639r1_rule"
+  tag "stig_id": "MD3X-00-000780"
+  tag "fix_id": "F-88775r1_fix"
+  tag "cci": ["CCI-002754"]
+  tag "nist": ["SI-10 (3)", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -37,7 +38,7 @@ control 'V-81925' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "As a user with the \"dbAdminAnyDatabase\" role, execute the
+  desc "check": "As a user with the \"dbAdminAnyDatabase\" role, execute the
   following on the database of interest:
 
   use myDB
@@ -49,7 +50,7 @@ control 'V-81925' do
 
   If the \"options\" sub-document within each does not contain a \"validator\"
   sub-document, this is a finding."
-  tag "fix": "Document validation can be added at the time of creation of a
+  desc "fix": "Document validation can be added at the time of creation of a
   collection. Existing collections can also be modified with document validation
   rules. Use the \"validator\" option to create or update a collection with the
   desired validation rules."

@@ -16,13 +16,14 @@ control 'V-81857' do
   configuration can lead to unauthorized or compromised installations.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000133-DB-000362'
-  tag "gid": 'V-81857'
-  tag "rid": 'SV-96571r1_rule'
-  tag "stig_id": 'MD3X-00-000270'
-  tag "fix_id": 'F-88707r1_fix'
-  tag "cci": ['CCI-001499']
-  tag "nist": ['CM-5 (6)', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000133-DB-000362"
+  tag "gid": "V-81857"
+  tag "rid": "SV-96571r1_rule"
+  tag "stig_id": "MD3X-00-000270"
+  tag "fix_id": "F-88707r1_fix"
+  tag "cci": ["CCI-001499"]
+  tag "nist": ["CM-5 (6)", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -33,7 +34,7 @@ control 'V-81857' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Run the following command to get the roles from a MongoDB
+  desc "check": "Run the following command to get the roles from a MongoDB
   database.
 
   For each database in MongoDB:
@@ -54,7 +55,7 @@ control 'V-81857' do
 
   Analyze the output and if any roles or users have unauthorized access, this is
   a finding."
-  tag "fix": "Use the following commands to remove unauthorized access to a
+  desc "fix": "Use the following commands to remove unauthorized access to a
   MongoDB database.
 
   db.revokePrivilegesFromRole()
@@ -64,8 +65,8 @@ control 'V-81857' do
   https://docs.mongodb.com/v3.4/reference/method/js-role-management/"
   a = []
   dbnames = []
-  mongo_user = attribute('user')
-  mongo_password = attribute('password')
+  mongo_user = input('user')
+  mongo_password = input('password')
 
   get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
 

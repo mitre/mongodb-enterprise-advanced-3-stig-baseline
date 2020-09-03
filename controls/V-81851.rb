@@ -22,15 +22,16 @@ control 'V-81851' do
   could also manipulate logs to hide evidence of malicious activity.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000121-DB-000202'
-  tag "satisfies": ['SRG-APP-000121-DB-000202', 'SRG-APP-000122-DB-000203',
-                    'SRG-APP-000122-DB-000204']
-  tag "gid": 'V-81851'
-  tag "rid": 'SV-96565r1_rule'
-  tag "stig_id": 'MD3X-00-000220'
-  tag "fix_id": 'F-88701r1_fix'
-  tag "cci": ['CCI-001493', 'CCI-001494', 'CCI-001495']
-  tag "nist": ['AU-9', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000121-DB-000202"
+  tag "satisfies": ["SRG-APP-000121-DB-000202", "SRG-APP-000122-DB-000203",
+                    "SRG-APP-000122-DB-000204"]
+  tag "gid": "V-81851"
+  tag "rid": "SV-96565r1_rule"
+  tag "stig_id": "MD3X-00-000220"
+  tag "fix_id": "F-88701r1_fix"
+  tag "cci": ["CCI-001493", "CCI-001494", "CCI-001495"]
+  tag "nist": ["AU-9", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -41,7 +42,7 @@ control 'V-81851' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Verify User ownership, Group ownership, and permissions on the
+  desc "check": "Verify User ownership, Group ownership, and permissions on the
   “<MongoDB configuration file>\":
 
   (default name and location is '/etc/mongod.conf')
@@ -58,7 +59,7 @@ control 'V-81851' do
   If the Group owner is not \"mongod\", this is a finding.
 
   If the filename is more permissive than \"700\", this is a finding."
-  tag "fix": "Run these commands:
+  desc "fix": "Run these commands:
 
   \"chown mongod <MongoDB configuration file>\"
   \"chgrp mongod <MongoDB configuration file>\"
@@ -72,7 +73,7 @@ control 'V-81851' do
   > chown mongod /etc/mongod.conf
   > chgrp mongod /etc/mongod.conf
   > chmod 700 /etc/mongod.conf"
-  describe file(attribute('mongod_conf')) do
+  describe file(input('mongod_conf')) do
     it { should_not be_more_permissive_than('0700') } 
     its('owner') { should eq 'mongod' }
     its('group') { should eq 'mongod' }

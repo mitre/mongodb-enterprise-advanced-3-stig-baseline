@@ -16,13 +16,14 @@ control 'V-81865' do
   available configuration parameters or custom code.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000164-DB-000401'
-  tag "gid": 'V-81865'
-  tag "rid": 'SV-96579r1_rule'
-  tag "stig_id": 'MD3X-00-000320'
-  tag "fix_id": 'F-88715r1_fix'
-  tag "cci": ['CCI-000192']
-  tag "nist": ['IA-5', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000164-DB-000401"
+  tag "gid": "V-81865"
+  tag "rid": "SV-96579r1_rule"
+  tag "stig_id": "MD3X-00-000320"
+  tag "fix_id": "F-88715r1_fix"
+  tag "cci": ["CCI-000192"]
+  tag "nist": ["IA-5", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -33,7 +34,7 @@ control 'V-81865' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "If MongoDB is using Native LDAP authentication where the LDAP
+  desc "check": "If MongoDB is using Native LDAP authentication where the LDAP
   server is configured to enforce password complexity and lifetime, this is not a
   finding.
 
@@ -44,7 +45,7 @@ control 'V-81865' do
   this is a finding.
 
   See: https://docs.mongodb.com/v3.4/core/authentication/#authentication-methods"
-  tag "fix": "Either configure MongoDB for Native LDAP authentication where
+  desc "fix": "Either configure MongoDB for Native LDAP authentication where
   LDAP is configured to enforce password complexity and lifetime.
   OR
   Configure MongoDB Kerberos authentication where Kerberos is configured to
@@ -52,8 +53,8 @@ control 'V-81865' do
 
   a = []
   dbnames = []
-  mongo_user = attribute('user')
-  mongo_password = attribute('password')
+  mongo_user = input('user')
+  mongo_password = input('password')
 
   get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
 
@@ -96,7 +97,7 @@ control 'V-81865' do
       end
     end
   end
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{security ldap}) { should be nil }
   end
 

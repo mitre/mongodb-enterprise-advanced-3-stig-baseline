@@ -31,13 +31,14 @@ control 'V-81889' do
   addressed, and must document what has been discovered.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000251-DB-000160'
-  tag "gid": 'V-81889'
-  tag "rid": 'SV-96603r1_rule'
-  tag "stig_id": 'MD3X-00-000490'
-  tag "fix_id": 'F-88739r1_fix'
-  tag "cci": ['CCI-001310']
-  tag "nist": ['SI-10', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000251-DB-000160"
+  tag "gid": "V-81889"
+  tag "rid": "SV-96603r1_rule"
+  tag "stig_id": "MD3X-00-000490"
+  tag "fix_id": "F-88739r1_fix"
+  tag "cci": ["CCI-001310"]
+  tag "nist": ["SI-10", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -48,7 +49,7 @@ control 'V-81889' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "As a client program assembles a query in MongoDB, it builds a
+  desc "check": "As a client program assembles a query in MongoDB, it builds a
   BSON object, not a string. Thus traditional SQL injection attacks are not a
   problem. However, MongoDB operations permit arbitrary JavaScript expressions to
   be run directly on the server.
@@ -64,7 +65,7 @@ control 'V-81889' do
   If validation is desired, but no rules are set, the valdiationAction is not
   \"error\" or the \"bypassDocumentValidation\" option is used for write commands
   on the application side, this is a finding."
-  tag "fix": "Disable the javascriptEnabled option in the config file.
+  desc "fix": "Disable the javascriptEnabled option in the config file.
 
   security:
   javascriptEnabled: false
@@ -72,7 +73,7 @@ control 'V-81889' do
   If document validation is needed, it should be configured according to the
   documentation page at
   https://docs.mongodb.com/manual/core/document-validation/."
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{security javascriptEnabled}) { should cmp 'false' }
   end
 end

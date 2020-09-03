@@ -22,14 +22,15 @@ control 'V-81861' do
   user/role permissions.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000141-DB-000092'
-  tag "satisfies": ['SRG-APP-000141-DB-000092', 'SRG-APP-000142-DB-000094']
-  tag "gid": 'V-81861'
-  tag "rid": 'SV-96575r1_rule'
-  tag "stig_id": 'MD3X-00-000290'
-  tag "fix_id": 'F-88711r1_fix'
-  tag "cci": ['CCI-000381', 'CCI-000382']
-  tag "nist": ['CM-7 b', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000141-DB-000092"
+  tag "satisfies": ["SRG-APP-000141-DB-000092", "SRG-APP-000142-DB-000094"]
+  tag "gid": "V-81861"
+  tag "rid": "SV-96575r1_rule"
+  tag "stig_id": "MD3X-00-000290"
+  tag "fix_id": "F-88711r1_fix"
+  tag "cci": ["CCI-000381", "CCI-000382"]
+  tag "nist": ["CM-7 b", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -40,7 +41,7 @@ control 'V-81861' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "In the MongoDB database configuration file (default location:
+  desc "check": "In the MongoDB database configuration file (default location:
   /etc/mongod.conf), review the following parameters:
 
   net:
@@ -50,7 +51,7 @@ control 'V-81861' do
   RESTInterfaceEnabled: true
 
   If any of the <booleans> are \"True\" or \"Enabled\", this is a finding."
-  tag "fix": "In the MongoDB database configuration file (default location:
+  desc "fix": "In the MongoDB database configuration file (default location:
   /etc/mongod.conf), ensure the following parameters either:
 
   Does not exist in the file
@@ -62,7 +63,7 @@ control 'V-81861' do
   JSONPEnabled: false
   RESTInterfaceEnabled: false"
 
-  mongo_conf_file = attribute('mongod_conf')
+  mongo_conf_file = input('mongod_conf')
   describe.one do
     describe yaml(mongo_conf_file.to_s) do
       its(%w{net http enabled}) { should cmp 'false' }

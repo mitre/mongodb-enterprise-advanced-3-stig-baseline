@@ -32,13 +32,14 @@ control 'V-81893' do
   addressed, and must document what has been discovered.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000266-DB-000162'
-  tag "gid": 'V-81893'
-  tag "rid": 'SV-96607r1_rule'
-  tag "stig_id": 'MD3X-00-000520'
-  tag "fix_id": 'F-88743r1_fix'
-  tag "cci": ['CCI-001312']
-  tag "nist": ['SI-11 a', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000266-DB-000162"
+  tag "gid": "V-81893"
+  tag "rid": "SV-96607r1_rule"
+  tag "stig_id": "MD3X-00-000520"
+  tag "fix_id": "F-88743r1_fix"
+  tag "cci": ["CCI-001312"]
+  tag "nist": ["SI-11 a", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -49,7 +50,7 @@ control 'V-81893' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Check custom database code to verify that error messages do not
+  desc "check": "Check custom database code to verify that error messages do not
   contain information beyond what is needed for troubleshooting the issue.
 
   If custom database errors contain PII data, sensitive business data, or
@@ -62,7 +63,7 @@ control 'V-81893' do
   If a user is attempting to perform an operation for which they do not have
   privileges, the database will return an error message that the operation is not
   authorized."
-  tag "fix": "Configure custom database code and associated application code
+  desc "fix": "Configure custom database code and associated application code
   not to divulge sensitive information or information useful for system
   identification in error messages."
   describe 'A manual review is required to ensure MongoDB provides non-privileged users with error messages that

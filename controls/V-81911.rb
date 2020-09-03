@@ -15,13 +15,14 @@ control 'V-81911' do
   including upgrades and modifications.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000380-DB-000360'
-  tag "gid": 'V-81911'
-  tag "rid": 'SV-96625r1_rule'
-  tag "stig_id": 'MD3X-00-000670'
-  tag "fix_id": 'F-88761r1_fix'
-  tag "cci": ['CCI-001813']
-  tag "nist": ['CM-5 (1)', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000380-DB-000360"
+  tag "gid": "V-81911"
+  tag "rid": "SV-96625r1_rule"
+  tag "stig_id": "MD3X-00-000670"
+  tag "fix_id": "F-88761r1_fix"
+  tag "cci": ["CCI-001813"]
+  tag "nist": ["CM-5 (1)", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -32,7 +33,7 @@ control 'V-81911' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Review the security configuration of the MongoDB database(s).
+  desc "check": "Review the security configuration of the MongoDB database(s).
 
   If unauthorized users can start the mongod or mongos processes or edit the
   MongoDB configuration file (default location: /etc/mongod.conf), this is a
@@ -52,7 +53,7 @@ control 'V-81911' do
 
   MongoDB commands to view roles in a particular database:
   db.getRoles( { rolesInfo: 1, showPrivileges:true, showBuiltinRoles: true })"
-  tag "fix": "Prereq: To view a user's roles, must have the \"viewUser\"
+  desc "fix": "Prereq: To view a user's roles, must have the \"viewUser\"
   privilege.
   https://docs.mongodb.com/v3.4/reference/privilege-actions/
 
@@ -72,8 +73,8 @@ control 'V-81911' do
   https://docs.mongodb.com/v3.4/reference/method/db.grantRolesToUser/"
   a = []
   dbnames = []
-  mongo_user = attribute('user')
-  mongo_password = attribute('password')
+  mongo_user = input('user')
+  mongo_password = input('password')
 
   get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
 

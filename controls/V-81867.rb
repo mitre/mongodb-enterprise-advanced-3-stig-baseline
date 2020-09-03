@@ -10,13 +10,14 @@ control 'V-81867' do
   hashes when stored internally or externally to MongoDB.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000171-DB-000074'
-  tag "gid": 'V-81867'
-  tag "rid": 'SV-96581r1_rule'
-  tag "stig_id": 'MD3X-00-000330'
-  tag "fix_id": 'F-88717r1_fix'
-  tag "cci": ['CCI-000196']
-  tag "nist": ['IA-5', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000171-DB-000074"
+  tag "gid": "V-81867"
+  tag "rid": "SV-96581r1_rule"
+  tag "stig_id": "MD3X-00-000330"
+  tag "fix_id": "F-88717r1_fix"
+  tag "cci": ["CCI-000196"]
+  tag "nist": ["IA-5", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -27,7 +28,7 @@ control 'V-81867' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "MongoDB supports x.509 certificate authentication for use with
+  desc "check": "MongoDB supports x.509 certificate authentication for use with
   a secure TLS/SSL connection.
 
   The x.509 client authentication allows clients to authenticate to servers with
@@ -48,7 +49,7 @@ control 'V-81867' do
   client certificate for the user field.
 
   If the mechanism field is not set to \"MONGODB-X509\", this is a finding."
-  tag "fix": "Do the following:
+  desc "fix": "Do the following:
   - Create local CA and signing keys.
   - Generate and sign server certificates for member authentication.
   - Generate and sign client certificates for client authentication.
@@ -61,10 +62,10 @@ control 'V-81867' do
 
   Additionally, SSL/TLS must be on as documented here:
   https://docs.mongodb.com/v3.4/tutorial/configure-ssl/"
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{security authorization}) { should cmp 'enabled' }
   end
-  describe yaml(attribute('mongod_conf')) do
+  describe yaml(input('mongod_conf')) do
     its(%w{security clusterAuthMode}) { should cmp 'x509' }
   end
 end

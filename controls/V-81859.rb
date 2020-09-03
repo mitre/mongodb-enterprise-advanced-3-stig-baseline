@@ -13,13 +13,14 @@ control 'V-81859' do
   only essential capabilities.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000141-DB-000091'
-  tag "gid": 'V-81859'
-  tag "rid": 'SV-96573r1_rule'
-  tag "stig_id": 'MD3X-00-000280'
-  tag "fix_id": 'F-88709r1_fix'
-  tag "cci": ['CCI-000381']
-  tag "nist": ['CM-7 a', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000141-DB-000091"
+  tag "gid": "V-81859"
+  tag "rid": "SV-96573r1_rule"
+  tag "stig_id": "MD3X-00-000280"
+  tag "fix_id": "F-88709r1_fix"
+  tag "cci": ["CCI-000381"]
+  tag "nist": ["CM-7 a", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -30,7 +31,7 @@ control 'V-81859' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "Review the list of components and features installed with the
+  desc "check": "Review the list of components and features installed with the
   MongoDB database.
 
   If unused components are installed and are not documented and authorized, this
@@ -44,7 +45,7 @@ control 'V-81859' do
 
   If any packages displayed by this command are not being used, this is a
   finding."
-  tag "fix": "On data-bearing nodes and arbiter nodes, the
+  desc "fix": "On data-bearing nodes and arbiter nodes, the
   mongodb-enterprise-tools, mongodb-enterprise-shell and
   mongodb-enterprise-mongos can be removed (or not installed).
 
@@ -63,7 +64,7 @@ control 'V-81859' do
     mongodb_installed_packages.each do |package|
       describe "The installed mongodb package: #{package}" do
         subject { package }
-        it { should be_in attribute('mongodb_packages_used') }
+        it { should be_in input('mongodb_packages_used') }
       end
     end
   end

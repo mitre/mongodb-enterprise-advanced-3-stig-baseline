@@ -16,13 +16,14 @@ control 'V-81917' do
   rather than for the network packet.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000427-DB-000385'
-  tag "gid": 'V-81917'
-  tag "rid": 'SV-96631r1_rule'
-  tag "stig_id": 'MD3X-00-000730'
-  tag "fix_id": 'F-88767r1_fix'
-  tag "cci": ['CCI-002470']
-  tag "nist": ['SC-23', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000427-DB-000385"
+  tag "gid": "V-81917"
+  tag "rid": "SV-96631r1_rule"
+  tag "stig_id": "MD3X-00-000730"
+  tag "fix_id": "F-88767r1_fix"
+  tag "cci": ["CCI-002470"]
+  tag "nist": ["SC-23", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -33,7 +34,7 @@ control 'V-81917' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "To run MongoDB in SSL mode, you have to obtain a valid
+  desc "check": "To run MongoDB in SSL mode, you have to obtain a valid
   certificate singed by a single certificate authority.
 
   Before starting the MongoDB database in SSL mode, verify that certificate used
@@ -42,7 +43,7 @@ control 'V-81917' do
 
   If there is any issuer present in the certificate that is not a DoD approved
   certificate authority, this is a finding."
-  tag "fix": "Remove any certificate that was not issued by an approved DoD
+  desc "fix": "Remove any certificate that was not issued by an approved DoD
   certificate authority. Contact the organization's certificate issuer and
   request a new certificate that is issued by a valid DoD certificate
   authorities."

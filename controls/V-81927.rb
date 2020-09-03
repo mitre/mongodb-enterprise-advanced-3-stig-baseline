@@ -30,13 +30,14 @@ control 'V-81927' do
   addressed, and must document what has been discovered.
   "
   impact 0.7
-  tag "gtitle": 'SRG-APP-000178-DB-000083'
-  tag "gid": 'V-81927'
-  tag "rid": 'SV-96641r1_rule'
-  tag "stig_id": 'MD3X-00-000800'
-  tag "fix_id": 'F-88777r1_fix'
-  tag "cci": ['CCI-000206']
-  tag "nist": ['IA-6', 'Rev_4']
+  tag "severity": "high"
+  tag "gtitle": "SRG-APP-000178-DB-000083"
+  tag "gid": "V-81927"
+  tag "rid": "SV-96641r1_rule"
+  tag "stig_id": "MD3X-00-000800"
+  tag "fix_id": "F-88777r1_fix"
+  tag "cci": ["CCI-000206"]
+  tag "nist": ["IA-6", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -47,7 +48,7 @@ control 'V-81927' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "For the MongoDB command-line tools \"mongo shell\",
+  desc "check": "For the MongoDB command-line tools \"mongo shell\",
   \"mongodump\", \"mongorestore\", \"mongoimport\", \"mongoexport\", which cannot
   be configured not to accept a plain-text password, and any other essential tool
   with the same limitation, verify that the system documentation explains the
@@ -62,7 +63,7 @@ control 'V-81927' do
   this practice.
 
   If evidence of training does not exist, this is a finding."
-  tag "fix": "For the \"mongo shell\", \"mongodump\", \"mongorestore\",
+  desc "fix": "For the \"mongo shell\", \"mongodump\", \"mongorestore\",
   \"mongoimport\", \"mongoexport\", which can accept a plain-text password, and
   any other essential tool with the same limitation:
 

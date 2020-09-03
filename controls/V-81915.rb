@@ -4,13 +4,14 @@ control 'V-81915' do
   desc "If cached authentication information is out-of-date, the validity of
   the authentication information may be questionable."
   impact 0.5
-  tag "gtitle": 'SRG-APP-000400-DB-000367'
-  tag "gid": 'V-81915'
-  tag "rid": 'SV-96629r1_rule'
-  tag "stig_id": 'MD3X-00-000710'
-  tag "fix_id": 'F-88765r1_fix'
-  tag "cci": ['CCI-002007']
-  tag "nist": ['IA-5', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000400-DB-000367"
+  tag "gid": "V-81915"
+  tag "rid": "SV-96629r1_rule"
+  tag "stig_id": "MD3X-00-000710"
+  tag "fix_id": "F-88765r1_fix"
+  tag "cci": ["CCI-002007"]
+  tag "nist": ["IA-5", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -21,7 +22,7 @@ control 'V-81915' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "If MongoDB is configured to authenticate using SASL and
+  desc "check": "If MongoDB is configured to authenticate using SASL and
   LDAP/Active Directory check the saslauthd command line options in the system
   boot script that starts saslauthd (the location will be dependent on the
   specific Linux operating system and boot script layout and naming conventions).
@@ -34,7 +35,7 @@ control 'V-81915' do
   timeout.
 
   The default is \"30\" seconds and the minimum is \"1\" second."
-  tag "fix": "If MongoDB is configured to authenticate using SASL and
+  desc "fix": "If MongoDB is configured to authenticate using SASL and
   LDAP/Active Directory modify and restart the saslauthd command line options in
   the system boot script and set the \"-t\" option to the appropriate timeout in
   seconds.

@@ -29,13 +29,14 @@ control 'V-81913' do
   privilege escalation and role changes.
   "
   impact 0.5
-  tag "gtitle": 'SRG-APP-000389-DB-000372'
-  tag "gid": 'V-81913'
-  tag "rid": 'SV-96627r1_rule'
-  tag "stig_id": 'MD3X-00-000700'
-  tag "fix_id": 'F-88763r1_fix'
-  tag "cci": ['CCI-002038']
-  tag "nist": ['IA-11', 'Rev_4']
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000389-DB-000372"
+  tag "gid": "V-81913"
+  tag "rid": "SV-96627r1_rule"
+  tag "stig_id": "MD3X-00-000700"
+  tag "fix_id": "F-88763r1_fix"
+  tag "cci": ["CCI-002038"]
+  tag "nist": ["IA-11", "Rev_4"]
   tag "false_negatives": nil
   tag "false_positives": nil
   tag "documentable": false
@@ -46,10 +47,10 @@ control 'V-81913' do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  tag "check": "If organization-defined circumstances or situations require
+  desc "check": "If organization-defined circumstances or situations require
   reauthentication, and these situations are not configured to terminate existing
   logins to require reauthentication, this is a finding."
-  tag "fix": "Determine the organization-defined circumstances or situations
+  desc "fix": "Determine the organization-defined circumstances or situations
   that require reauthentication and ensure that the mongod and mongos processes
   are stopped/started (restart)."
   describe 'A manual review is required to ensure MongoDB requires users to reauthenticate when organization-defined
