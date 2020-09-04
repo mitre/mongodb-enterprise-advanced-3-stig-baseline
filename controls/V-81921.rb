@@ -1,4 +1,4 @@
-control 'V-81921' do
+control "V-81921" do
   title "MongoDB must maintain the confidentiality and integrity of information
   during preparation for transmission."
   desc "Information can be either unintentionally or maliciously disclosed or

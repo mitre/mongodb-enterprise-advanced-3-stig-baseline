@@ -1,4 +1,4 @@
-control 'V-81873' do
+control "V-81873" do
   title "MongoDB must map the PKI-authenticated identity to an associated user
   account."
   desc "The DoD standard for authentication is DoD-approved PKI certificates.

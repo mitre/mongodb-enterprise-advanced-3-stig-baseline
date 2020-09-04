@@ -1,4 +1,4 @@
-control 'V-81847' do
+control "V-81847" do
   title "MongoDB must provide audit record generation for DoD-defined auditable
   events within all DBMS/database components."
   desc "MongoDB must provide audit record generation capability for

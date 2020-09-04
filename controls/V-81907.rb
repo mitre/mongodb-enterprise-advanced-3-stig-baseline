@@ -1,4 +1,4 @@
-control 'V-81907' do
+control "V-81907" do
   title "MongoDB must provide a warning to appropriate support staff when
   allocated audit record storage volume reaches 75% of maximum audit record
   storage capacity."

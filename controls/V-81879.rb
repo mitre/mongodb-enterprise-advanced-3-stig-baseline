@@ -1,4 +1,4 @@
-control 'V-81879' do
+control "V-81879" do
   title "MongoDB must maintain the authenticity of communications sessions by
   guarding against man-in-the-middle attacks that guess at Session ID values."
   desc "One class of man-in-the-middle, or session hijacking, attack involves

@@ -1,4 +1,4 @@
-control 'V-81917' do
+control "V-81917" do
   title "MongoDB must only accept end entity certificates issued by DoD PKI or
   DoD-approved PKI Certification Authorities (CAs) for the establishment of all
   encrypted sessions."

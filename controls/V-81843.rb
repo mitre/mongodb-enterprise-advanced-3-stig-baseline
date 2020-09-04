@@ -1,4 +1,4 @@
-control 'V-81843' do
+control "V-81843" do
   title "MongoDB must integrate with an organization-level
   authentication/access mechanism providing account management and automation for
   all users, groups, roles, and any other principals."

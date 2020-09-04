@@ -1,4 +1,4 @@
-control 'V-81855' do
+control "V-81855" do
   title "Database software, including DBMS configuration files, must be stored
   in dedicated directories, or DASD pools, separate from the host OS and other
   applications."

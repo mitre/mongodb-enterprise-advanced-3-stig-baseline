@@ -1,4 +1,4 @@
-control 'V-81869' do
+control "V-81869" do
   title "If passwords are used for authentication, MongoDB must transmit only
   encrypted representations of passwords."
   desc "The DoD standard for authentication is DoD-approved PKI certificates.

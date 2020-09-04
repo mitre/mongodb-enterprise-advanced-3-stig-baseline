@@ -1,4 +1,4 @@
-control 'V-81887' do
+control "V-81887" do
   title "MongoDB must prevent unauthorized and unintended information transfer
   via shared system resources."
   desc "The purpose of this control is to prevent information, including

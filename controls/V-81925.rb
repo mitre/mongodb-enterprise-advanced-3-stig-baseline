@@ -1,4 +1,4 @@
-control 'V-81925' do
+control "V-81925" do
   title "When invalid inputs are received, MongoDB must behave in a predictable
   and documented manner that reflects organizational and system objectives."
   desc "A common vulnerability is unplanned behavior when invalid inputs are

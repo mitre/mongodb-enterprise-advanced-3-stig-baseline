@@ -1,4 +1,4 @@
-control 'V-81899' do
+control "V-81899" do
   title "MongoDB must enforce discretionary access control policies, as defined
   by the data owner, over defined subjects and objects."
   desc "Discretionary Access Control (DAC) is based on the notion that

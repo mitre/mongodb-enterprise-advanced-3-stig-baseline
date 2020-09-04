@@ -1,4 +1,4 @@
-control 'V-81881' do
+control "V-81881" do
   title "MongoDB must fail to a secure state if system initialization fails,
   shutdown fails, or aborts fail."
   desc "Failure to a known state can address safety or security in accordance

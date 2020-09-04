@@ -1,4 +1,4 @@
-control 'V-81871' do
+control "V-81871" do
   title "MongoDB must enforce authorized access to all PKI private keys
   stored/utilized by MongoDB."
   desc "The DoD standard for authentication is DoD-approved PKI certificates.

@@ -1,4 +1,4 @@
-control 'V-81897' do
+control "V-81897" do
   title "MongoDB must associate organization-defined types of security labels
   having organization-defined security label values with information in storage."
   desc  "Without the association of security labels to information, there is no

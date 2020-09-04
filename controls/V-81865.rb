@@ -1,4 +1,4 @@
-control 'V-81865' do
+control "V-81865" do
   title "If DBMS authentication, using passwords, is employed, MongoDB must
   enforce the DoD standards for password complexity and lifetime."
   desc "OS/enterprise authentication and identification must be used

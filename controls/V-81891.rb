@@ -1,4 +1,4 @@
-control 'V-81891' do
+control "V-81891" do
   title "MongoDB and associated applications must reserve the use of dynamic
   code execution for situations that require it."
   desc  "With respect to database management systems, one class of threat is

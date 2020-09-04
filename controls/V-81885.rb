@@ -1,4 +1,4 @@
-control 'V-81885' do
+control "V-81885" do
   title "Database contents must be protected from unauthorized and unintended
   information transfer by enforcement of a data-transfer policy."
   desc "Applications, including DBMSs, must prevent unauthorized and

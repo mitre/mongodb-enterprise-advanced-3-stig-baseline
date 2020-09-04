@@ -1,4 +1,4 @@
-control 'V-81845' do
+control "V-81845" do
   title "MongoDB must enforce approved authorizations for logical access to
   information and system resources in accordance with applicable access control
   policies."

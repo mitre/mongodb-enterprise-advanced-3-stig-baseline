@@ -1,4 +1,4 @@
-control 'V-81853' do
+control "V-81853" do
   title "MongoDB software installation account must be restricted to authorized
   users."
   desc  "When dealing with change control issues, it should be noted any

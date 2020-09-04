@@ -1,4 +1,4 @@
-control 'V-81883' do
+control "V-81883" do
   title "MongoDB must protect the confidentiality and integrity of all
   information at rest."
   desc "This control is intended to address the confidentiality and integrity

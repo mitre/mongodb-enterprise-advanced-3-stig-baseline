@@ -1,4 +1,4 @@
-control 'V-81893' do
+control "V-81893" do
   title "MongoDB must provide non-privileged users with error messages that
   provide information necessary for corrective actions without revealing
   information that could be exploited by adversaries."

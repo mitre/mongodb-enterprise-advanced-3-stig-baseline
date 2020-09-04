@@ -1,4 +1,4 @@
-control 'V-81905' do
+control "V-81905" do
   title "MongoDB must allocate audit record storage capacity in accordance with
   site audit record storage requirements."
   desc "In order to ensure sufficient storage capacity for the audit logs,
