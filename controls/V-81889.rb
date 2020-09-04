@@ -1,4 +1,4 @@
-control 'V-81889' do
+control "V-81889" do
   title "MongoDB must check the validity of all data inputs except those
   specifically identified by the organization."
   desc "Invalid user input occurs when a user inserts data or characters into

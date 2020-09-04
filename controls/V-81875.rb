@@ -1,4 +1,4 @@
-control 'V-81875' do
+control "V-81875" do
   title "MongoDB must use NIST FIPS 140-2-validated cryptographic modules for
   cryptographic operations."
   desc "Use of weak or not validated cryptographic algorithms undermines the

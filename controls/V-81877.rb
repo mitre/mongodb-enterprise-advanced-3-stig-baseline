@@ -1,4 +1,4 @@
-control 'V-81877' do
+control "V-81877" do
   title "MongoDB must uniquely identify and authenticate non-organizational
   users (or processes acting on behalf of non-organizational users)."
   desc  "Non-organizational users include all information system users other

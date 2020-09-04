@@ -1,4 +1,4 @@
-control 'V-81911' do
+control "V-81911" do
   title "MongoDB must enforce access restrictions associated with changes to
   the configuration of MongoDB or database(s)."
   desc "Failure to provide logical access restrictions associated with changes

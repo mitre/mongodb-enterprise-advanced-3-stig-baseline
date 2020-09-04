@@ -1,4 +1,4 @@
-control 'V-81861' do
+control "V-81861" do
   title "Unused database components that are integrated in MongoDB and cannot
   be uninstalled must be disabled."
   desc "Information systems are capable of providing a wide variety of

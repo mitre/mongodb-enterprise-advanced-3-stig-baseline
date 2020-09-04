@@ -1,4 +1,4 @@
-control 'V-81901' do
+control "V-81901" do
   title "MongoDB must provide the means for individuals in authorized roles to
   change the auditing to be performed on all application components, based on all
   selectable event criteria within organization-defined time thresholds."

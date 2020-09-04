@@ -1,4 +1,4 @@
-control 'V-81851' do
+control "V-81851" do
   title 'MongoDB must protect its audit features from unauthorized access.'
   desc  "Protecting audit data also includes identifying and protecting the
   tools used to view and manipulate log data.

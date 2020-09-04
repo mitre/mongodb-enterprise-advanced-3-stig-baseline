@@ -1,4 +1,4 @@
-control 'V-81859' do
+control "V-81859" do
   title "Unused database components, DBMS software, and database objects must
   be removed."
   desc "Information systems are capable of providing a wide variety of

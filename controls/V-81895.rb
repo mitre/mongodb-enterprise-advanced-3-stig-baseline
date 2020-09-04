@@ -1,4 +1,4 @@
-control 'V-81895' do
+control "V-81895" do
   title "MongoDB must reveal detailed error messages only to the ISSO, ISSM,
   SA, and DBA."
   desc "If MongoDB provides too much information in error logs and

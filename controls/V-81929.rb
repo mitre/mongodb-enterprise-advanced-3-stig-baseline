@@ -1,4 +1,4 @@
-control 'V-81929' do
+control "V-81929" do
   title "MongoDB must be configured in accordance with the security
   configuration settings based on DoD security configuration and implementation
   guidance, including STIGs, NSA configuration guides, CTOs, DTMs, and IAVMs."

@@ -1,4 +1,4 @@
-control 'V-81849' do
+control "V-81849" do
   title "The audit information produced by MongoDB must be protected from
   unauthorized read access."
   desc "If audit data were to become compromised, then competent forensic

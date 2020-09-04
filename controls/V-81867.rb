@@ -1,4 +1,4 @@
-control 'V-81867' do
+control "V-81867" do
   title "If passwords are used for authentication, MongoDB must store only
   hashed, salted representations of passwords."
   desc "The DoD standard for authentication is DoD-approved PKI certificates.

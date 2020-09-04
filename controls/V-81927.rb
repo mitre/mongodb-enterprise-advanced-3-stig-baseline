@@ -1,4 +1,4 @@
-control 'V-81927' do
+control "V-81927" do
   title "MongoDB must obscure feedback of authentication information during the
   authentication process to protect the information from possible
   exploitation/use by unauthorized individuals."

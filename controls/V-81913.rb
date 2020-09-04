@@ -1,4 +1,4 @@
-control 'V-81913' do
+control "V-81913" do
   title "MongoDB must require users to reauthenticate when organization-defined
   circumstances or situations require reauthentication."
   desc "The DoD standard for authentication of an interactive user is the

@@ -1,4 +1,4 @@
-control 'V-81919' do
+control "V-81919" do
   title "MongoDB must implement cryptographic mechanisms to prevent
   unauthorized modification of organization-defined information at rest (to
   include, at a minimum, PII and classified information) on organization-defined

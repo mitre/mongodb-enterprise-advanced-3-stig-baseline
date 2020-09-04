@@ -1,4 +1,4 @@
-control 'V-81915' do
+control "V-81915" do
   title "MongoDB must prohibit the use of cached authenticators after an
   organization-defined time period."
   desc "If cached authentication information is out-of-date, the validity of
