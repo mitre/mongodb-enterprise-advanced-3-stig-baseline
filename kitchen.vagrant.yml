@@ -1,0 +1,54 @@
+---
+  driver:
+    name: vagrant
+    driver_config:
+      ssl_verify_mode: ":verify_none"
+
+  transport:
+    max_ssh_sessions: 1
+
+  provisioner:
+    name: chef_solo
+  
+  verifier:
+    name: inspec
+    sudo: true
+    load_plugins: true
+    inspec_tests:
+      - path: ./
+    input_files:
+      - inputs.yml
+  
+  platforms:
+    - name: mongodb-enterprise-3.6
+      lifecycle:
+        post_create: 
+          - remote: sudo yum clean all
+          - remote: sudo touch /etc/yum.repos.d/mongodb-enterprise-3.6.repo
+          - remote: echo '[mongodb-enterprise-3.6]' | sudo tee -a /etc/yum.repos.d/mongodb-enterprise-3.6.repo
+          - remote: echo 'name=MongoDB Enterprise Repository' | sudo tee -a /etc/yum.repos.d/mongodb-enterprise-3.6.repo
+          - remote: echo 'baseurl=https://repo.mongodb.com/yum/redhat/$releasever/mongodb-enterprise/3.6/$basearch/' | sudo tee -a /etc/yum.repos.d/mongodb-enterprise-3.6.repo
+          - remote: echo 'gpgcheck=1' | sudo tee -a /etc/yum.repos.d/mongodb-enterprise-3.6.repo
+          - remote: echo 'enabled=1' | sudo tee -a /etc/yum.repos.d/mongodb-enterprise-3.6.repo
+          - remote: echo 'gpgkey=https://www.mongodb.org/static/pgp/server-3.6.asc' | sudo tee -a /etc/yum.repos.d/mongodb-enterprise-3.6.repo
+          - remote: sudo yum install -y mongodb-enterprise
+          # prevent upgrading mongodb version
+          - remote: echo 'exclude=mongodb-enterprise,mongodb-enterprise-server,mongodb-enterprise-shell,mongodb-enterprise-mongos,mongodb-enterprise-tools' | sudo tee -a /etc/yum.conf
+          - remote: sudo yum install checkpolicy
+          - remote: sudo systemctl start mongod
+          - remote: sleep 10
+      driver:
+        box: bento/centos-8
+
+  suites:
+    - name: hardened
+      verifier:
+        reporter:
+          - cli
+          - json:spec/results/%{platform}-hardened-test-result.json
+    - name: vanilla
+      verifier:
+        reporter:
+          - cli
+          - json:spec/results/%{platform}-vanilla-test-result.json
+          
