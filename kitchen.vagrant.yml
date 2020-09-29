@@ -8,7 +8,7 @@
     max_ssh_sessions: 1
 
   provisioner:
-    name: chef_solo
+    name: ansible_playbook
   
   verifier:
     name: inspec
@@ -40,12 +40,16 @@
         box: bento/centos-8
 
   suites:
-    - name: hardened
+    - name: harden
+      provisioner:
+        playbook: spec/ansible/mongodb-hardening/hardening-playbook.yml
       verifier:
         reporter:
           - cli
           - json:spec/results/%{platform}-hardened-test-result.json
     - name: vanilla
+      provisioner:
+        playbook: spec/ansible/mongodb-hardening/vanilla-playbook.yml
       verifier:
         reporter:
           - cli

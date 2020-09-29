@@ -1,0 +1,25 @@
+---
+cb_full_admin: 'admin'
+cb_full_admin_password: '@dminP@asswd2020'
+
+cb_cluster_host: 'localhost'
+cb_cluster_port: '8091'
+
+cb_config_dir: '/opt/mongodb/etc/mongodb'
+cb_static_conf: '/opt/mongodb/etc/mongodb/static_config'
+cb_log_dir: '/opt/mongodb/var/lib/mongodb/logs'
+cb_samples_dir: '/opt/mongodb/samples'
+
+cb_use_saslauthd: 'true'
+cb_use_ldap: 'false'
+cb_use_pki: 'true'
+cb_client_auth_config: '/opt/mongodb/client-auth-config.json'
+cb_auth_domain: 'local'
+
+approved_ssl_protocol: 'tlsv1.2'
+
+
+approved_ciphers: [
+  'TLS_RSA_WITH_AES_128_CBC_SHA',
+  'TLS_RSA_WITH_AES_256_CBC_SHA'
+]

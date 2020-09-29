@@ -8,7 +8,7 @@
     name: docker
   
   provisioner:
-    name: chef_solo
+    name: ansible_playbook
   
   verifier:
     name: inspec
@@ -40,12 +40,16 @@
 
   suites:
     - name: hardened
+      provisioner:
+        playbook: spec/ansible/mongodb-hardending/hardening-playbook.yml
       verifier:
         reporter:
           - cli
           - json:spec/results/%{platform}-hardened-test-result.json
   
     - name: vanilla
+      provisioner:
+        playbook: spec/ansible/mongodb-hardending/vanilla-playbook.yml
       verifier:
         reporter:
           - cli

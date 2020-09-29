@@ -1,0 +1,10 @@
+- hosts: localhost
+  tasks:
+    - name: Start service mongodb-server, if not started
+      service:
+        name: mongodb-server
+        state: started
+    - name: Shutdown Mongodb
+      shell: "mongod --shutdown"
+    - name: Start Mongodb
+      shell: "mongod"
