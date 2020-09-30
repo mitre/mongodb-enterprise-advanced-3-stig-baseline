@@ -9,6 +9,14 @@
   
   provisioner:
     name: ansible_playbook
+    hosts: all
+    require_ansible_repo: false
+    require_ansible_omnibus: true
+    require_chef_for_busser: false
+    require_ruby_for_busser: false
+    ansible_verbose: true
+    roles_path: spec/ansible/mongodb-hardening
+    galaxy_ignore_certs: true
   
   verifier:
     name: inspec
@@ -20,7 +28,7 @@
       - inputs.yml
   
   platforms:
-    - name: ubuntu_16.04.7_LTS-mongodb-enterprise-3.6
+    - name: mongodb-enterprise-3.6
       driver_config:
         image: mongo:3.6
         platform: ubuntu
@@ -41,7 +49,7 @@
   suites:
     - name: hardened
       provisioner:
-        playbook: spec/ansible/mongodb-hardending/hardening-playbook.yml
+        playbook: spec/ansible/mongodb-hardening/hardening-playbook.yml
       verifier:
         reporter:
           - cli
@@ -49,7 +57,7 @@
   
     - name: vanilla
       provisioner:
-        playbook: spec/ansible/mongodb-hardending/vanilla-playbook.yml
+        playbook: spec/ansible/mongodb-hardening/vanilla-playbook.yml
       verifier:
         reporter:
           - cli

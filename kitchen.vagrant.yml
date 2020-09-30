@@ -9,6 +9,14 @@
 
   provisioner:
     name: ansible_playbook
+    hosts: all
+    require_ansible_repo: false
+    require_ansible_omnibus: true
+    require_chef_for_busser: false
+    require_ruby_for_busser: false
+    ansible_verbose: true
+    roles_path: spec/ansible/mongodb-hardening
+    galaxy_ignore_certs: true
   
   verifier:
     name: inspec
@@ -40,7 +48,7 @@
         box: bento/centos-8
 
   suites:
-    - name: harden
+    - name: hardened
       provisioner:
         playbook: spec/ansible/mongodb-hardening/hardening-playbook.yml
       verifier:

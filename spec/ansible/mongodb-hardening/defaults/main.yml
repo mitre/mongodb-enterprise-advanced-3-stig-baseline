@@ -1,25 +1,31 @@
----
-cb_full_admin: 'admin'
-cb_full_admin_password: '@dminP@asswd2020'
+mongod_conf: '/etc/mongod.conf'
+mongodb_packages_used: [
+  'mongodb-org-tools-4.0.5-1.el7.x86_64',
+  'mongodb-org-server-4.0.5-1.el7.x86_64',
+  'mongodb-org-shell-4.0.5-1.el7.x86_64',
+  'mongodb-org-4.0.5-1.el7.x86_64',
+  'mongodb-org-mongos-4.0.5-1.el7.x86_64']
 
-cb_cluster_host: 'localhost'
-cb_cluster_port: '8091'
+user: 'mongoadmin'
+password: 'mongoadmin'
 
-cb_config_dir: '/opt/mongodb/etc/mongodb'
-cb_static_conf: '/opt/mongodb/etc/mongodb/static_config'
-cb_log_dir: '/opt/mongodb/var/lib/mongodb/logs'
-cb_samples_dir: '/opt/mongodb/samples'
+admin_db_users: ["mongodb_admin"]
+config_db_users: ["config_admin"]
+myUserAdmin_allowed_role: ['[ 
+  { "role" : "userAdminAnyDatabase", "db" : "admin" } 
+  ] }']
 
-cb_use_saslauthd: 'true'
-cb_use_ldap: 'false'
-cb_use_pki: 'true'
-cb_client_auth_config: '/opt/mongodb/client-auth-config.json'
-cb_auth_domain: 'local'
-
-approved_ssl_protocol: 'tlsv1.2'
-
-
-approved_ciphers: [
-  'TLS_RSA_WITH_AES_128_CBC_SHA',
-  'TLS_RSA_WITH_AES_256_CBC_SHA'
-]
+mongoadmin_allowed_role: ['[ { 
+  "role" : "userAdminAnyDatabase", 
+  "db" : "admin" 
+  } ] }']
+appAdmin_allowed_role: ['[
+   { "role" : "readWrite", "db" : "config" }, 
+   { "role" : "clusterAdmin", "db" : "admin" } 
+   ] }']
+accountAdmin01_allowed_role: ['[ 
+  { "role" : "clusterAdmin", "db" : "admin" }, 
+  { "role" : "readAnyDatabase", "db" : "admin" }, 
+  { "role" : "readWrite", "db" : "config" } 
+  ] }
+  ']
