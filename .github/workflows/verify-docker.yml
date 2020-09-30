@@ -52,9 +52,9 @@ jobs:
         mkdir results
         bundle exec kitchen test --destroy=always ${{ matrix.suite }}-mongodb-enterprise-3.6 || true
     - name: Display our ${{ matrix.suite }} results summary
-      run: bundle exec inspec_tools summary -j spec/results/mongodb-enterprise-3.6-${{ matrix.suite }}-test-result.json --json-counts | jq .
+      run: bundle exec inspec_tools summary -j spec/results/${{ matrix.suite }}-test-result.json --json-counts | jq .
     - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
-      run: bundle exec inspec_tools compliance -j spec/results/mongodb-enterprise-3.6-${{ matrix.suite }}-test-result.json -f threshold.${{ matrix.suite }}.yml
+      run: bundle exec inspec_tools compliance -j spec/results/${{ matrix.suite }}-test-result.json -f threshold.${{ matrix.suite }}.yml
     - name: Save Test Result JSON
       uses: actions/upload-artifact@v2
       with:
