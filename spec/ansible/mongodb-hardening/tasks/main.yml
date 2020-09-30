@@ -1,0 +1,5 @@
+---
+- name: Start service couchbase-server, if not started
+  service:
+    name: mongod
+    state: started

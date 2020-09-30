@@ -1,0 +1,64 @@
+---
+  driver:
+    name: docker
+    use_sudo: false
+    privileged: true
+  
+  transport:
+    name: docker
+  
+  provisioner:
+    name: ansible_playbook
+    hosts: all
+    require_ansible_repo: false
+    require_ansible_omnibus: true
+    require_chef_for_busser: false
+    require_ruby_for_busser: false
+    ansible_verbose: true
+    roles_path: spec/ansible/mongodb-hardening
+    galaxy_ignore_certs: true
+  
+  verifier:
+    name: inspec
+    sudo: true
+    load_plugins: true
+    inspec_tests:
+      - path: ./
+    input_files:
+      - inputs.yml
+  
+  platforms:
+    - name: mongodb-enterprise-3.6
+      driver_config:
+        image: mongo:3.6
+        platform: ubuntu
+        run_command: /sbin/init
+        provision_command: 
+          - sudo apt-get --yes --force-yes purge mongodb-org*
+          - sudo rm -r /var/log/mongodb
+          - wget -qO - https://www.mongodb.org/static/pgp/server-3.6.asc | sudo apt-key add -
+          - echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.com/apt/ubuntu xenial/mongodb-enterprise/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-enterprise.list
+          - sudo apt-get update
+          - sudo apt-get install -y mongodb-enterprise=3.6.20 mongodb-enterprise-server=3.6.20 mongodb-enterprise-shell=3.6.20 mongodb-enterprise-mongos=3.6.20 mongodb-enterprise-tools=3.6.20
+          - echo "mongodb-enterprise hold" | sudo dpkg --set-selections
+          - echo "mongodb-enterprise-server hold" | sudo dpkg --set-selections
+          - echo "mongodb-enterprise-shell hold" | sudo dpkg --set-selections
+          - echo "mongodb-enterprise-mongos hold" | sudo dpkg --set-selections
+          - echo "mongodb-enterprise-tools hold" | sudo dpkg --set-selections
+
+  suites:
+    - name: hardened
+      provisioner:
+        playbook: spec/ansible/mongodb-hardening/hardening-playbook.yml
+      verifier:
+        reporter:
+          - cli
+          - json:spec/results/hardened-test-result.json
+  
+    - name: vanilla
+      provisioner:
+        playbook: spec/ansible/mongodb-hardening/vanilla-playbook.yml
+      verifier:
+        reporter:
+          - cli
+          - json:spec/results/vanilla-test-result.json
