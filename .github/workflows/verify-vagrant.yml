@@ -2,9 +2,9 @@ name: Verify the Baseline using Vagrant
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, feature/** ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, feature/** ]
   release:
     types:
       - published
@@ -48,6 +48,7 @@ jobs:
           bundle exec inspec json . | jq . > profile.json
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
+
       - name: Run kitchen test
         run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-mongodb-enterprise-36 || true
       - name: Display our ${{ matrix.suite }} results summary
