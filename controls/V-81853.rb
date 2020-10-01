@@ -44,7 +44,7 @@ control "V-81853" do
   If access or use of this account is not restricted to the minimum number of
   personnel required or if unauthorized access to the account has been granted,
   this is a finding."
-  desc "fix": "Develop, document, and implement procedures to restrict and track
+  desc "fix", "Develop, document, and implement procedures to restrict and track
   use of the DBMS software installation account."
   describe 'A manual review is required to ensure there are procedures in place to restrict and track the use of the DBMS software installation account' do
     skip 'A manual review is required to ensure there are procedures in place to restrict and track the use of the DBMS software installation account'

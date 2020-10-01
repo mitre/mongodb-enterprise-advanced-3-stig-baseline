@@ -51,7 +51,7 @@ control "V-81861" do
   RESTInterfaceEnabled: true
 
   If any of the <booleans> are \"True\" or \"Enabled\", this is a finding."
-  desc "fix": "In the MongoDB database configuration file (default location:
+  desc "fix", "In the MongoDB database configuration file (default location:
   /etc/mongod.conf), ensure the following parameters either:
 
   Does not exist in the file

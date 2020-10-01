@@ -43,7 +43,7 @@ control "V-81917" do
 
   If there is any issuer present in the certificate that is not a DoD approved
   certificate authority, this is a finding."
-  desc "fix": "Remove any certificate that was not issued by an approved DoD
+  desc "fix", "Remove any certificate that was not issued by an approved DoD
   certificate authority. Contact the organization's certificate issuer and
   request a new certificate that is issued by a valid DoD certificate
   authorities."

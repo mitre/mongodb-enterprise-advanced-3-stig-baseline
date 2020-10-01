@@ -60,7 +60,7 @@ control "V-81919" do
 
   Items in the <> above and starting with kmip* are specific to the KMIP
   appliance and need to be set according to the KMIP appliance configuration."
-  desc "fix": "Configure MongoDB to use the Encrypted Storage Engine and a KMIP
+  desc "fix", "Configure MongoDB to use the Encrypted Storage Engine and a KMIP
   appliance as documented here:
 
   https://docs.mongodb.com/v3.4/core/security-encryption-at-rest/

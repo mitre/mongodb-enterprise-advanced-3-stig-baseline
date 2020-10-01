@@ -50,7 +50,7 @@ control "V-81925" do
 
   If the \"options\" sub-document within each does not contain a \"validator\"
   sub-document, this is a finding."
-  desc "fix": "Document validation can be added at the time of creation of a
+  desc "fix", "Document validation can be added at the time of creation of a
   collection. Existing collections can also be modified with document validation
   rules. Use the \"validator\" option to create or update a collection with the
   desired validation rules."

@@ -60,7 +60,7 @@ control "V-81905" do
   identify how the \"auditlog.destination\" is configured.
 
   When the \"auditlog.destination\" is \"file\", this is a finding."
-  desc "fix": "View the mongodb configuration file (default location:
+  desc "fix", "View the mongodb configuration file (default location:
   /etc/mongod.conf) and view the \"auditlog.path\" to identify the storage volume.
 
   Allocate sufficient space to the storage volume hosting the file identified in

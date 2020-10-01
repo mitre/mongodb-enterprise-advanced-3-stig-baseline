@@ -63,7 +63,7 @@ control "V-81881" do
 
   If the mongod process was started with the \"--nojournal\" option, this is a
   finding."
-  desc "fix": "Modify the mongod startup command-line options by removing the
+  desc "fix", "Modify the mongod startup command-line options by removing the
   \"--nojournal\" option.
 
   Edit the MongoDB database configuration file (default location:

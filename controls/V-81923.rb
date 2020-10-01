@@ -49,7 +49,7 @@ control "V-81923" do
   PEMKeyFile: /etc/ssl/mongodb.pem
 
   If net.ssl.mode is not set to \"requireSSL\", this is a finding."
-  desc "fix": "Obtain a certificate from a valid DoD certificate authority to be
+  desc "fix", "Obtain a certificate from a valid DoD certificate authority to be
   used for encrypted data transmission.
 
   Modify the MongoDB configuration file (default location: /etc/mongod.conf) with

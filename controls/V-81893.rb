@@ -63,7 +63,7 @@ control "V-81893" do
   If a user is attempting to perform an operation for which they do not have
   privileges, the database will return an error message that the operation is not
   authorized."
-  desc "fix": "Configure custom database code and associated application code
+  desc "fix", "Configure custom database code and associated application code
   not to divulge sensitive information or information useful for system
   identification in error messages."
   describe 'A manual review is required to ensure MongoDB provides non-privileged users with error messages that

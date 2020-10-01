@@ -44,7 +44,7 @@ control "V-81901" do
 
   If replica sets or the rolling maintenance approach is not used for the
   procedure by the application owner, this is a finding."
-  desc "fix": "Use the rolling maintenance procedure.
+  desc "fix", "Use the rolling maintenance procedure.
 
   For each member of a replica set, starting with a secondary member, perform the
   following sequence of events, ending with the primary:

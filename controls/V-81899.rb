@@ -57,7 +57,7 @@ control "V-81899" do
 
   If any functionality considered privileged has access privileges granted to
   non-privileged users, this is a finding."
-  desc "fix": "Revoke any roles with unnecessary privileges to privileged
+  desc "fix", "Revoke any roles with unnecessary privileges to privileged
   functionality by executing the revoke command as documented here:
   https://docs.mongodb.com/v3.4/reference/method/db.revokeRolesFromUser/
 

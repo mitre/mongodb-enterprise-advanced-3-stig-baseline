@@ -45,7 +45,7 @@ control "V-81865" do
   this is a finding.
 
   See: https://docs.mongodb.com/v3.4/core/authentication/#authentication-methods"
-  desc "fix": "Either configure MongoDB for Native LDAP authentication where
+  desc "fix", "Either configure MongoDB for Native LDAP authentication where
   LDAP is configured to enforce password complexity and lifetime.
   OR
   Configure MongoDB Kerberos authentication where Kerberos is configured to

@@ -50,7 +50,7 @@ control "V-81913" do
   desc "check", "If organization-defined circumstances or situations require
   reauthentication, and these situations are not configured to terminate existing
   logins to require reauthentication, this is a finding."
-  desc "fix": "Determine the organization-defined circumstances or situations
+  desc "fix", "Determine the organization-defined circumstances or situations
   that require reauthentication and ensure that the mongod and mongos processes
   are stopped/started (restart)."
   describe 'A manual review is required to ensure MongoDB requires users to reauthenticate when organization-defined

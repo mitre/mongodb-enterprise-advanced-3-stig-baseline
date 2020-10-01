@@ -45,7 +45,7 @@ control "V-81859" do
 
   If any packages displayed by this command are not being used, this is a
   finding."
-  desc "fix": "On data-bearing nodes and arbiter nodes, the
+  desc "fix", "On data-bearing nodes and arbiter nodes, the
   mongodb-enterprise-tools, mongodb-enterprise-shell and
   mongodb-enterprise-mongos can be removed (or not installed).
 

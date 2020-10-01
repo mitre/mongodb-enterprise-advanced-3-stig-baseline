@@ -65,7 +65,7 @@ control "V-81889" do
   If validation is desired, but no rules are set, the valdiationAction is not
   \"error\" or the \"bypassDocumentValidation\" option is used for write commands
   on the application side, this is a finding."
-  desc "fix": "Disable the javascriptEnabled option in the config file.
+  desc "fix", "Disable the javascriptEnabled option in the config file.
 
   security:
   javascriptEnabled: false

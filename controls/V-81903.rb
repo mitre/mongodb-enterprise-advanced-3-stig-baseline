@@ -43,7 +43,7 @@ control "V-81903" do
 
   If a centralized tool for log management is not installed and configured to
   collect audit logs or syslogs, this is a finding."
-  desc "fix": "Install a centralized syslog collecting tool and configured it as
+  desc "fix", "Install a centralized syslog collecting tool and configured it as
   instructed in its documentation.
 
   To enable auditing and print audit events to the syslog in JSON format, specify

@@ -83,7 +83,7 @@ control "V-81847" do
   auditLog:
   destination: syslog
   filter: '{ atype: { $in: [ \"createCollection\", \"dropCollection\" ] } }'"
-  desc "fix": "If the \"auditLog\" setting was not present in the MongoDB
+  desc "fix", "If the \"auditLog\" setting was not present in the MongoDB
   configuration file (default location: '/etc/mongod.conf)' edit this file and
   add a configured \"auditLog\" setting:
 

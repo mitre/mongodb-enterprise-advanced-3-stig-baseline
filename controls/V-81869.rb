@@ -48,7 +48,7 @@ If the \"allowInvalidCertificates\" parameter is found, this is a finding.
 net:
 ssl:
 allowInvalidCertificates: true"
-  desc "fix": "In the MongoDB database configuration file (default location:
+  desc "fix", "In the MongoDB database configuration file (default location:
   /etc/mongod.conf) ensure the following parameters following parameter are set
   and configured correctly:
 

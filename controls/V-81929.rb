@@ -38,7 +38,7 @@ control "V-81929" do
 
   If the MongoDB is not configured in accordance with security configuration
   settings, this is a finding."
-  desc "fix": "Configure MongoDB in accordance with security configuration
+  desc "fix", "Configure MongoDB in accordance with security configuration
   settings by reviewing the Operation System and MongoDB documentation and
   applying the necessary configuration parameters to meet the configurations
   required by the STIG, NSA configuration guidelines, CTOs, DTMs, and IAVMs."

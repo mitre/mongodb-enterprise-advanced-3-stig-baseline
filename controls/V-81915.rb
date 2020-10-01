@@ -35,7 +35,7 @@ control "V-81915" do
   timeout.
 
   The default is \"30\" seconds and the minimum is \"1\" second."
-  desc "fix": "If MongoDB is configured to authenticate using SASL and
+  desc "fix", "If MongoDB is configured to authenticate using SASL and
   LDAP/Active Directory modify and restart the saslauthd command line options in
   the system boot script and set the \"-t\" option to the appropriate timeout in
   seconds.

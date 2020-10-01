@@ -57,7 +57,7 @@ control "V-81863" do
   authorization: \"enabled\"
 
   If this parameter is not present, this is a finding."
-  desc "fix": "Prereq: To drop a user from a database, must have the
+  desc "fix", "Prereq: To drop a user from a database, must have the
   \"dropUser\" action on the database.
 
   For any user not a member of an appropriate organization and has access to a

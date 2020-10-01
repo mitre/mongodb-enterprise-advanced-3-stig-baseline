@@ -73,7 +73,7 @@ control "V-81871" do
   If the group owner is not \"mongod\", this is a finding.
 
   IF the file is more permissive than \"600\", this is a finding."
-  desc "fix": "Run these commands:
+  desc "fix", "Run these commands:
   \"chown mongod:mongod /etc/ssl/mongodb.pem\"
   \"chmod 600 /etc/ssl/mongodb.pem\"
   \"chown mongod:mongod /etc/ssl/mongodbca.pem\"

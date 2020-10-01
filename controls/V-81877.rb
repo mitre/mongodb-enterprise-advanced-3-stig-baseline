@@ -78,7 +78,7 @@ control "V-81877" do
   the role does not inherit from other roles, the two fields are the same.
 
   If a user has a role with inappropriate privileges, this is a finding."
-  desc "fix": "Prereq: To view a user's roles, must have the \"viewUser\"
+  desc "fix", "Prereq: To view a user's roles, must have the \"viewUser\"
   privilege.
 
   Connect to MongoDB.

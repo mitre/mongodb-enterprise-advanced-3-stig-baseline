@@ -38,7 +38,7 @@ control "V-81887" do
   If the owner and group are not both \"mongod\", this is a finding.
 
   If the file permissions are more permissive than \"755\", this is a finding."
-  desc "fix": "Correct the permission to the files and/or directories that are
+  desc "fix", "Correct the permission to the files and/or directories that are
   in violation.
 
   MongoDB Configuration file (default location):
