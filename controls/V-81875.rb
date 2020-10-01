@@ -66,7 +66,7 @@ control "V-81875" do
   cat /proc/sys/crypto/fips_enabled
 
   If the above command does not return \"1\", this is a finding."
-  desc "fix": "Enable FIPS 140-2 mode for MongoDB Enterprise.
+  desc "fix", "Enable FIPS 140-2 mode for MongoDB Enterprise.
 
   Edit the MongoDB database configuration file (default location:
   /etc/mongod.conf) to contain the following parameter setting:

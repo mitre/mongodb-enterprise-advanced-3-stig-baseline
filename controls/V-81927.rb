@@ -63,7 +63,7 @@ control "V-81927" do
   this practice.
 
   If evidence of training does not exist, this is a finding."
-  desc "fix": "For the \"mongo shell\", \"mongodump\", \"mongorestore\",
+  desc "fix", "For the \"mongo shell\", \"mongodump\", \"mongorestore\",
   \"mongoimport\", \"mongoexport\", which can accept a plain-text password, and
   any other essential tool with the same limitation:
 

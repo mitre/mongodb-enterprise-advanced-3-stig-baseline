@@ -41,7 +41,7 @@ control "V-81873" do
 
   If the output shows a Relative Distinguished Name (RDN) for users that are not
   authorized, this is a finding."
-  desc "fix": "Add x.509 Certificate subject as an authorized user.
+  desc "fix", "Add x.509 Certificate subject as an authorized user.
 
   To authenticate with a client certificate, you must first add the value of the
   subject from the client certificate as a MongoDB user.

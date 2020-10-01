@@ -39,7 +39,7 @@ control "V-81845" do
   showBuiltinRoles: true
   }
   )"
-  desc "fix": "Use createRole(), updateRole(), dropRole(), grantRole()
+  desc "fix", "Use createRole(), updateRole(), dropRole(), grantRole()
   statements to add and remove permissions on server-level securables, bringing
   them into line with the documented requirements.
 

@@ -48,7 +48,7 @@ control "V-81883" do
 
   If any mongod process is started with \"--enableEncryption false\", this is a
   finding."
-  desc "fix": "Ensure that the MongoDB Configuration file (default location:
+  desc "fix", "Ensure that the MongoDB Configuration file (default location:
   /etc/mongod.conf) has the following set:
 
   security:

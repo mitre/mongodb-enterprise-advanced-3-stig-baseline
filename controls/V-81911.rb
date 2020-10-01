@@ -53,7 +53,7 @@ control "V-81911" do
 
   MongoDB commands to view roles in a particular database:
   db.getRoles( { rolesInfo: 1, showPrivileges:true, showBuiltinRoles: true })"
-  desc "fix": "Prereq: To view a user's roles, must have the \"viewUser\"
+  desc "fix", "Prereq: To view a user's roles, must have the \"viewUser\"
   privilege.
   https://docs.mongodb.com/v3.4/reference/privilege-actions/
 

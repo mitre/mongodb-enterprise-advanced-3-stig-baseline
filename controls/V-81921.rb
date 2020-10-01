@@ -48,7 +48,7 @@ control "V-81921" do
   PEMKeyFile: /etc/ssl/mongodb.pem
 
   If net.ssl.mode is not set to \"requireSSL\", this is a finding."
-  desc "fix": "Stop the MongoDB instance if it is running. Obtain a certificate
+  desc "fix", "Stop the MongoDB instance if it is running. Obtain a certificate
   from a valid DoD certificate authority to be used for encrypted data
   transmission. Modify the MongoDB configuration file with ssl configuration
   options such as:

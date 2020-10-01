@@ -31,7 +31,7 @@ control "V-81843" do
   authorization: \"enabled\"
 
   If this parameter is not present, this is a finding."
-  desc "fix": "Edit the MongoDB configuration file (default location:
+  desc "fix", "Edit the MongoDB configuration file (default location:
   /etc/mongod.conf) to include the following:
 
   security:

@@ -43,7 +43,7 @@ control "V-81885" do
   If the code that exists for data movement does not comply with the
   organization-defined data transfer policy and/or fails to remove any copies of
   production data from unprotected locations, this is a finding."
-  desc "fix": "Modify any code used for moving data from production to
+  desc "fix", "Modify any code used for moving data from production to
   development/test systems to comply with the organization-defined data transfer
   policy, and to ensure copies of production data are not left in unsecured
   locations."

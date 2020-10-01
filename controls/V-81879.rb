@@ -43,7 +43,7 @@ control "V-81879" do
   mode: requireSSL
 
   If this is not found in the MongoDB configuration file, this is a finding."
-  desc "fix": "Follow the documentation guide at
+  desc "fix", "Follow the documentation guide at
   https://docs.mongodb.com/v3.4/tutorial/configure-ssl/.
 
   Stop/start (restart) and mongod or mongos using the MongoDB configuration file."

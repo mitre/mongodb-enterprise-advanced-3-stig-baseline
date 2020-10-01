@@ -58,7 +58,7 @@ control "V-81909" do
 
   If any such permissions exist and are not documented and approved, this is a
   finding."
-  desc "fix": "Revoke any roles with unnecessary privileges to privileged
+  desc "fix", "Revoke any roles with unnecessary privileges to privileged
   functionality by executing the revoke command.
 
   Revoke any unnecessary privileges from any roles by executing the revoke

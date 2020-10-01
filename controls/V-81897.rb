@@ -65,7 +65,7 @@ control "V-81897" do
 
   If desired and aggregation queries in the application code are not using the
   $redact stage with appropriate logic, this is a finding."
-  desc "fix": "Follow the documentation page to setup
+  desc "fix", "Follow the documentation page to setup
   RBAC:https://docs.mongodb.com/manual/core/authorization/.
 
   For the required collections, create specific read-only views that allow access

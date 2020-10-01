@@ -57,7 +57,7 @@ control "V-81891" do
 
   security:
   javascriptEnabled: \"false\""
-  desc "fix": "Disable the \"javascriptEnabled\" option.
+  desc "fix", "Disable the \"javascriptEnabled\" option.
 
   Edit the MongoDB configuration file (default location: /etc/mongod.conf\" to
   include the following:

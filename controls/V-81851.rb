@@ -59,7 +59,7 @@ control "V-81851" do
   If the Group owner is not \"mongod\", this is a finding.
 
   If the filename is more permissive than \"700\", this is a finding."
-  desc "fix": "Run these commands:
+  desc "fix", "Run these commands:
 
   \"chown mongod <MongoDB configuration file>\"
   \"chgrp mongod <MongoDB configuration file>\"

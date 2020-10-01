@@ -55,7 +55,7 @@ control "V-81857" do
 
   Analyze the output and if any roles or users have unauthorized access, this is
   a finding."
-  desc "fix": "Use the following commands to remove unauthorized access to a
+  desc "fix", "Use the following commands to remove unauthorized access to a
   MongoDB database.
 
   db.revokePrivilegesFromRole()

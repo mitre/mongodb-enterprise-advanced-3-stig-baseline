@@ -49,7 +49,7 @@ control "V-81867" do
   client certificate for the user field.
 
   If the mechanism field is not set to \"MONGODB-X509\", this is a finding."
-  desc "fix": "Do the following:
+  desc "fix", "Do the following:
   - Create local CA and signing keys.
   - Generate and sign server certificates for member authentication.
   - Generate and sign client certificates for client authentication.

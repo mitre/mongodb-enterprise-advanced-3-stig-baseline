@@ -79,7 +79,7 @@ control "V-81849" do
   the output will be the \"<MongoDB auditLog directory>\"
 
   /var/lib/mongo"
-  desc "fix": "Run these commands:
+  desc "fix", "Run these commands:
 
   \"chown mongod <MongoDB auditLog directory>\"
   \"chgrp mongod <MongoDB auditLog directory>\"

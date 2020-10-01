@@ -70,7 +70,7 @@ control "V-81895" do
   redactClientLogData: \"true\"
 
   If this parameter is not present, this is a finding."
-  desc "fix": "Edit the MongoDB configuration file (default location:
+  desc "fix", "Edit the MongoDB configuration file (default location:
   /etc/mongod.conf) and add the following parameter \"redactClientLogData\" in
   the security section of that file:
 

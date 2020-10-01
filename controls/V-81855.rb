@@ -52,7 +52,7 @@ control "V-81855" do
 
   If other applications are located in the same directory as the MongoDB database
   this is a finding."
-  desc "fix": "Install all applications on directories separate from the MongoDB
+  desc "fix", "Install all applications on directories separate from the MongoDB
   software library directory. Relocate any directories or reinstall other
   application software that currently shares the MongoDB software library
   directory."
