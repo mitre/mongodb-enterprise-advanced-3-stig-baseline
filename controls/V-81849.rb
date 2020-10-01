@@ -47,7 +47,7 @@ control "V-81849" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Verify User ownership, Group ownership, and permissions on the
+  desc "check", "Verify User ownership, Group ownership, and permissions on the
   \"<MongoDB auditLog directory>\":
 
   > ls –ald <MongoDB auditLog data directory>

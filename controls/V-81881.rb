@@ -49,7 +49,7 @@ control "V-81881" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Journaling is enabled by default in 64-bit systems.
+  desc "check", "Journaling is enabled by default in 64-bit systems.
 
   With journaling enabled, if mongod stops unexpectedly, the program can recover
   everything written to the journal.

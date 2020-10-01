@@ -31,7 +31,7 @@ control "V-81859" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Review the list of components and features installed with the
+  desc "check", "Review the list of components and features installed with the
   MongoDB database.
 
   If unused components are installed and are not documented and authorized, this

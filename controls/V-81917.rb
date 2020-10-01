@@ -34,7 +34,7 @@ control "V-81917" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "To run MongoDB in SSL mode, you have to obtain a valid
+  desc "check", "To run MongoDB in SSL mode, you have to obtain a valid
   certificate singed by a single certificate authority.
 
   Before starting the MongoDB database in SSL mode, verify that certificate used

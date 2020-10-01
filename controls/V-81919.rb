@@ -41,7 +41,7 @@ control "V-81919" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Review the documentation and/or specification for the
+  desc "check", "Review the documentation and/or specification for the
   organization-defined information.
 
   If any data is PII, classified or is deemed by the organization to be encrypted

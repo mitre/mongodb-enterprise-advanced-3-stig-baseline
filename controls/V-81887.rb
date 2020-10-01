@@ -29,7 +29,7 @@ control "V-81887" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Verify the permissions for the following database files or
+  desc "check", "Verify the permissions for the following database files or
   directories:
 
   MongoDB default configuration file: \"/etc/mongod.conf\"

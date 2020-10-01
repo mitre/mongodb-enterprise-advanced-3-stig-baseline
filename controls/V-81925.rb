@@ -38,7 +38,7 @@ control "V-81925" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "As a user with the \"dbAdminAnyDatabase\" role, execute the
+  desc "check", "As a user with the \"dbAdminAnyDatabase\" role, execute the
   following on the database of interest:
 
   use myDB

@@ -48,7 +48,7 @@ control "V-81927" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "For the MongoDB command-line tools \"mongo shell\",
+  desc "check", "For the MongoDB command-line tools \"mongo shell\",
   \"mongodump\", \"mongorestore\", \"mongoimport\", \"mongoexport\", which cannot
   be configured not to accept a plain-text password, and any other essential tool
   with the same limitation, verify that the system documentation explains the

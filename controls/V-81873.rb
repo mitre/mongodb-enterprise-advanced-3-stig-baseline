@@ -24,7 +24,7 @@ control "V-81873" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "To authenticate with a client certificate, you must first add
+  desc "check", "To authenticate with a client certificate, you must first add
   the value of the subject from the client certificate as a MongoDB user.
 
   Each unique x.509 client certificate corresponds to a single MongoDB user; i.e.

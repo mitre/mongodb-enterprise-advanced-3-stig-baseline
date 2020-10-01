@@ -38,7 +38,7 @@ control "V-81853" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Review procedures for controlling, granting access to, and
+  desc "check", "Review procedures for controlling, granting access to, and
   tracking use of the DBMS software installation account.
 
   If access or use of this account is not restricted to the minimum number of

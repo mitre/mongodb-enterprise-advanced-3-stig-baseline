@@ -42,7 +42,7 @@ control "V-81851" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Verify User ownership, Group ownership, and permissions on the
+  desc "check", "Verify User ownership, Group ownership, and permissions on the
   “<MongoDB configuration file>\":
 
   (default name and location is '/etc/mongod.conf')

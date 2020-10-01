@@ -34,7 +34,7 @@ control "V-81857" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Run the following command to get the roles from a MongoDB
+  desc "check", "Run the following command to get the roles from a MongoDB
   database.
 
   For each database in MongoDB:

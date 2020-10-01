@@ -43,7 +43,7 @@ control "V-81877" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "MongoDB grants access to data and commands through role-based
+  desc "check", "MongoDB grants access to data and commands through role-based
   authorization and provides built-in roles that provide the different levels of
   access commonly needed in a database system. You can additionally create
   user-defined roles.

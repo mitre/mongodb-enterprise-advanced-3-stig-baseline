@@ -43,7 +43,7 @@ control "V-81909" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "If MongoDB supports only software development, experimentation,
+  desc "check", "If MongoDB supports only software development, experimentation,
   and/or developer-level testing (that is, excluding production systems,
   integration testing, stress testing, and user acceptance testing), this is not
   a finding.

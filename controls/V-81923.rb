@@ -35,7 +35,7 @@ control "V-81923" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "If the data owner does not have a strict requirement for
+  desc "check", "If the data owner does not have a strict requirement for
   ensuring data integrity and confidentiality is maintained at every step of the
   data transfer and handling process, this is not a finding.
 

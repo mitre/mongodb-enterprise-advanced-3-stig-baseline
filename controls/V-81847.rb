@@ -60,7 +60,7 @@ control "V-81847" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Check the MongoDB configuration file (default location:
+  desc "check", "Check the MongoDB configuration file (default location:
   '/etc/mongod.conf)' for a key named 'auditLog:'.
 
   Example shown below:

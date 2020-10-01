@@ -33,7 +33,7 @@ control "V-81921" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Review the system information/specification for information
+  desc "check", "Review the system information/specification for information
   indicating a strict requirement for data integrity and confidentiality when
   data is being prepared to be transmitted.
 
