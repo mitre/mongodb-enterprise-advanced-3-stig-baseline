@@ -33,7 +33,7 @@ control "V-81879" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Check the MongoDB configuration file (default location:
+  desc "check", "Check the MongoDB configuration file (default location:
   /etc/mongod.conf).
 
   The following should be set:

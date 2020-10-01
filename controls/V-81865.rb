@@ -34,7 +34,7 @@ control "V-81865" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "If MongoDB is using Native LDAP authentication where the LDAP
+  desc "check", "If MongoDB is using Native LDAP authentication where the LDAP
   server is configured to enforce password complexity and lifetime, this is not a
   finding.
 

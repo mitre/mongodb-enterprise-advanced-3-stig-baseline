@@ -54,7 +54,7 @@ control "V-81895" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "A mongod or mongos running with
+  desc "check", "A mongod or mongos running with
   \"security.redactClientLogData\" redacts any message accompanying a given log
   event before logging.
 

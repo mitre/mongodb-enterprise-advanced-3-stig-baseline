@@ -31,7 +31,7 @@ control "V-81929" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Review the MongoDB documentation and configuration to determine
+  desc "check", "Review the MongoDB documentation and configuration to determine
   it is configured in accordance with DoD security configuration and
   implementation guidance, including STIGs, NSA configuration guides, CTOs, DTMs,
   and IAVMs.

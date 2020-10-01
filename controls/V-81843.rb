@@ -24,7 +24,7 @@ control "V-81843" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Verify that the MongoDB configuration file (default location:
+  desc "check", "Verify that the MongoDB configuration file (default location:
   /etc/mongod.conf) contains the following:
 
   security:

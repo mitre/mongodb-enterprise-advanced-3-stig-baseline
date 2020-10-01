@@ -50,7 +50,7 @@ control "V-81893" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Check custom database code to verify that error messages do not
+  desc "check", "Check custom database code to verify that error messages do not
   contain information beyond what is needed for troubleshooting the issue.
 
   If custom database errors contain PII data, sensitive business data, or

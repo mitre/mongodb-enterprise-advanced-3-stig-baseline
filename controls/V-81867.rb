@@ -28,7 +28,7 @@ control "V-81867" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "MongoDB supports x.509 certificate authentication for use with
+  desc "check", "MongoDB supports x.509 certificate authentication for use with
   a secure TLS/SSL connection.
 
   The x.509 client authentication allows clients to authenticate to servers with

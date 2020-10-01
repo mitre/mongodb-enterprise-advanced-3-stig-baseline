@@ -47,7 +47,7 @@ control "V-81913" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "If organization-defined circumstances or situations require
+  desc "check", "If organization-defined circumstances or situations require
   reauthentication, and these situations are not configured to terminate existing
   logins to require reauthentication, this is a finding."
   desc "fix": "Determine the organization-defined circumstances or situations

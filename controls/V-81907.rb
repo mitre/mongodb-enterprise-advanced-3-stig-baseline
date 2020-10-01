@@ -35,7 +35,7 @@ control "V-81907" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "A MongoDB audit log that is configured to be stored in a file
+  desc "check", "A MongoDB audit log that is configured to be stored in a file
   is identified in the MongoDB configuration file (default: /etc/mongod.conf)
   under the \"auditLog:\" key and subkey \"destination:\" where \"destination\"
   is \"file\".

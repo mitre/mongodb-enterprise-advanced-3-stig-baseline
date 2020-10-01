@@ -22,7 +22,7 @@ control "V-81915" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "If MongoDB is configured to authenticate using SASL and
+  desc "check", "If MongoDB is configured to authenticate using SASL and
   LDAP/Active Directory check the saslauthd command line options in the system
   boot script that starts saslauthd (the location will be dependent on the
   specific Linux operating system and boot script layout and naming conventions).

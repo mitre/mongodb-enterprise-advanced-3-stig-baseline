@@ -25,7 +25,7 @@ control "V-81845" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Review the system documentation to determine the required
+  desc "check", "Review the system documentation to determine the required
   levels of protection for DBMS server securables by type of login. Review the
   permissions actually in place on the server. If the actual permissions do not
   match the documented requirements, this is a finding.

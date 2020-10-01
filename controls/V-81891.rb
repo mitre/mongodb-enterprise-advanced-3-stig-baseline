@@ -48,7 +48,7 @@ control "V-81891" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "MongoDB operations permit arbitrary JavaScript expressions to
+  desc "check", "MongoDB operations permit arbitrary JavaScript expressions to
   be run directly on the server.
 
   If the following parameter is not present or not set as show below in the

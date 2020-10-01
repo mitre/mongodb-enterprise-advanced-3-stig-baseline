@@ -43,7 +43,7 @@ control "V-81875" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "If MongoDB is deployed in a classified environment:
+  desc "check", "If MongoDB is deployed in a classified environment:
 
   In the MongoDB database configuration file (default location:
   /etc/mongod.conf), search for and review the following parameters:

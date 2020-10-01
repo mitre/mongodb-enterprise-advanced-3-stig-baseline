@@ -51,7 +51,7 @@ control "V-81899" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Review the system documentation to obtain the definition of the
+  desc "check", "Review the system documentation to obtain the definition of the
   database/DBMS functionality considered privileged in the context of the system
   in question.
 

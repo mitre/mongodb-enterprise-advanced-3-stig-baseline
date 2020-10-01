@@ -41,7 +41,7 @@ control "V-81905" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Investigate whether there have been any incidents where MongoDB
+  desc "check", "Investigate whether there have been any incidents where MongoDB
   ran out of audit log space since the last time the space was allocated or other
   corrective measures were taken.
 

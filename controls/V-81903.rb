@@ -35,7 +35,7 @@ control "V-81903" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "MongoDB can be configured to write audit events to the syslog
+  desc "check", "MongoDB can be configured to write audit events to the syslog
   in Linux, but this is not available in Windows. Audit events can also be
   written to a file in either JSON on BSON format. Through the use of third-party
   tools or via syslog directly, audit records can be pushed to a centralized log

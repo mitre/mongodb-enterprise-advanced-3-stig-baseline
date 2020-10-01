@@ -32,7 +32,7 @@ control "V-81885" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Review the procedures for the refreshing of development/test
+  desc "check", "Review the procedures for the refreshing of development/test
   data from production.
 
   Review any scripts or code that exists for the movement of production data to

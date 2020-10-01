@@ -44,7 +44,7 @@ control "V-81897" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "MongoDB supports role-based access control at the collection
+  desc "check", "MongoDB supports role-based access control at the collection
   level. If enabled, the database process should be started with
   \"security.authorization:enabled\" in the config file or with \"--auth\" in the
   command line.

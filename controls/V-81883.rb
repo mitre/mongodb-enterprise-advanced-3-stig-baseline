@@ -34,7 +34,7 @@ control "V-81883" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "If the MongoDB Encrypted Storage Engines is being used, ensure
+  desc "check", "If the MongoDB Encrypted Storage Engines is being used, ensure
   that the \"security.enableEncryption\" option is set to \"true\" in the MongoDB
   configuration file (default location: /etc/mongod.conf) or that MongoDB was
   started with the \"--enableEncryption\" command line option.

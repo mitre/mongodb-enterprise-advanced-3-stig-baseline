@@ -33,7 +33,7 @@ control "V-81911" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Review the security configuration of the MongoDB database(s).
+  desc "check", "Review the security configuration of the MongoDB database(s).
 
   If unauthorized users can start the mongod or mongos processes or edit the
   MongoDB configuration file (default location: /etc/mongod.conf), this is a

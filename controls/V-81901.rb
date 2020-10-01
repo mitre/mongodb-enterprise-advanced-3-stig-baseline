@@ -34,7 +34,7 @@ control "V-81901" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "The MongoDB auditing facility allows authorized administrators
+  desc "check", "The MongoDB auditing facility allows authorized administrators
   and users track system activity. Once auditing is configured and enabled,
   changes to the audit events and filters require restarting the mongod (and
   mongos, if applicable) instances. This can be done with zero down time by

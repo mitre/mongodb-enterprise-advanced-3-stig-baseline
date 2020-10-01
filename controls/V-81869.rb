@@ -32,7 +32,7 @@ control "V-81869" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "In the MongoDB database configuration file (default location:
+  desc "check", "In the MongoDB database configuration file (default location:
 /etc/mongod.conf), review the following parameters:
 
 net:

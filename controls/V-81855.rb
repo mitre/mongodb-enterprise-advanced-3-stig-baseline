@@ -38,7 +38,7 @@ control "V-81855" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "Review the MongoDB software library directory and note other
+  desc "check", "Review the MongoDB software library directory and note other
   root directories located on the same disk directory or any subdirectories.
 
   If any non-MongoDB software directories exist on the disk directory, examine or

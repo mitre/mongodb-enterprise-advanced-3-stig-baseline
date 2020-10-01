@@ -37,7 +37,7 @@ control "V-81863" do
   tag "mitigation_controls": nil
   tag "responsibility": nil
   tag "ia_controls": nil
-  desc "check": "To view another user’s information, you must have the
+  desc "check", "To view another user’s information, you must have the
   \"viewUser\" action on the other user’s database.
 
   For each database in the system, run the following command:
