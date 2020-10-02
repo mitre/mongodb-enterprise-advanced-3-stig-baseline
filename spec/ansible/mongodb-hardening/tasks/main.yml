@@ -58,7 +58,7 @@
       - enterprise-tools
     state: absent
 
-# V-81861 # V-81875 # V-81869 # V-81879
+# V-81861 # V-81875 # V-81869 # V-81879 # V-81921 # V-81923 
 - name: Remove occurances of invalid certs
   lineinfile:
     path: '/etc/mongod.conf'
