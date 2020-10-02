@@ -187,9 +187,9 @@
         # Where and how to store data.
         storage:
           dbPath: data/db
-        auditLog:
-          destination: syslog
-          path: 
+          auditLog:
+            destination: syslog
+            path: 
 
 # V-81905
 
@@ -213,3 +213,7 @@
       --kmipPort <KMIP server port>
       --kmipServerCAFile ca.pem
       --kmipClientCertificateFile client.pem
+
+# restart mongodb
+- name: Restart mongodb
+  shell: "sudo service mongod restart"
