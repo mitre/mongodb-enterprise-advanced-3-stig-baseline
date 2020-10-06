@@ -20,7 +20,6 @@
           enableEncryption: true
           javascriptEnabled: false
           redactClientLogData: true
-
 # V-81847  # V-81901
 - name: Check if configuration file contains key auditlog
   lineinfile:
@@ -116,7 +115,6 @@
             mode: requireSSL
             PEMKeyFile: /etc/ssl/mongodb.pem
             CAFile: /etc/ssl/mongodbca.pem
-
 - name: Configure MongoDB for Native LDAP authentication
   blockinfile: 
     path: /etc/mongod.conf
@@ -124,7 +122,6 @@
     block: |4
           setParameter:
             authenticationMechanisms: 'PLAIN'       
-
 # V-81871
 - name: verify User ownership, Group ownership, and permssions
   file:
@@ -186,7 +183,6 @@
           dbPath: data/db
         auditLog:
           destination: syslog
-
 # V-81919 #####need more work?
 - name: Enable encryption 
   blockinfile:
@@ -200,13 +196,18 @@
       --kmipClientCertificateFile client.pem
 
 # V-81917 # if soso isnt there, delete the file
-- name: Check if DoD is in cert
-  ansible.builtin.shell: cat /etc/ssl/mongodb.pem 
-  register: cert
+#- name: Remove non DoD certificates
+#  lineinfile:
+#    path:  /etc/ssl/mongodb.pem
+#    line: "DoD"
+#  check_mode: yes
+#  register: presence
 
-- name: Remove file if DoD cert not available 
-  ansible.builtin.shell: sudo rm /etc/ssl/mongodb.pem
-  when: cert.stdout.find('DoD') != 1
+#- name: Remove file if DoD cert not available 
+#  file:
+#    state: absent
+#    path: /etc/ssl/mongodb.pem
+#  when: presence != ""
 
 # V-81865
 #- name: Configure MongoDB for Native LDAP authentication
@@ -218,6 +219,9 @@
     #          servers: " N/A "
      #         bind: sasl
 
+# restart mongodb
+#- name: Restart mongodb
+#  shell: "sudo service mongod restart"
 # restart mongodb
 #- name: Restart mongodb
 #  shell: "sudo service mongod restart"
