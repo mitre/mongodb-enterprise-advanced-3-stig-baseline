@@ -7,13 +7,13 @@
 # V-81843 # V-81883 # V-81889 # V-81891 # V-81895 # V-81863
 - name: Verify MongoDB config file -security
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^#security:$'
     line: ' '
 
 - name: Verify MongoDB config file -security
   blockinfile: 
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     block: |4
         security: 
           authorization: enabled
@@ -23,7 +23,7 @@
 # V-81847  # V-81901
 - name: Check if configuration file contains key auditlog
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^#auditLog:$'
     line: ' '
 
@@ -65,37 +65,37 @@
 # V-81861 # V-81875 # V-81869 # V-81879 # V-81921 # V-81923 
 - name: Remove occurances of invalid certs
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^# network interfaces$'
     line: ' '
 
 - name: Remove occurances of invalid certs
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^net:$'
     line: ' '
 
 - name: Remove occurances of invalid certs
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^  port: 27017$'
     line: ' '
 
 - name: Remove occurances of invalid certs
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^  bindIp: 127.0.0.1  # Listen to local interface only, comment to listen on all interfaces.$'
     line: ' '
 
 - name: Remove occurances of invalid certs
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^allowInvalidCertificates: true$'
     line: ' '
 
 - name: Remove occurances false fipsmode
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^FIPSMode: false$'
     line: ' '
 
@@ -138,38 +138,38 @@
 # V-81881
 - name: Remove occurances of nojournal
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^--nojournal$'
     line: ' '
 
 # V-81903 
 - name: Enable auditing
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^# Where and how to store data.$'
     line: ' '
 
 - name: Enable auditing
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^storage:$'
     line: ' '
 
 - name: Enable auditing
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^  dbPath: /var/lib/mongo$'
     line: ' '
 
 - name: Enable auditing
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^  journal:$'
     line: ' '
 
 - name: Enable auditing
   lineinfile:
-    path: '/etc/mongod.conf'
+    path: "{{ mongod_conf }}"
     regexp: '^    enabled: true$'
     line: ' '
 
@@ -186,7 +186,7 @@
 # V-81919 #####need more work?
 - name: Enable encryption 
   blockinfile:
-    path: /etc/mongod.conf
+    path: "{{ mongod_conf }}"
     marker: '  '
     block: |
       --enableEncryption
