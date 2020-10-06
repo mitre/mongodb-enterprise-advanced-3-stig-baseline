@@ -1,10 +1,10 @@
 ---
-- name: Start service couchbase-server, if not started
-  service:
-    name: mongod
-    state: started
+#- name: Start service mongodb, if not started
+#  service:
+#    name: mongod
+#    state: started
 
-# V-81843 # V-81883 # V-81889 # V-81891 # V-81895
+# V-81843 # V-81883 # V-81889 # V-81891 # V-81895 # V-81863
 - name: Verify MongoDB config file -security
   lineinfile:
     path: '/etc/mongod.conf'
@@ -14,7 +14,6 @@
 - name: Verify MongoDB config file -security
   blockinfile: 
     path: '/etc/mongod.conf'
-    insertafter: " "
     block: |4
         security: 
           authorization: enabled
@@ -22,9 +21,7 @@
           javascriptEnabled: false
           redactClientLogData: true
 
-# V-81845
-
-# V-81847  
+# V-81847  # V-81901
 - name: Check if configuration file contains key auditlog
   lineinfile:
     path: '/etc/mongod.conf'
@@ -35,11 +32,10 @@
   blockinfile:
     path: /etc/mongod.conf
     marker: ' '
-    insertafter: “ ”
     block: |4
         auditLog: 
           destination: syslog
-          filter: '{ atype: { $in: [ \"createCollection\", \"dropCollection\" ] } }'
+          filter: 
  
 # V-81849 V-81851 # V-81887
 - name: verify User ownership, Group ownership, and permssions
@@ -49,7 +45,16 @@
     group: mongod
     mode: '700'
 
-# V-81857
+- name: Verify User ownership, Group ownership, and permisions via shell
+  shell: "chown mongod /etc/mongod.conf"
+
+- name: Verify User ownership, Group ownership, and permisions via shell
+  shell: "chgrp mongod /etc/mongod.conf"
+
+- name: Verify User ownership, Group ownership, and permisions via shell
+  shell: "chmod 700 /etc/mongod.conf"
+
+# V-81859 
 - name: Uninstall unused packages
   yum:
     name: 
@@ -99,7 +104,6 @@
   blockinfile:
     path: /etc/mongod.conf
     marker: '  '
-    insertafter: “# network interfaces”
     block: |4
         # network interfaces
         net:
@@ -113,11 +117,13 @@
             PEMKeyFile: /etc/ssl/mongodb.pem
             CAFile: /etc/ssl/mongodbca.pem
 
-# V-81863
-
-# V-81865
-
-# V-81867
+- name: Configure MongoDB for Native LDAP authentication
+  blockinfile: 
+    path: /etc/mongod.conf
+    marker: '  '
+    block: |4
+          setParameter:
+            authenticationMechanisms: 'PLAIN'       
 
 # V-81871
 - name: verify User ownership, Group ownership, and permssions
@@ -132,10 +138,6 @@
     owner: mongod
     group: mongod
 
-# V-81873
-
-# V-81877
-
 # V-81881
 - name: Remove occurances of nojournal
   lineinfile:
@@ -143,11 +145,7 @@
     regexp: '^--nojournal$'
     line: ' '
 
-# V-81899
-
-# V-81901
-
-# V-81903
+# V-81903 
 - name: Enable auditing
   lineinfile:
     path: '/etc/mongod.conf'
@@ -182,31 +180,18 @@
   blockinfile:
     path: /etc/mongod.conf
     marker: '  '
-    insertafter: “^# Where and how to store data.”
     block: |4
         # Where and how to store data.
         storage:
           dbPath: data/db
-          auditLog:
-            destination: syslog
-            path: 
-
-# V-81905
-
-# V-81907
-
-# V-81909
-
-# V-81911
-
-# V-81917
+        auditLog:
+          destination: syslog
 
 # V-81919 #####need more work?
 - name: Enable encryption 
   blockinfile:
     path: /etc/mongod.conf
     marker: '  '
-    insertafter: “ ”
     block: |
       --enableEncryption
       --kmipServerName <KMIP Server HostName>
@@ -214,6 +199,25 @@
       --kmipServerCAFile ca.pem
       --kmipClientCertificateFile client.pem
 
+# V-81917 # if soso isnt there, delete the file
+- name: Check if DoD is in cert
+  ansible.builtin.shell: cat /etc/ssl/mongodb.pem 
+  register: cert
+
+- name: Remove file if DoD cert not available 
+  ansible.builtin.shell: sudo rm /etc/ssl/mongodb.pem
+  when: cert.stdout.find('DoD') != 1
+
+# V-81865
+#- name: Configure MongoDB for Native LDAP authentication
+ # blockinfile: 
+  #  path: /etc/mongod.conf
+   # marker: '  '
+  #  block: |4
+   #       ldap:
+    #          servers: " N/A "
+     #         bind: sasl
+
 # restart mongodb
-- name: Restart mongodb
-  shell: "sudo service mongod restart"
+#- name: Restart mongodb
+#  shell: "sudo service mongod restart"
