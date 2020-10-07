@@ -5,30 +5,85 @@
     state: started
 
 # V-81843
+- name: enable security
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: '^#security:$'
+    line: 'security:'
+- name: set authorization enabled
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)authorization:.*"
+    line: "  authorization: enabled"
+    insertafter: "^security:$"
+
 # V-81845
-# V-81847
-# V-81849
-# V-81851
+#TODO check user roles
+
+# V-81849 V-81851 V-81887
+- name: verify User ownership, Group ownership, and permssions
+  file:
+    path: /var/lib/mongo/
+    owner: mongod
+    group: mongod
+    mode: '700'
+
 # V-81853
+# manual review
+
 # V-81855
+# manual review
+
 # V-81857
+#TODO check user roles
+
 # V-81859
+- name: Uninstall unused packages
+  yum:
+    name: 
+      - enterprise-shell
+      - enterprise-mongos
+      - enterprise-tools
+    state: absent
+
 # V-81861
+- name: disable http access
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} http config"
+    insertafter: "^net:$"
+    block: |2
+        http:
+          enabled: false
+          JSONPEnabled: false
+          RESTInterfaceEnabled: false
+
 # V-81863
+#TODO check user roles
+
 # V-81865
+#TODO ldap auth check
+
 # V-81867
+- name: set certificate authenticaion mode
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)clusterAuthMode:.*"
+    line: "  clusterAuthMode: x509"
+    insertafter: "^security:$"
+
 # V-81869
 
 # V-81871
 - name: verify User ownership, Group ownership, and permssions
   file:
-    path: /etc/mongod.conf
+    path: "{{ mongod_conf }}"
     state: touch
     mode: u+rw,g-rwx,o-rwx
 
 - name: Change file ownership, group and permissions
   file:
-    path: /etc/mongod.conf
+    path: "{{ mongod_conf }}"
     owner: mongod
     group: mongod
 
@@ -71,11 +126,8 @@
 # V-81885
 # manual review
 
-# V-81887
-# manual review
-
 # V-81889
-#TODO check user privileges
+#TODO check user roles
 
 # V-81891
 - name: redact sensative data in log file
@@ -100,9 +152,9 @@
 # manual review
 
 # V-81899
-#TODO check user privileges
+#TODO check user roles
 
-# V-81901 V-81903 V-81905 V-81907 
+# # V-81847 V-81901 V-81903 V-81905 V-81907 
 - name: set audit log destination
   lineinfile:
     path: "{{ mongod_conf }}"
@@ -148,9 +200,3 @@
 
 # V-81929
 # manual review
-
-
-
-
-
-
