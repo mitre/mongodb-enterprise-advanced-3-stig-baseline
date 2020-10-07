@@ -17,9 +17,6 @@
     line: "  authorization: enabled"
     insertafter: "^security:$"
 
-# V-81845
-#TODO check user roles
-
 # V-81849 V-81887
 - name: verify User ownership, Group ownership, and permssions
   file:
@@ -60,15 +57,6 @@
       - /etc/ssl/mongodbca.pem
       - /etc/ssl/mongodb.pem
 
-# V-81853
-# manual review
-
-# V-81855
-# manual review
-
-# V-81857
-#TODO check user roles
-
 # V-81859
 - name: Uninstall unused packages
   yum:
@@ -90,12 +78,6 @@
           JSONPEnabled: false
           RESTInterfaceEnabled: false
 
-# V-81863
-#TODO check user roles
-
-# V-81865
-#TODO ldap auth check
-
 # V-81867
 - name: set certificate authenticaion mode
   lineinfile:
@@ -104,15 +86,7 @@
     line: "  clusterAuthMode: x509"
     insertafter: "^security:$"
 
-# V-81869
-
-# V-81873
-# manual review
-
-# V-81877
-#TODO check user roles
-
-# V-81879 V-81921 V-81923
+# V-81879 V-81921 V-81923 V-81869
 - name: set SSL as required with custom key file
   blockinfile:
     path: "{{ mongod_conf }}"
@@ -122,6 +96,8 @@
         ssl:
           mode: requireSSL
           certificateKeyFile: /etc/ssl/mongodb.pem
+          PEMKeyFile: /etc/ssl/mongodb.pem
+          CAFile: /etc/ssl/mongodbca.pem
 
 # V-81875
 - name: enable NIST FIPS 140-2-validated cryptographic modules
@@ -131,9 +107,6 @@
     line: "    FIPSMode: true"
     insertafter: "^ +ssl:$"
 
-# V-81881
-# default enabled
-
 # V-81883
 - name: enable MongoDB Encrypted Storage Engine
   lineinfile:
@@ -141,12 +114,6 @@
     regexp: "(|#)enableEncryption:.*"
     line: "  enableEncryption: true"
     insertafter: "^security:$"
-
-# V-81885
-# manual review
-
-# V-81889
-#TODO check user roles
 
 # V-81891
 - name: redact sensative data in log file
@@ -156,9 +123,6 @@
     line: "  javascriptEnabled: false"
     insertafter: "^security:$"
 
-# V-81893
-# manual review
-
 # V-81895
 - name: redact sensative data in log file
   lineinfile:
@@ -167,33 +131,26 @@
     line: "  redactClientLogData: true"
     insertafter: "^security:$"
 
-# V-81897
-# manual review
-
-# V-81899
-#TODO check user roles
-
-# # V-81847 V-81901 V-81903 V-81905 V-81907 
+# V-81847 V-81901 V-81905 V-81907 
 - name: set audit log destination
   lineinfile:
     path: "{{ mongod_conf }}"
     regexp: ".*auditLog:.*\n.*destination:.*"
     line: "auditLog:\n  destination: syslog"
 
-# V-81909 V-81911
-#TODO check user roles
-
-# V-81913
-# manual review
-
-# V-81915
-# manual review
+# V-81903
+- name: set path of database files
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: ".*dbPath:.*"
+    line: "  dbPath: data/db"
+    insertafter: "^storage:$"
 
 # V-81917
 - name: generate self-signed ssl certificate and key
   shell: |
-    openssl req -nodes -x509 -newkey rsa:2048 -keyout /tmp/ca.key -out /tmp/ca.crt -subj "/C=US/ST=DC/L=GOV/O=DOD/OU=root/CN=MONGODB/emailAddress=ansible@mongodb.config"
-    openssl req -nodes -newkey rsa:2048 -keyout /tmp/server.key -out /tmp/server.csr -subj "/C=US/ST=DC/L=GOV/O=DOD/OU=server/CN=MONGODB/emailAddress=ansible@mongodb.config"
+    openssl req -nodes -x509 -newkey rsa:2048 -keyout /tmp/ca.key -out /tmp/ca.crt -subj "/C=US/ST=DC/L=GOV/O=DoD/OU=root/CN=MONGODB/emailAddress=ansible@mongodb.config"
+    openssl req -nodes -newkey rsa:2048 -keyout /tmp/server.key -out /tmp/server.csr -subj "/C=US/ST=DC/L=GOV/O=DoD/OU=server/CN=MONGODB/emailAddress=ansible@mongodb.config"
     openssl x509 -req -in /tmp/server.csr -CA /tmp/ca.crt -CAkey /tmp/ca.key -CAcreateserial -out /tmp/server.crt
     cat /tmp/server.key /tmp/server.crt > /etc/ssl/mongodb.pem
   changed_when: 1
@@ -211,11 +168,26 @@
           clientCertificateFile: /etc/ssl/mongodb_kmip_client.pem
           serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
 
-# V-81925
-# manual review
+# V-81877
+#TODO check user roles
 
-# V-81927
-# manual review
+# V-81863
+#TODO check user roles
 
-# V-81929
-# manual review
+# V-81857
+#TODO check user roles
+
+# V-81909
+#TODO check user roles
+
+# V-81911
+#TODO check user roles
+
+# V-81899
+#TODO check user roles
+
+# V-81845
+#TODO check user roles
+
+# V-81865
+#TODO ldap auth check
