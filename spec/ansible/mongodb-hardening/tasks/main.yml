@@ -1,42 +1,24 @@
 ---
-#- name: Start service mongodb, if not started
-#  service:
-#    name: mongod
-#    state: started
+- name: Start service mongodb-server, if not started
+  service:
+    name: mongod
+    state: started
 
-# V-81843 # V-81883 # V-81889 # V-81891 # V-81895 # V-81863
-- name: Verify MongoDB config file -security
+# V-81843
+- name: enable security
   lineinfile:
     path: "{{ mongod_conf }}"
     regexp: '^#security:$'
-    line: ' '
-
-- name: Verify MongoDB config file -security
-  blockinfile: 
-    path: "{{ mongod_conf }}"
-    block: |4
-        security: 
-          authorization: enabled
-          enableEncryption: true
-          javascriptEnabled: false
-          redactClientLogData: true
-# V-81847  # V-81901
-- name: Check if configuration file contains key auditlog
+    line: 'security:'
+- name: set authorization enabled
   lineinfile:
     path: "{{ mongod_conf }}"
-    regexp: '^#auditLog:$'
-    line: ' '
+    regexp: "(|#)authorization:.*"
+    line: "  authorization: enabled"
+    insertafter: "^security:$"
+  notify: restart mongod
 
-- name: Check if configuration file contains key auditlog and filter
-  blockinfile:
-    path: /etc/mongod.conf
-    marker: ' '
-    block: |4
-        auditLog: 
-          destination: syslog
-          filter: 
- 
-# V-81849 V-81851 # V-81887
+# V-81849 V-81887
 - name: verify User ownership, Group ownership, and permssions
   file:
     path: /var/lib/mongo/
@@ -44,16 +26,155 @@
     group: mongod
     mode: '700'
 
-- name: Verify User ownership, Group ownership, and permisions via shell
-  shell: "chown mongod /etc/mongod.conf"
+# V-81851
+- name: verify User ownership, Group ownership, and permssions
+  file:
+    path: "{{ mongod_conf }}"
+    state: touch
+    mode: u+rw,g-rwx,o-rwx
 
-- name: Verify User ownership, Group ownership, and permisions via shell
-  shell: "chgrp mongod /etc/mongod.conf"
+- name: Change file ownership, group and permissions
+  file:
+    path: "{{ mongod_conf }}"
+    owner: mongod
+    group: mongod
 
-- name: Verify User ownership, Group ownership, and permisions via shell
-  shell: "chmod 700 /etc/mongod.conf"
+# V-81871
+- name: verify User ownership, Group ownership, and permssions
+  file:
+    path: "{{ item }}"
+    state: touch
+    mode: u+rw,g-rwx,o-rwx
+  with_items:
+      - /etc/ssl/mongodbca.pem
+      - /etc/ssl/mongodb.pem
 
-# V-81859 
+- name: Change file ownership, group and permissions
+  file:
+    path: "{{ item }}"
+    owner: mongod
+    group: mongod
+  with_items:
+      - /etc/ssl/mongodbca.pem
+      - /etc/ssl/mongodb.pem
+
+# V-81861
+- name: disable http access
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} http config"
+    insertafter: "^net:$"
+    block: |2
+        http:
+          enabled: false
+          JSONPEnabled: false
+          RESTInterfaceEnabled: false
+  notify: restart mongod
+
+# V-81867
+- name: set certificate authenticaion mode
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)clusterAuthMode:.*"
+    line: "  clusterAuthMode: x509"
+    insertafter: "^security:$"
+  notify: restart mongod
+
+# V-81879 V-81921 V-81923 V-81869
+- name: set SSL as required with custom key file
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} SSL config"
+    insertafter: "^net:$"
+    block: |2
+        ssl:
+          mode: requireSSL
+          certificateKeyFile: /etc/ssl/mongodb.pem
+          PEMKeyFile: /etc/ssl/mongodb.pem
+          CAFile: /etc/ssl/mongodbca.pem
+  notify: restart mongod
+
+# V-81875
+- name: enable NIST FIPS 140-2-validated cryptographic modules
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)FIPSMode:.*"
+    line: "    FIPSMode: true"
+    insertafter: "^ +ssl:$"
+  notify: restart mongod
+
+# V-81883
+- name: enable MongoDB Encrypted Storage Engine
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)enableEncryption:.*"
+    line: "  enableEncryption: true"
+    insertafter: "^security:$"
+  notify: restart mongod
+
+# V-81891 V-81889
+- name: redact sensative data in log file
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)javascriptEnabled:.*"
+    line: "  javascriptEnabled: false"
+    insertafter: "^security:$"
+  notify: restart mongod
+
+# V-81895
+- name: redact sensative data in log file
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)redactClientLogData:.*"
+    line: "  redactClientLogData: true"
+    insertafter: "^security:$"
+  notify: restart mongod
+
+# V-81847 V-81901 V-81905 V-81907 
+- name: set audit log destination
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: ".*auditLog:.*\n.*destination:.*"
+    line: "auditLog:\n  destination: syslog"
+  notify: restart mongod
+
+# V-81903
+- name: set path of database files
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: ".*dbPath:.*"
+    line: "  dbPath: data/db"
+    insertafter: "^storage:$"
+  notify: restart mongod
+
+# V-81917
+- name: generate self-signed ssl certificate and key
+  shell: |
+    openssl req -nodes -x509 -newkey rsa:2048 -keyout /tmp/ca.key -out /tmp/ca.crt -subj "/C=US/ST=DC/L=GOV/O=DoD/OU=root/CN=MONGODB/emailAddress=ansible@mongodb.config"
+    openssl req -nodes -newkey rsa:2048 -keyout /tmp/server.key -out /tmp/server.csr -subj "/C=US/ST=DC/L=GOV/O=DoD/OU=server/CN=MONGODB/emailAddress=ansible@mongodb.config"
+    openssl x509 -req -in /tmp/server.csr -CA /tmp/ca.crt -CAkey /tmp/ca.key -CAcreateserial -out /tmp/server.crt
+    cat /tmp/server.key /tmp/server.crt > /etc/ssl/mongodb.pem
+  changed_when: 1
+
+# V-81919 not working
+- name: set KMIP settings for data at rest encryption
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} KMIP config"
+    insertafter: "^security:$"
+    block: |2
+        kmip:
+          serverName: server.ip
+          port: 5696
+          clientCertificateFile: /etc/ssl/mongodb_kmip_client.pem
+          serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
+  notify: restart mongod
+
+# Automate
+
+# V-81855 - yes
+
+# V-81859
 - name: Uninstall unused packages
   yum:
     name: 
@@ -61,167 +182,16 @@
       - enterprise-mongos
       - enterprise-tools
     state: absent
+    autoremove: true
+  become: true 
 
-# V-81861 # V-81875 # V-81869 # V-81879 # V-81921 # V-81923 
-- name: Remove occurances of invalid certs
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^# network interfaces$'
-    line: ' '
+# V-81873 - yes
 
-- name: Remove occurances of invalid certs
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^net:$'
-    line: ' '
+# V-81893 - 
 
-- name: Remove occurances of invalid certs
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^  port: 27017$'
-    line: ' '
+# V-81915 -yes automation
 
-- name: Remove occurances of invalid certs
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^  bindIp: 127.0.0.1  # Listen to local interface only, comment to listen on all interfaces.$'
-    line: ' '
+# V-81925
 
-- name: Remove occurances of invalid certs
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^allowInvalidCertificates: true$'
-    line: ' '
+# V-81929
 
-- name: Remove occurances false fipsmode
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^FIPSMode: false$'
-    line: ' '
-
-- name: Verify MongoDB config file
-  blockinfile:
-    path: /etc/mongod.conf
-    marker: '  '
-    block: |4
-        # network interfaces
-        net:
-          http:
-            enabled: false
-            JSONPEnabled: false
-            RESTInterfaceEnabled: false
-          ssl:
-            FIPSMode: true
-            mode: requireSSL
-            PEMKeyFile: /etc/ssl/mongodb.pem
-            CAFile: /etc/ssl/mongodbca.pem
-- name: Configure MongoDB for Native LDAP authentication
-  blockinfile: 
-    path: /etc/mongod.conf
-    marker: '  '
-    block: |4
-          setParameter:
-            authenticationMechanisms: 'PLAIN'       
-# V-81871
-- name: verify User ownership, Group ownership, and permssions
-  file:
-    path: /etc/mongod.conf
-    state: touch
-    mode: u+rw,g-rwx,o-rwx
-
-- name: Change file ownership, group and permissions
-  file:
-    path: /etc/mongod.conf
-    owner: mongod
-    group: mongod
-
-# V-81881
-- name: Remove occurances of nojournal
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^--nojournal$'
-    line: ' '
-
-# V-81903 
-- name: Enable auditing
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^# Where and how to store data.$'
-    line: ' '
-
-- name: Enable auditing
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^storage:$'
-    line: ' '
-
-- name: Enable auditing
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^  dbPath: /var/lib/mongo$'
-    line: ' '
-
-- name: Enable auditing
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^  journal:$'
-    line: ' '
-
-- name: Enable auditing
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^    enabled: true$'
-    line: ' '
-
-- name: Enable auditing
-  blockinfile:
-    path: /etc/mongod.conf
-    marker: '  '
-    block: |4
-        # Where and how to store data.
-        storage:
-          dbPath: data/db
-        auditLog:
-          destination: syslog
-# V-81919 #####need more work?
-- name: Enable encryption 
-  blockinfile:
-    path: "{{ mongod_conf }}"
-    marker: '  '
-    block: |
-      --enableEncryption
-      --kmipServerName <KMIP Server HostName>
-      --kmipPort <KMIP server port>
-      --kmipServerCAFile ca.pem
-      --kmipClientCertificateFile client.pem
-
-# V-81917 # if soso isnt there, delete the file
-#- name: Remove non DoD certificates
-#  lineinfile:
-#    path:  /etc/ssl/mongodb.pem
-#    line: "DoD"
-#  check_mode: yes
-#  register: presence
-
-#- name: Remove file if DoD cert not available 
-#  file:
-#    state: absent
-#    path: /etc/ssl/mongodb.pem
-#  when: presence != ""
-
-# V-81865
-#- name: Configure MongoDB for Native LDAP authentication
- # blockinfile: 
-  #  path: /etc/mongod.conf
-   # marker: '  '
-  #  block: |4
-   #       ldap:
-    #          servers: " N/A "
-     #         bind: sasl
-
-# restart mongodb
-#- name: Restart mongodb
-#  shell: "sudo service mongod restart"
-# restart mongodb
-#- name: Restart mongodb
-#  shell: "sudo service mongod restart"
