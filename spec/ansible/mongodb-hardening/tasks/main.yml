@@ -16,6 +16,7 @@
     regexp: "(|#)authorization:.*"
     line: "  authorization: enabled"
     insertafter: "^security:$"
+  notify: restart mongod
 
 # V-81849 V-81887
 - name: verify User ownership, Group ownership, and permssions
@@ -57,13 +58,13 @@
       - /etc/ssl/mongodbca.pem
       - /etc/ssl/mongodb.pem
 
-# V-81859
+# V-81859 not working
 - name: Uninstall unused packages
   yum:
     name: 
-      - enterprise-shell
-      - enterprise-mongos
-      - enterprise-tools
+      - mongodb-enterprise-mongos
+      - mongodb-enterprise-shell
+      - mongodb-enterprise-tools
     state: absent
 
 # V-81861
@@ -155,7 +156,7 @@
     cat /tmp/server.key /tmp/server.crt > /etc/ssl/mongodb.pem
   changed_when: 1
 
-# V-81919
+# V-81919 not working
 - name: set KMIP settings for data at rest encryption
   blockinfile:
     path: "{{ mongod_conf }}"
