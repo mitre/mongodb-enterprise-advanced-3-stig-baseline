@@ -58,6 +58,15 @@
       - /etc/ssl/mongodbca.pem
       - /etc/ssl/mongodb.pem
 
+# V-81859 not working
+- name: Uninstall unused packages
+  yum:
+    name: 
+      - mongodb-enterprise-mongos
+      - mongodb-enterprise-shell
+      - mongodb-enterprise-tools
+    state: absent
+
 # V-81861
 - name: disable http access
   blockinfile:
@@ -69,8 +78,6 @@
           enabled: false
           JSONPEnabled: false
           RESTInterfaceEnabled: false
-  notify: restart mongod
-
 # V-81867
 - name: set certificate authenticaion mode
   lineinfile:
