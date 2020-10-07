@@ -178,9 +178,6 @@
   notify: restart mongod
 
 # Automate
-
-# V-81855 - yes
-
 # V-81859
 - name: Uninstall unused packages
   yum:
@@ -192,13 +189,22 @@
     autoremove: true
   become: true 
 
+# V-81855 - yes
+
 # V-81873 - yes
 
-# V-81893 - 
+# V-81893 - https://www.stigviewer.com/stig/postgresql_9.x/2020-03-23/finding/V-72851
+- name: Verify error messages 
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: '^security:$'
+    line: "  redactClientLogData: true"
+    insertafter: "^security:$"
+  notify: restart mongod
 
 # V-81915 -yes automation
 
 # V-81925
 
-# V-81929
+# V-81927
 
