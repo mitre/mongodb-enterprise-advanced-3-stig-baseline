@@ -189,9 +189,9 @@
     autoremove: true
   become: true 
 
-# V-81855 - yes
+# V-81855 
 
-# V-81873 - yes
+# V-81873 
 
 # V-81893 
 - name: Verify error messages 

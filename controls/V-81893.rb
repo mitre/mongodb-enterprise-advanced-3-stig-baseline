@@ -66,11 +66,17 @@ control "V-81893" do
   desc "fix", "Configure custom database code and associated application code
   not to divulge sensitive information or information useful for system
   identification in error messages."
-  describe 'A manual review is required to ensure MongoDB provides non-privileged users with error messages that
-  provide information necessary for corrective actions without revealing
-  information that could be exploited by adversaries.' do
-    skip 'A manual review is required to ensure MongoDB provides non-privileged users with error messages that
-  provide information necessary for corrective actions without revealing
-  information that could be exploited by adversaries.'
+  # describe 'A manual review is required to ensure MongoDB provides non-privileged users with error messages that
+  # provide information necessary for corrective actions without revealing
+  # information that could be exploited by adversaries.' do
+  #   skip 'A manual review is required to ensure MongoDB provides non-privileged users with error messages that
+  # provide information necessary for corrective actions without revealing
+  # information that could be exploited by adversaries.'
+
+  describe yaml(input('mongod_conf')) do
+    its(%w{security authorization}) { should cmp 'enabled' }
+  end
+  describe yaml(input('mongod_conf')) do
+    its(%{security redactClientLogData}) { should cmp 'true' }
   end
 end
