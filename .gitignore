@@ -146,4 +146,5 @@ tramp
 /.envrc
 results/
 contrib/*
-
+Dockerfile*
+Gemfile.lock

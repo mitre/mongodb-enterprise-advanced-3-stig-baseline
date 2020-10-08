@@ -1,4 +1,6 @@
+mongod_data_dir: '/var/lib/mongodb'
 mongod_conf: '/etc/mongod.conf'
+
 mongodb_packages_used: [
   'mongodb-org-tools-4.0.5-1.el7.x86_64',
   'mongodb-org-server-4.0.5-1.el7.x86_64',
