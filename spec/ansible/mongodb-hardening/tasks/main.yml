@@ -176,6 +176,16 @@
     line: "        enabled: true"
     insertafter: "^journal:$"
 
+
+- name: create test database
+  shell: "mongo use MONGO_TEST_DB"
+
+- name: insert data in database
+  shell: "db.movie.insert({"test":"Tester"})
+
+- name: create user 
+  shell: "db.createUser({user: 'jdoe', pwd: 'jdoePassword', roles: [ { role: 'readWrite', db: 'MONGO_TEST_DB' } ]})"
+
 # V-81877
 #TODO check user roles
 
