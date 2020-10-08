@@ -2,3 +2,8 @@
   service:
     name: "mongod"
     state: restarted
+
+- name: restart saslauthd
+  service: 
+    name: "saslauthd"
+    state: restarted

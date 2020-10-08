@@ -193,18 +193,41 @@
 
 # V-81873 - yes
 
-# V-81893 - https://www.stigviewer.com/stig/postgresql_9.x/2020-03-23/finding/V-72851
+# V-81893 
 - name: Verify error messages 
   lineinfile:
     path: "{{ mongod_conf }}"
-    regexp: '^security:$'
     line: "  redactClientLogData: true"
     insertafter: "^security:$"
   notify: restart mongod
 
-# V-81915 -yes automation
+# V-81915
+- name: configure saslauthd
+  replace: 
+    path: "{{ saslauthd }}"
+    regexp: '^MECH=pam$'
+    replace: 'MECH=ldap'
+  notify: restart saslauthd
+
+- name: edit timout cache
+  lineinfile:
+    path: "{{ saslauthd }}"
+    line: -t 900
+    insertafter: "^FLAGS=$"
+  become: true
+  notify: restart saslauthd
+
+- name: Edit LDAP timeout
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} LDAP config"
+    insertafter: "^security:$"
+    block: |2
+        ldap:
+          timeoutMS = 10000
+  notify: restart mongod
 
 # V-81925
 
-# V-81927
+# V-81927 
 
