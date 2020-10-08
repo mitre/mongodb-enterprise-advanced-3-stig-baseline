@@ -41,7 +41,9 @@
           - remote: echo 'gpgkey=https://www.mongodb.org/static/pgp/server-3.6.asc' | sudo tee -a /etc/yum.repos.d/mongodb-enterprise-3.6.repo
           - remote: sudo yum install -y mongodb-enterprise python3-pymongo python3-pip
           - remote: echo 'exclude=mongodb-enterprise,mongodb-enterprise-server,mongodb-enterprise-shell,mongodb-enterprise-mongos,mongodb-enterprise-tools' | sudo tee -a /etc/yum.conf
-          - remote: sudo yum install checkpolicy
+          - remote: sudo yum install checkpolicy python python-pip
+          - remote: python -m pip install --upgrade pip 
+          - remote: python -m pip install pymongo 
           - remote: sudo systemctl start mongod
           - remote: sleep 10
       driver:
