@@ -57,14 +57,14 @@
       - /etc/ssl/mongodbca.pem
       - /etc/ssl/mongodb.pem
 
-# # V-81859
-# - name: Uninstall unused packages
-#   yum:
-#     name: 
-#       - enterprise-shell
-#       - enterprise-mongos
-#       - enterprise-tools
-#     state: absent
+# V-81859
+- name: Uninstall unused packages
+  yum:
+    name: 
+      - enterprise-shell
+      - enterprise-mongos
+      - enterprise-tools
+    state: absent
 
 # V-81861
 - name: disable http access

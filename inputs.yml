@@ -9,7 +9,7 @@ mongodb_packages_used: [
 user: 'mongoadmin'
 password: 'mongoadmin'
 
-admin_db_users: ["mongodb_admin"]
+admin_db_users: ["mongodb_admin", mongoadmin]
 config_db_users: ["config_admin"]
 myUserAdmin_allowed_role: ['[ 
   { "role" : "userAdminAnyDatabase", "db" : "admin" } 

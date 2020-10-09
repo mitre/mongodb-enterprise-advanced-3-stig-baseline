@@ -75,7 +75,7 @@ control "V-81851" do
   > chmod 700 /etc/mongod.conf"
   describe file(input('mongod_conf')) do
     it { should_not be_more_permissive_than('0700') } 
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should eq 'mongodb' }
+    its('group') { should eq 'mongodb' }
   end
 end

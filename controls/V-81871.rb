@@ -80,13 +80,13 @@ control "V-81871" do
   \"chmod 600 /etc/ssl/mongodbca.pem\""
   describe file('/etc/ssl/mongodb.pem') do
     its('mode') { should cmp <= 0600 }
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should eq 'mongodb' }
+    its('group') { should eq 'mongodb' }
   end
 
   describe file('/etc/ssl/mongodbca.pem') do
     its('mode') { should cmp <= 0600 }
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should eq 'mongodb' }
+    its('group') { should eq 'mongodb' }
   end
 end
