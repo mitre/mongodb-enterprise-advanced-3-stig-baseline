@@ -168,7 +168,7 @@
           clientCertificateFile: /etc/ssl/mongodb_kmip_client.pem
           serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
 
-# V-81909
+# V-81909 & V-81911 & V-81865 & V-81899 & V-81845
 - name: Create MongoDB Admin user 
   mongodb_user:
     database: "admin"
@@ -181,16 +181,4 @@
     database: "admin"
     name: "mongoadmin"
     password: "mongoadmin"
-    roles: "readWrite"
-
-# V-81911
-#TODO check user roles
-
-# V-81899
-#TODO check user roles
-
-# V-81845
-#TODO check user roles
-
-# V-81865
-#TODO ldap auth check
+    roles: "userAdminAnyDatabase"
