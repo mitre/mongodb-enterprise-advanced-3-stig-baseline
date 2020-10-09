@@ -39,9 +39,10 @@
           - remote: echo 'gpgcheck=1' | sudo tee -a /etc/yum.repos.d/mongodb-enterprise-3.6.repo
           - remote: echo 'enabled=1' | sudo tee -a /etc/yum.repos.d/mongodb-enterprise-3.6.repo
           - remote: echo 'gpgkey=https://www.mongodb.org/static/pgp/server-3.6.asc' | sudo tee -a /etc/yum.repos.d/mongodb-enterprise-3.6.repo
-          - remote: sudo yum install -y mongodb-enterprise python3 python3-pip
+          - remote: sudo yum install -y mongodb-enterprise python3-pip
           - remote: echo 'exclude=mongodb-enterprise,mongodb-enterprise-server,mongodb-enterprise-shell,mongodb-enterprise-mongos,mongodb-enterprise-tools' | sudo tee -a /etc/yum.conf
           - remote: sudo yum install checkpolicy
+          - remote: sudo python3 -m pip install --upgrade setuptools
           - remote: sudo python3 -m pip install --upgrade pip 
           - remote: sudo python3 -m pip install pymongo 
           - remote: sudo systemctl start mongod
