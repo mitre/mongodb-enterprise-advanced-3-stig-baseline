@@ -1,10 +1,11 @@
 mongod_conf: '/etc/mongod.conf'
 mongodb_packages_used: [
-  'mongodb-org-tools-4.0.5-1.el7.x86_64',
-  'mongodb-org-server-4.0.5-1.el7.x86_64',
-  'mongodb-org-shell-4.0.5-1.el7.x86_64',
-  'mongodb-org-4.0.5-1.el7.x86_64',
-  'mongodb-org-mongos-4.0.5-1.el7.x86_64']
+      'mongodb-enterprise-3.6.20-1.el7.x86_64',
+      'mongodb-enterprise-mongos-3.6.20-1.el7.x86_64',
+      'mongodb-enterprise-server-3.6.20-1.el7.x86_64',
+      'mongodb-enterprise-shell-3.6.20-1.el7.x86_64',
+      'mongodb-enterprise-tools-3.6.20-1.el7.x86_64'
+    ]
 
 user: 'mongoadmin'
 password: 'mongoadmin'
