@@ -27,7 +27,7 @@
     group: mongod
   with_items:
     - /var/lib/mongo/
-    - 
+    - /data/db/
 
 # V-81851
 - name: secure access to config file
@@ -48,8 +48,10 @@
   with_items:
       - /etc/ssl/mongodbca.pem
       - /etc/ssl/mongodb.pem
+      - /etc/ssl/mongodb_kmip_client.pem
+      - /etc/ssl/mongodb_kmip_ca.pem
 
-# V-81859 not working
+# V-81859
 - name: uninstall unused packages
   yum:
     name: 
@@ -139,6 +141,8 @@
     openssl x509 -req -in /tmp/server.csr -CA /tmp/ca.crt -CAkey /tmp/ca.key -CAcreateserial -out /tmp/server.crt
     cat /tmp/server.key /tmp/server.crt > /etc/ssl/mongodb.pem
     cat /tmp/ca.crt > /etc/ssl/mongodbca.pem
+    cp /etc/ssl/mongodb.pem /etc/ssl/mongodb_kmip_client.pem
+    cp /etc/ssl/mongodbca.pem /etc/ssl/mongodb_kmip_ca.pem
   changed_when: 1
 
 # V-81919 not working
@@ -149,11 +153,11 @@
     insertafter: "^security:$"
     block: |2
         kmip:
-          serverName: server.name
+          serverName: 127.0.0.1
           port: 5696
           clientCertificateFile: /etc/ssl/mongodb_kmip_client.pem
           serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
-  notify: restart mongod
+  #notify: restart mongod
 
 # V-81877
 #TODO check user roles
