@@ -29,3 +29,4 @@ accountAdmin01_allowed_role: ['[
   { "role" : "readWrite", "db" : "config" } 
   ] }
   ']
+is_docker: 'true'

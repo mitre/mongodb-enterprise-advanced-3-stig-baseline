@@ -56,11 +56,19 @@ control "V-81855" do
   software library directory. Relocate any directories or reinstall other
   application software that currently shares the MongoDB software library
   directory."
-  describe 'A manual review is required to ensure all database software, including DBMS configuration files, is stored
-  in dedicated directories, or DASD pools, separate from the host OS and other
-  applications' do
-    skip 'A manual review is required to ensure all database software, including DBMS configuration files, is stored
-  in dedicated directories, or DASD pools, separate from the host OS and other
-  applications'
-  end
+  if input('is_docker') == 'true'
+    describe "The MongoDB is installed within a Docker container so it is 
+    separate from the host OS, therefore this is not a finding." do
+      subject { virtualization.system }
+      it {should cmp 'docker'}
+    end
+  else
+    describe "This test requires a Manual Review: Ensure all database software, 
+    including DBMS configuration files, is stored in dedicated directories, or 
+    DASD pools, separate from the host OS and other applications." do
+      skip "This test requires a Manual Review: Ensure all database software, 
+      including DBMS configuration files, is stored in dedicated directories, or 
+      DASD pools, separate from the host OS and other applications."
+    end
+  end  
 end
