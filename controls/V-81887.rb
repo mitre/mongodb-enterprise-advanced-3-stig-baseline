@@ -51,13 +51,13 @@ control "V-81887" do
 
   describe file(input('mongod_conf')) do
     it { should_not be_more_permissive_than('0755') } 
-    its('owner') { should eq 'mongodb' }
-    its('group') { should eq 'mongodb' }
+    its('owner') { should eq 'mongod' }
+    its('group') { should eq 'mongod' }
   end
   
-  describe directory('/var/lib/mongo') do
+  describe directory(input('mongod_data_dir')) do
     it { should_not be_more_permissive_than('0755') } 
-    its('owner') { should eq 'mongodb' }
-    its('group') { should eq 'mongodb' }
+    its('owner') { should eq 'mongod' }
+    its('group') { should eq 'mongod' }
   end
 end

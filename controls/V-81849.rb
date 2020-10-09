@@ -106,7 +106,8 @@ control "V-81849" do
   the output will be the \"<MongoDB auditLog directory>\"
 
   /var/lib/mongo"
-  mongodb_auditlog_dir = command('dirname /var/lib/mongo/auditLog.bson').stdout.strip
+
+  mongodb_auditlog_dir = command("dirname #{input('mongod_data_dir')}/auditLog.bson").stdout.strip
   describe file(mongodb_auditlog_dir) do
     it { should_not be_more_permissive_than('0700') } 
     its('owner') { should eq 'mongod' }

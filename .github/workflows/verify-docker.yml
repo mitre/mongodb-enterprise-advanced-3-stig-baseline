@@ -2,9 +2,9 @@ name: Verify the Baseline using Docker
 
 on:
   push:
-    branches: [ master, feature/**]
+    branches: [ master, Sb-anisible-hardening]
   pull_request:
-    branches: [ master, feature/** ]
+    branches: [ master, * ]
   release:
     types:
       - published

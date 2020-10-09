@@ -21,8 +21,8 @@
 - name: verify User ownership, Group ownership, and permssions
   file:
     path: "{{ mongod_data_dir }}"
-    owner: "mongodb"
-    group: "mongodb"
+    owner: "mongod"
+    group: "mongod"
     mode: "700"
 
 # V-81851
@@ -35,8 +35,8 @@
 - name: Change file ownership, group and permissions
   file:
     path: "{{ mongod_conf }}"
-    owner: "mongodb"
-    group: "mongodb"
+    owner: "mongod"
+    group: "mongod"
 
 # V-81871
 - name: verify User ownership, Group ownership, and permssions
@@ -51,8 +51,8 @@
 - name: Change file ownership, group and permissions
   file:
     path: "{{ item }}"
-    owner: "mongodb"
-    group: "mongodb"
+    owner: "mongod"
+    group: "mongod"
   with_items:
       - /etc/ssl/mongodbca.pem
       - /etc/ssl/mongodb.pem
