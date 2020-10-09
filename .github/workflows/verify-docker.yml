@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master, Sb-anisible-hardening]
   pull_request:
-    branches: [ master, * ]
+    branches: [ master, Sb-anisible-hardening]
   release:
     types:
       - published
