@@ -148,4 +148,3 @@ results/
 contrib/*
 Dockerfile*
 Gemfile.lock
-sample_jsons/mongodb-enterprise-advanced-stig-baseline.json
