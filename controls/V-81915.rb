@@ -51,9 +51,17 @@ control "V-81915" do
 
   This is accomplished by modifying the mongos configuration file (default
   location: /etc/mongos.conf) and then restarting mongos."
-  describe 'A manual review is required to ensure MongoDB prohibits the use of cached authenticators after an
-  organization-defined time period' do
-    skip 'A manual review is required to ensure MongoDB prohibits the use of cached authenticators after an
-    organization-defined time period'
+
+  describe yaml(input('saslauthd')) do
+    its(%{MECH}) {should cmp 'ldap'}
   end
+  describe yaml(input('saslauthd')) do
+    its(%{FLAGS}) {should cmp '-t 900'}
+  end
+  describe yaml(input('mongod_conf')) do
+    its(%w{security authorization}) { should cmp 'enabled'}
+  end
+  describe yaml(input('mongod_conf')) do
+    its(%{security ldap timeoutMS}) { should cmp '10000'}
+  end 
 end

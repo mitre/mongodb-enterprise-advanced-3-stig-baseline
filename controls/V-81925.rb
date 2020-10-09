@@ -54,9 +54,17 @@ control "V-81925" do
   collection. Existing collections can also be modified with document validation
   rules. Use the \"validator\" option to create or update a collection with the
   desired validation rules."
-  describe 'A manual review is required to ensure when invalid inputs are received, MongoDB behaves in a predictable
-  and documented manner that reflects organizational and system objectives' do
-    skip 'A manual review is required to ensure when invalid inputs are received, MongoDB behaves in a predictable
-    and documented manner that reflects organizational and system objectives'
+  
+  describe yaml(input('mongod_conf')) do
+    its(%w{storage dbPath}) { should cmp 'data/db'}
+  end
+  describe yaml(input('mongod_conf')) do
+    its(%w{auditLog destination}) { should cmp 'file'}
+  end
+  describe yaml(input('mongod_conf')) do
+    its(%w{auditLog format}) { should cmp 'JSON'}
+  end
+  describe yaml(input('mongod_conf')) do
+    its(%w{auditLog path}) { should cmp 'data/db/auditLog.json'}
   end
 end

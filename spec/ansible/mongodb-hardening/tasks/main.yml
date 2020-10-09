@@ -58,14 +58,14 @@
       - /etc/ssl/mongodbca.pem
       - /etc/ssl/mongodb.pem
 
-# V-81859 not working
-- name: Uninstall unused packages
-  yum:
-    name: 
-      - mongodb-enterprise-mongos
-      - mongodb-enterprise-shell
-      - mongodb-enterprise-tools
-    state: absent
+# # V-81859 not working
+# - name: Uninstall unused packages
+#   yum:
+#     name: 
+#       - mongodb-enterprise-mongos
+#       - mongodb-enterprise-shell
+#       - mongodb-enterprise-tools
+#     state: absent
 
 # V-81861
 - name: disable http access
@@ -209,11 +209,11 @@
     replace: 'MECH=ldap'
   notify: restart saslauthd
 
-- name: edit timout cache
-  lineinfile:
+- name: edit timeout cache
+  replace:
     path: "{{ saslauthd }}"
-    line: -t 900
-    insertafter: "^FLAGS=$"
+    regexp: '^FLAGS=$'
+    replace: "FLAGS=-t 900"
   become: true
   notify: restart saslauthd
 
@@ -227,7 +227,17 @@
           timeoutMS = 10000
   notify: restart mongod
 
-# V-81925
+# V-81925 #  > enable logging
+- name: Document validation at time of creation
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} auditLog config"
+    insertafter: "^storage:$"
+    block: |2
+        auditLog:
+          destination: file
+          format: JSON
+          path: data/db/auditLog.json
 
 # V-81927 
 
