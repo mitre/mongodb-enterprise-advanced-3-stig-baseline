@@ -51,13 +51,13 @@ control "V-81887" do
 
   describe file(input('mongod_conf')) do
     it { should_not be_more_permissive_than('0755') } 
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
   
   describe directory(input('mongod_data_dir')) do
     it { should_not be_more_permissive_than('0755') } 
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
 end

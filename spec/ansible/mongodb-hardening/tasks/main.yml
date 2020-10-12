@@ -18,12 +18,16 @@
     insertafter: "^security:$"
 
 # V-81849 V-81887
-- name: verify User ownership, Group ownership, and permssions
+- name: secure access to mongo directory
   file:
-    path: "{{ mongod_data_dir }}"
-    owner: "mongod"
-    group: "mongod"
-    mode: "700"
+    path: "{{ item }}"
+    state: directory
+    mode: '700'
+    owner: mongod
+    group: mongod
+  with_items:
+    - /var/lib/mongo/
+    - /data/db/
 
 # V-81851
 - name: verify User ownership, Group ownership, and permssions
@@ -59,7 +63,7 @@
 
 # V-81859
 - name: Uninstall unused packages
-  yum:
+  package:
     name: 
       - enterprise-shell
       - enterprise-mongos

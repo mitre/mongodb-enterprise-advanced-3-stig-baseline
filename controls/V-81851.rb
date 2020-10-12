@@ -76,7 +76,7 @@ control "V-81851" do
   
   describe file(input('mongod_conf')) do
     it { should_not be_more_permissive_than('0700') } 
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
 end

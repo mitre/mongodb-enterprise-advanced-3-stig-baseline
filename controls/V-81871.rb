@@ -81,13 +81,13 @@ control "V-81871" do
 
   describe file('/etc/ssl/mongodb.pem') do
     its('mode') { should cmp <= 0600 }
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
 
   describe file('/etc/ssl/mongodbca.pem') do
     its('mode') { should cmp <= 0600 }
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
 end
