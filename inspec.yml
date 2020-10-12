@@ -15,11 +15,13 @@ inputs:
   - name: mongodb_packages_used
     description: 'List of mongodb packages used'
     type: array
-    value: ['mongodb-org-tools-4.0.5-1.el7.x86_64',
-              'mongodb-org-server-4.0.5-1.el7.x86_64',
-              'mongodb-org-shell-4.0.5-1.el7.x86_64',
-              'mongodb-org-4.0.5-1.el7.x86_64',
-              'mongodb-org-mongos-4.0.5-1.el7.x86_64']
+    value: [
+      'mongodb-enterprise-3.6.20-1.el7.x86_64',
+      'mongodb-enterprise-mongos-3.6.20-1.el7.x86_64',
+      'mongodb-enterprise-server-3.6.20-1.el7.x86_64',
+      'mongodb-enterprise-shell-3.6.20-1.el7.x86_64',
+      'mongodb-enterprise-tools-3.6.20-1.el7.x86_64'
+    ]
   - name: user
     description: 'User to log into the mongo database'
     type: string
@@ -61,4 +63,3 @@ inputs:
     type: array
     value: ['[ { "role" : "clusterAdmin", "db" : "admin" }, { "role" : "readAnyDatabase", "db" : "admin" }, { "role" : "readWrite", "db" : "config" } ] }
 ']
-
