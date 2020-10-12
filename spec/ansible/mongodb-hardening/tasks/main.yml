@@ -18,7 +18,7 @@
     insertafter: "^security:$"
 
  # V-81849 V-81887
- - name: verify User ownership, Group ownership, and permssions
+- name: verify User ownership, Group ownership, and permssions
    file:
      path: "{{ mongod_data_dir }}"
      owner: "mongod"
@@ -32,7 +32,7 @@
     state: touch
     mode: u+rw,g-rwx,o-rwx
 
- - name: Change file ownership, group and permissions
+- name: Change file ownership, group and permissions
    file:
      path: "{{ mongod_conf }}"
      owner: "mongod"
@@ -58,7 +58,7 @@
        - /etc/ssl/mongodb.pem
 
  # V-81859
- - name: Uninstall unused packages
+- name: Uninstall unused packages
    yum:
      name: 
        - enterprise-shell
