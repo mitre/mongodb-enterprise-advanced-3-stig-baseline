@@ -153,19 +153,21 @@
     cat /tmp/server.key /tmp/server.crt > /etc/ssl/mongodb.pem
   changed_when: 1
 
-# V-81919
-- name: set KMIP settings for data at rest encryption
-  blockinfile:
-    path: "{{ mongod_conf }}"
-    marker: "# {mark} KMIP config"
-    insertafter: "^security:$"
-    block: |2
-        kmip:
-          serverName: server.ip
-          port: 5696
-          clientCertificateFile: /etc/ssl/mongodb_kmip_client.pem
-          serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
-          
+
+# V-81919 not working
+#- name: set KMIP settings for data at rest encryption
+ # blockinfile:
+  #  path: "{{ mongod_conf }}"
+   # marker: "# {mark} KMIP config"
+    #insertafter: "^security:$"
+    #block: |2
+     #   kmip:
+      #    serverName: server.ip
+       #   port: 5696
+        #  clientCertificateFile: /etc/ssl/mongodb_kmip_client.pem
+         # serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
+  #notify: restart mongod
+
 # V-81845, V-81857, V-81863, V-81877, V-81899, V-81909, V-81911
 - name: Create MongoDB Admin user 
   mongodb_user:
