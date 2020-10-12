@@ -2,9 +2,9 @@ name: Verify the Baseline using Docker
 
 on:
   push:
-    branches: [ master, feature/**]
+    branches: [ master, feature/**, CH-Updates]
   pull_request:
-    branches: [ master, feature/** ]
+    branches: [ master, feature/**, CH-Updates]
   release:
     types:
       - published
