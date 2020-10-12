@@ -17,13 +17,13 @@
     line: "  authorization: enabled"
     insertafter: "^security:$"
 
-# # V-81849 V-81887
-# - name: verify User ownership, Group ownership, and permssions
-#   file:
-#     path: "{{ mongod_data_dir }}"
-#     owner: "mongod"
-#     group: "mongod"
-#     mode: "700"
+ # V-81849 V-81887
+ - name: verify User ownership, Group ownership, and permssions
+   file:
+     path: "{{ mongod_data_dir }}"
+     owner: "mongod"
+     group: "mongod"
+     mode: "700"
 
 # V-81851
 - name: verify User ownership, Group ownership, and permssions
@@ -32,11 +32,11 @@
     state: touch
     mode: u+rw,g-rwx,o-rwx
 
-# - name: Change file ownership, group and permissions
-#   file:
-#     path: "{{ mongod_conf }}"
-#     owner: "mongod"
-#     group: "mongod"
+ - name: Change file ownership, group and permissions
+   file:
+     path: "{{ mongod_conf }}"
+     owner: "mongod"
+     group: "mongod"
 
 # V-81871
 - name: verify User ownership, Group ownership, and permssions
@@ -48,23 +48,23 @@
       - /etc/ssl/mongodbca.pem
       - /etc/ssl/mongodb.pem
 
-# - name: Change file ownership, group and permissions
-#   file:
-#     path: "{{ item }}"
-#     owner: "mongod"
-#     group: "mongod"
-#   with_items:
-#       - /etc/ssl/mongodbca.pem
-#       - /etc/ssl/mongodb.pem
+- name: Change file ownership, group and permissions
+   file:
+     path: "{{ item }}"
+     owner: "mongod"
+     group: "mongod"
+   with_items:
+       - /etc/ssl/mongodbca.pem
+       - /etc/ssl/mongodb.pem
 
-# # V-81859
-# - name: Uninstall unused packages
-#   yum:
-#     name: 
-#       - enterprise-shell
-#       - enterprise-mongos
-#       - enterprise-tools
-#     state: absent
+ # V-81859
+ - name: Uninstall unused packages
+   yum:
+     name: 
+       - enterprise-shell
+       - enterprise-mongos
+       - enterprise-tools
+     state: absent
 
 # V-81861
 - name: disable http access
