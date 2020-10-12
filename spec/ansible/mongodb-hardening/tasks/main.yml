@@ -16,7 +16,7 @@
     regexp: "(|#)authorization:.*"
     line: "  authorization: enabled"
     insertafter: "^security:$"
-  notify: restart mongod
+#  notify: restart mongod
 
 # # V-81849 V-81887
 # - name: verify User ownership, Group ownership, and permssions
@@ -85,7 +85,7 @@
     regexp: "(|#)clusterAuthMode:.*"
     line: "  clusterAuthMode: x509"
     insertafter: "^security:$"
-  notify: restart mongod
+ # notify: restart mongod
 
 # # V-81879 V-81921 V-81923 V-81869
 # - name: set SSL as required with custom key file
@@ -117,7 +117,7 @@
     regexp: "(|#)enableEncryption:.*"
     line: "  enableEncryption: true"
     insertafter: "^security:$"
-  notify: restart mongod
+  # notify: restart mongod
 
 # V-81891 V-81889
 - name: redact sensative data in log file
@@ -126,7 +126,7 @@
     regexp: "(|#)javascriptEnabled:.*"
     line: "  javascriptEnabled: false"
     insertafter: "^security:$"
-  notify: restart mongod
+  # notify: restart mongod
 
 # V-81895
 - name: redact sensative data in log file
@@ -195,7 +195,7 @@
     regexp: "(|#)redactClientLogData:.*"
     line: "  redactClientLogData: true"
     insertafter: "^security:$"
-  notify: restart mongod
+  # notify: restart mongod
 
 # # V-81915 -> erorr
 # - name: configure saslauthd
@@ -236,7 +236,7 @@
     regexp: '^auditLog:$'
     line: "  destination: syslog"
     insertafter: "^auditLog:$"
-  notify: restart saslauthd
+  # notify: restart saslauthd
 
 # V-81927 
 
