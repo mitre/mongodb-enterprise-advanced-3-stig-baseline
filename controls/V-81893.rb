@@ -71,6 +71,6 @@ control "V-81893" do
     its(%w{security authorization}) { should cmp 'enabled' }
   end
   describe yaml(input('mongod_conf')) do
-    its(%{security redactClientLogData}) { should cmp 'true' }
+    its(%w{security redactClientLogData}) { should cmp 'true' }
   end
 end

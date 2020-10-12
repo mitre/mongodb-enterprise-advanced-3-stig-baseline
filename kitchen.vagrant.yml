@@ -23,7 +23,7 @@
     sudo: true
     load_plugins: true
     inspec_tests:
-      - path: ./
+      - path: ./controls/V-81925.rb
     input_files:
       - inputs.yml
   

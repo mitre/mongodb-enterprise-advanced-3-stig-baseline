@@ -56,15 +56,9 @@ control "V-81925" do
   desired validation rules."
   
   describe yaml(input('mongod_conf')) do
-    its(%w{storage dbPath}) { should cmp 'data/db'}
+    its(%w{storage dbPath}) { should cmp 'data/db' }
   end
   describe yaml(input('mongod_conf')) do
-    its(%w{auditLog destination}) { should cmp 'file'}
-  end
-  describe yaml(input('mongod_conf')) do
-    its(%w{auditLog format}) { should cmp 'JSON'}
-  end
-  describe yaml(input('mongod_conf')) do
-    its(%w{auditLog path}) { should cmp 'data/db/auditLog.json'}
+    its(%w{auditLog destination}) { should cmp 'syslog' }
   end
 end
