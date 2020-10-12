@@ -19,7 +19,7 @@
 
  # V-81849 V-81887
 - name: verify User ownership, Group ownership, and permssions
-   file:
+   file: 
      path: "{{ mongod_data_dir }}"
      owner: "mongod"
      group: "mongod"
@@ -27,20 +27,20 @@
 
 # V-81851
 - name: verify User ownership, Group ownership, and permssions
-  file:
+  file: 
     path: "{{ mongod_conf }}"
     state: touch
     mode: u+rw,g-rwx,o-rwx
 
 - name: Change file ownership, group and permissions
-   file:
+   file: 
      path: "{{ mongod_conf }}"
      owner: "mongod"
      group: "mongod"
 
 # V-81871
 - name: verify User ownership, Group ownership, and permssions
-  file:
+  file: 
     path: "{{ item }}"
     state: touch
     mode: u+rw,g-rwx,o-rwx
@@ -49,7 +49,7 @@
       - /etc/ssl/mongodb.pem
 
 - name: Change file ownership, group and permissions
-   file:
+   file: 
      path: "{{ item }}"
      owner: "mongod"
      group: "mongod"
