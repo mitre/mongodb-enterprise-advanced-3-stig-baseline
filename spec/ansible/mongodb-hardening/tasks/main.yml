@@ -145,7 +145,7 @@
     cp /etc/ssl/mongodbca.pem /etc/ssl/mongodb_kmip_ca.pem
   changed_when: 1
 
-# V-81919 not working
+# V-81919
 - name: set KMIP settings for data at rest encryption
   blockinfile:
     path: "{{ mongod_conf }}"
@@ -157,7 +157,7 @@
           port: 5696
           clientCertificateFile: /etc/ssl/mongodb_kmip_client.pem
           serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
-  #notify: restart mongod
+  notify: restart mongod
 
 # V-81877
 #TODO check user roles
