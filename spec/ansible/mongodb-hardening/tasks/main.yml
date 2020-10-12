@@ -1,3 +1,4 @@
+---
 - name: Start service mongodb-server, if not started
   service:
     name: mongod
@@ -84,6 +85,7 @@
           mode: requireSSL
           PEMKeyFile: /etc/ssl/mongodb.pem
           CAFile: /etc/ssl/mongodbca.pem
+
 # V-81875
 - name: enable NIST FIPS 140-2-validated cryptographic modules
   lineinfile:
@@ -143,19 +145,6 @@
     cp /etc/ssl/mongodbca.pem /etc/ssl/mongodb_kmip_ca.pem
   changed_when: 1
 
-# V-81919 not working
-#- name: set KMIP settings for data at rest encryption
- # blockinfile:
-  #  path: "{{ mongod_conf }}"
-   # marker: "# {mark} KMIP config"
-    #insertafter: "^security:$"
-    #block: |2
-     #   kmip:
-      #    serverName: server.ip
-       #   port: 5696
-        #  clientCertificateFile: /etc/ssl/mongodb_kmip_client.pem
-         # serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
-  #notify: restart mongod
 
 # V-81845, V-81857, V-81863, V-81877, V-81899, V-81909, V-81911
 - name: Create MongoDB Admin user 
@@ -171,10 +160,6 @@
     name: "mongoadmin"
     password: "mongoadmin"
     roles: "userAdminAnyDatabase"
-
-
+    
 # V-81865
 #TODO ldap auth check
-
-
-

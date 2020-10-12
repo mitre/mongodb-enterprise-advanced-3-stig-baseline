@@ -67,21 +67,21 @@ control "V-81919" do
   https://docs.mongodb.com/v3.4/tutorial/configure-encryption/"
 
   describe yaml(input('mongod_conf')) do
-    its(%w{kmip serverName}) { should_not be_nil }
+    its(%w{security kmip serverName}) { should_not be_nil }
   end
   describe yaml(input('mongod_conf')) do
-    its(%w{kmip port}) { should_not be_nil }
+    its(%w{security kmip port}) { should_not be_nil }
   end
   describe yaml(input('mongod_conf')) do
-    its(%w{kmip port}) { should_not be_nil }
+    its(%w{security kmip port}) { should_not be_nil }
   end
   describe yaml(input('mongod_conf')) do
-    its(%w{kmip serverCAFile}) { should_not be_nil }
+    its(%w{security kmip serverCAFile}) { should_not be_nil }
   end
   describe yaml(input('mongod_conf')) do
-    its(%w{kmip clientCertificateFile}) { should_not be_nil }
+    its(%w{security kmip clientCertificateFile}) { should_not be_nil }
   end
   describe yaml(input('mongod_conf')) do
-    its(['enableEncryption']) { should cmp 'true' }
+    its(['security' , 'enableEncryption']) { should cmp 'true' }
   end
 end

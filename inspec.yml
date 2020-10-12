@@ -63,3 +63,4 @@ inputs:
     type: array
     value: ['[ { "role" : "clusterAdmin", "db" : "admin" }, { "role" : "readAnyDatabase", "db" : "admin" }, { "role" : "readWrite", "db" : "config" } ] }
 ']
+

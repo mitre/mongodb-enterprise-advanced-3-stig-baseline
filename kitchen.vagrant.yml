@@ -62,3 +62,4 @@
         reporter:
           - cli
           - json:spec/results/vanilla-test-result.json
+          
