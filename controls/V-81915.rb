@@ -34,7 +34,11 @@ control "V-81915" do
   \"userCacheInvalidationIntervalSecs\" option can be used to specify the cache
   timeout.
 
-  The default is \"30\" seconds and the minimum is \"1\" second."
+  The default is \"30\" seconds and the minimum is \"1\" second.
+  
+  In the saslauthd file, if MECH is not equal to ldap, this is a finding.
+  
+  "
   desc "fix", "If MongoDB is configured to authenticate using SASL and
   LDAP/Active Directory modify and restart the saslauthd command line options in
   the system boot script and set the \"-t\" option to the appropriate timeout in
@@ -50,7 +54,18 @@ control "V-81915" do
   can be changed from the default \"30\" seconds.
 
   This is accomplished by modifying the mongos configuration file (default
-  location: /etc/mongos.conf) and then restarting mongos."
+  location: /etc/mongod.conf) and then restarting mongos.
+  
+  In the mongod.conf, set timeoutMS to 1000.
+  security:
+  ldap:
+  timeoutMS: 1000
+  
+  In the saslauthd file ( default location: /etc/sysconfig/saslauthd ), set FLAGS to -t 900
+  FLAGS= -t 900
+  
+  Also, in the saslauthd file, set MECH to ldap
+  MECH=ldap "
 
   describe yaml(input('saslauthd')) do
     its(%w{MECH}) {should cmp 'ldap'}
@@ -62,6 +77,6 @@ control "V-81915" do
     its(%w{security authorization}) { should cmp 'enabled'}
   end
   describe yaml(input('mongod_conf')) do
-    its(%w{security ldap timeoutMS}) { should cmp '10000'}
+    its(%w{security ldap timeoutMS}) { should cmp '10000' }
   end 
 end
