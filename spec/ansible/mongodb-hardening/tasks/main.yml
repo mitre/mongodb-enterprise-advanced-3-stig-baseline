@@ -197,12 +197,18 @@
     roles: "userAdminAnyDatabase"
 
 # # V-81915
+- name: Check if saslauthd is required
+  shell: "echo{{ mongo_use_saslauthd }}"
+  register: use_saslauthd
+
 - name: configure saslauthd
   lineinfile: 
     path: "{{ saslauthd }}"
     regexp: '^MECH=pam$'
     line: 'MECH=ldap'
   become: true
+  when:
+    - use_saslauthd.stdout == 'true'
   # notify: restart saslauthd
 
 - name: edit timeout cache
@@ -211,7 +217,13 @@
     regexp: '^FLAGS=$'
     line: "FLAGS=-t 900"
   become: true
+  when:
+    - use_saslauthd.stdout == 'true'
   # notify: restart saslauthd
+
+- name: Check if LDAP is required
+  shell: "echo{{ mongo_use_ldap }}"
+  register: use_ldap
 
 - name: Edit LDAP timeout
   blockinfile:
@@ -221,6 +233,8 @@
     block: |2
         ldap:
           timeoutMS: 10000
+  when:
+    - use_ldap.stdout == 'true'
 
   # V-81873 
   # V-81927 

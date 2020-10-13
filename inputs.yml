@@ -35,3 +35,8 @@ accountAdmin01_allowed_role: ['[
   ] }
   ']
 is_docker: 'true'
+
+#disallowed: ['']
+
+mongo_use_ldap: 'true'
+mongo_use_saslauthd: 'true'
