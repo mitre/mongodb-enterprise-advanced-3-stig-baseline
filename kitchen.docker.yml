@@ -39,12 +39,14 @@
           - wget -qO - https://www.mongodb.org/static/pgp/server-3.6.asc | sudo apt-key add -
           - echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.com/apt/ubuntu xenial/mongodb-enterprise/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-enterprise.list
           - sudo apt-get update
-          - sudo apt-get install -y mongodb-enterprise=3.6.20 mongodb-enterprise-server=3.6.20 mongodb-enterprise-shell=3.6.20 mongodb-enterprise-mongos=3.6.20 mongodb-enterprise-tools=3.6.20
+          - sudo apt-get install -y python python-pip mongodb-enterprise=3.6.20 mongodb-enterprise-server=3.6.20 mongodb-enterprise-shell=3.6.20 mongodb-enterprise-mongos=3.6.20 mongodb-enterprise-tools=3.6.20
           - echo "mongodb-enterprise hold" | sudo dpkg --set-selections
           - echo "mongodb-enterprise-server hold" | sudo dpkg --set-selections
           - echo "mongodb-enterprise-shell hold" | sudo dpkg --set-selections
           - echo "mongodb-enterprise-mongos hold" | sudo dpkg --set-selections
           - echo "mongodb-enterprise-tools hold" | sudo dpkg --set-selections
+          - python -m pip install --upgrade pip 
+          - python -m pip install pymongo 
 
   suites:
     - name: hardened

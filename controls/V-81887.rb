@@ -48,14 +48,16 @@ control "V-81887" do
   MongoDB data file directory (default location):
   chown -R mongod:mongod/var/lib/mongo
   chmod -R 755/var/lib/mongo"
+
   describe file(input('mongod_conf')) do
     it { should_not be_more_permissive_than('0755') } 
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
-  describe directory('/var/lib/mongo') do
+  
+  describe directory(input('mongo_dir')) do
     it { should_not be_more_permissive_than('0755') } 
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
 end
