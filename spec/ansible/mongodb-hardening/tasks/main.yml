@@ -188,7 +188,7 @@
     insertafter: "^security:$"
   # notify: restart mongod
 
-# # V-81915 -> erorr
+# # V-81915 - works
 - name: configure saslauthd
   lineinfile: 
     path: "{{ saslauthd }}"
