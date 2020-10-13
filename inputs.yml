@@ -1,21 +1,21 @@
 mongod_conf: '/etc/mongod.conf'
-mongo_dir: '/var/lib/mongo'
+mongod_pem: '/etc/ssl/mongodbca.pem'
+mongod_lib: '/var/lib/mongo/'
+mongod_auditlog: '/var/lib/mongo/auditLog.bson'
+saslauthd: '/etc/sysconfig/saslauthd'
 
 mongodb_packages_used: [
-      'mongodb-enterprise-3.6.20-1.el7.x86_64',
-      'mongodb-enterprise-mongos-3.6.20-1.el7.x86_64',
-      'mongodb-enterprise-server-3.6.20-1.el7.x86_64',
-      'mongodb-enterprise-shell-3.6.20-1.el7.x86_64',
-      'mongodb-enterprise-tools-3.6.20-1.el7.x86_64'
-    ]
+  'mongodb-org-tools-4.0.5-1.el7.x86_64',
+  'mongodb-org-server-4.0.5-1.el7.x86_64',
+  'mongodb-org-shell-4.0.5-1.el7.x86_64',
+  'mongodb-org-4.0.5-1.el7.x86_64',
+  'mongodb-org-mongos-4.0.5-1.el7.x86_64']
 
 user: 'mongoadmin'
 password: 'mongoadmin'
 
-admin_db_users: ["mongodb_admin", mongoadmin]
+admin_db_users: ["mongodb_admin"]
 config_db_users: ["config_admin"]
-mongodb_service_account: ['mongod', 'mongodb']
-mongodb_service_group: ['mongod', 'mongodb']
 myUserAdmin_allowed_role: ['[ 
   { "role" : "userAdminAnyDatabase", "db" : "admin" } 
   ] }']
@@ -34,3 +34,4 @@ accountAdmin01_allowed_role: ['[
   { "role" : "readWrite", "db" : "config" } 
   ] }
   ']
+is_docker: 'true'
