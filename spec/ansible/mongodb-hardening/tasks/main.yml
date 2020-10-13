@@ -58,14 +58,14 @@
       - /etc/ssl/mongodbca.pem
       - /etc/ssl/mongodb.pem
 
-# # # V-81859 not working
-# # - name: Uninstall unused packages
-# #   yum:
-# #     name: 
-# #       - mongodb-enterprise-mongos
-# #       - mongodb-enterprise-shell
-# #       - mongodb-enterprise-tools
-# #     state: absent
+# V-81859 not working
+- name: Uninstall unused packages
+  yum:
+    name: 
+      - mongodb-enterprise-mongos
+      - mongodb-enterprise-shell
+      - mongodb-enterprise-tools
+    state: absent
 
 # V-81861
 - name: disable http access
@@ -137,13 +137,13 @@
     insertafter: "^security:$"
   # notify: restart mongod
 
-# # V-81847 V-81901 V-81905 V-81907 
-# - name: set audit log destination
-#   lineinfile:
-#     path: "{{ mongod_conf }}"
-#     regexp: ".*auditLog:.*\n.*destination:.*"
-#     line: "auditLog:\n  destination: syslog"
-#   notify: restart mongod
+# V-81847 V-81901 V-81905 V-81907 
+- name: set audit log destination
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: ".*auditLog:.*\n.*destination:.*"
+    line: "auditLog:\n  destination: syslog"
+ # notify: restart mongod
 
 # # V-81903
 - name: set path of database files
@@ -175,16 +175,7 @@
           port: 5696
           clientCertificateFile: /etc/ssl/mongodb_kmip_client.pem
           serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
-  notify: restart mongod
-
-# # V-81859
-# - name: Uninstall unused packages
-#   package:
-#     name: 
-#       - enterprise-shell
-#       - enterprise-mongos
-#       - enterprise-tools
-#     state: absent
+ # notify: restart mongod
 
 # V-81873 
 

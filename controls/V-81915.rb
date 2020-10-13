@@ -67,11 +67,11 @@ control "V-81915" do
   Also, in the saslauthd file, set MECH to ldap
   MECH=ldap "
 
-  describe yaml(input('saslauthd')) do
+  describe ini(input('saslauthd')) do
     its(%w{MECH}) {should cmp 'ldap'}
   end
-  describe yaml(input('saslauthd')) do
-    its(%w{FLAGS}) {should cmp '-t 900'}
+  describe ini(input('saslauthd')) do
+    its('FLAGS') {should eq '-t 900'}
   end
   describe yaml(input('mongod_conf')) do
     its(%w{security authorization}) { should cmp 'enabled'}
