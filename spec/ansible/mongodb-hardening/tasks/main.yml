@@ -196,7 +196,7 @@
     password: "mongoadmin"
     roles: "userAdminAnyDatabase"
 
-# # V-81915 -> erorr
+# # V-81915
 - name: configure saslauthd
   lineinfile: 
     path: "{{ saslauthd }}"
@@ -221,7 +221,6 @@
     block: |2
         ldap:
           timeoutMS: 10000
-  # notify: restart mongod
 
   # V-81873 
   # V-81927 
