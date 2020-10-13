@@ -1,5 +1,8 @@
-mongo_dir: '/var/lib/mongodb'
 mongod_conf: '/etc/mongod.conf'
+mongod_pem: '/etc/ssl/mongodbca.pem'
+mongod_lib: '/var/lib/mongo/'
+mongod_auditlog: '/var/lib/mongo/auditLog.bson'
+saslauthd: '/etc/sysconfig/saslauthd'
 
 mongodb_packages_used: [
   'mongodb-org-tools-4.0.5-1.el7.x86_64',
@@ -31,3 +34,9 @@ accountAdmin01_allowed_role: ['[
   { "role" : "readWrite", "db" : "config" } 
   ] }
   ']
+is_docker: 'true'
+
+#disallowed: ['']
+
+mongo_use_ldap: 'true'
+mongo_use_saslauthd: 'true'
