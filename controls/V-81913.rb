@@ -37,16 +37,9 @@ control "V-81913" do
   tag "fix_id": "F-88763r1_fix"
   tag "cci": ["CCI-002038"]
   tag "nist": ["IA-11", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "If organization-defined circumstances or situations require
   reauthentication, and these situations are not configured to terminate existing
   logins to require reauthentication, this is a finding."

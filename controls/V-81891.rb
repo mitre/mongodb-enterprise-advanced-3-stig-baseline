@@ -38,16 +38,9 @@ control "V-81891" do
   tag "fix_id": "F-88741r1_fix"
   tag "cci": ["CCI-001310"]
   tag "nist": ["SI-10", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "MongoDB operations permit arbitrary JavaScript expressions to
   be run directly on the server.
 

@@ -28,16 +28,9 @@ control "V-81855" do
   tag "fix_id": "F-88705r1_fix"
   tag "cci": ["CCI-001499"]
   tag "nist": ["CM-5 (6)", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Review the MongoDB software library directory and note other
   root directories located on the same disk directory or any subdirectories.
 

@@ -25,16 +25,9 @@ control "V-81923" do
   tag "fix_id": "F-88773r2_fix"
   tag "cci": ["CCI-002422"]
   tag "nist": ["SC-8 (2)", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "If the data owner does not have a strict requirement for
   ensuring data integrity and confidentiality is maintained at every step of the
   data transfer and handling process, this is not a finding.

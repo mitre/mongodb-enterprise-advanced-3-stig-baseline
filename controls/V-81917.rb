@@ -24,16 +24,9 @@ control "V-81917" do
   tag "fix_id": "F-88767r1_fix"
   tag "cci": ["CCI-002470"]
   tag "nist": ["SC-23", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "To run MongoDB in SSL mode, you have to obtain a valid
   certificate singed by a single certificate authority.
 

@@ -38,16 +38,9 @@ control "V-81927" do
   tag "fix_id": "F-88777r1_fix"
   tag "cci": ["CCI-000206"]
   tag "nist": ["IA-6", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "For the MongoDB command-line tools \"mongo shell\",
   \"mongodump\", \"mongorestore\", \"mongoimport\", \"mongoexport\", which cannot
   be configured not to accept a plain-text password, and any other essential tool

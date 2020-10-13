@@ -44,16 +44,9 @@ control "V-81895" do
   tag "fix_id": "F-88745r1_fix"
   tag "cci": ["CCI-001314"]
   tag "nist": ["SI-11 b", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "A mongod or mongos running with
   \"security.redactClientLogData\" redacts any message accompanying a given log
   event before logging.

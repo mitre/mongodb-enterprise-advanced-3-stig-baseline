@@ -40,16 +40,9 @@ control "V-81893" do
   tag "fix_id": "F-88743r1_fix"
   tag "cci": ["CCI-001312"]
   tag "nist": ["SI-11 a", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "Check custom database code to verify that error messages do not
   contain information beyond what is needed for troubleshooting the issue.
 

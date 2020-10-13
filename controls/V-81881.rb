@@ -39,16 +39,9 @@ control "V-81881" do
   tag "fix_id": "F-88731r1_fix"
   tag "cci": ["CCI-001190", "CCI-001665"]
   tag "nist": ["SC-24", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Journaling is enabled by default in 64-bit systems.
 
   With journaling enabled, if mongod stops unexpectedly, the program can recover

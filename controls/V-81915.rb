@@ -12,16 +12,9 @@ control "V-81915" do
   tag "fix_id": "F-88765r1_fix"
   tag "cci": ["CCI-002007"]
   tag "nist": ["IA-5", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "If MongoDB is configured to authenticate using SASL and
   LDAP/Active Directory check the saslauthd command line options in the system
   boot script that starts saslauthd (the location will be dependent on the

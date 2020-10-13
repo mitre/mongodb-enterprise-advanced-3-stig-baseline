@@ -33,16 +33,9 @@ control "V-81877" do
   tag "nist": ["IA-8", "Rev_4"]
   tag "nist": ["SC-2", "Rev_4"]
   tag "nist": ["SC-3", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "MongoDB grants access to data and commands through role-based
   authorization and provides built-in roles that provide the different levels of
   access commonly needed in a database system. You can additionally create

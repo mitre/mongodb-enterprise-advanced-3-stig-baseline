@@ -24,16 +24,9 @@ control "V-81857" do
   tag "fix_id": "F-88707r1_fix"
   tag "cci": ["CCI-001499"]
   tag "nist": ["CM-5 (6)", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "Run the following command to get the roles from a MongoDB
   database.
 

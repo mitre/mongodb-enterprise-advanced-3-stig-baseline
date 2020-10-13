@@ -25,16 +25,9 @@ control "V-81903" do
   tag "fix_id": "F-88753r1_fix"
   tag "cci": ["CCI-001844"]
   tag "nist": ["AU-3 (2)", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "MongoDB can be configured to write audit events to the syslog
   in Linux, but this is not available in Windows. Audit events can also be
   written to a file in either JSON on BSON format. Through the use of third-party

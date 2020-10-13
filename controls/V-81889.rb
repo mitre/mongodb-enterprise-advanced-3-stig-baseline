@@ -39,16 +39,9 @@ control "V-81889" do
   tag "fix_id": "F-88739r1_fix"
   tag "cci": ["CCI-001310"]
   tag "nist": ["SI-10", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "As a client program assembles a query in MongoDB, it builds a
   BSON object, not a string. Thus traditional SQL injection attacks are not a
   problem. However, MongoDB operations permit arbitrary JavaScript expressions to

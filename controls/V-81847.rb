@@ -50,16 +50,9 @@ control "V-81847" do
   tag "nist": ["AU-14 (2)", "Rev_4"]
   tag "nist": ["AU-14 (1)", "Rev_4"]
   tag "nist": ["CM-5 (1)", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "Check the MongoDB configuration file (default location:
   '/etc/mongod.conf)' for a key named 'auditLog:'.
 

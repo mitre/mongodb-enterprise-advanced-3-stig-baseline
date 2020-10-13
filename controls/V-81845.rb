@@ -15,16 +15,9 @@ control "V-81845" do
   tag "cci": ["CCI-000213"]
   tag "nist": ["AC-3", "Rev_4"]
   tag "nist": ["Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "Review the system documentation to determine the required
   levels of protection for DBMS server securables by type of login. Review the
   permissions actually in place on the server. If the actual permissions do not

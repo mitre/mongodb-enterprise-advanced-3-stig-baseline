@@ -24,16 +24,9 @@ control "V-81865" do
   tag "fix_id": "F-88715r1_fix"
   tag "cci": ["CCI-000192"]
   tag "nist": ["IA-5", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "If MongoDB is using Native LDAP authentication where the LDAP
   server is configured to enforce password complexity and lifetime, this is not a
   finding.

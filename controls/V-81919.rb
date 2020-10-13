@@ -31,16 +31,9 @@ control "V-81919" do
   tag "fix_id": "F-88769r1_fix"
   tag "cci": ["CCI-002475"]
   tag "nist": ["SC-28", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Review the documentation and/or specification for the
   organization-defined information.
 

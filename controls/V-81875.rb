@@ -33,16 +33,9 @@ control "V-81875" do
   tag "cci": ["CCI-000803", "CCI-002450"]
   tag "nist": ["IA-7", "Rev_4"]
   tag "nist": ["SC-13", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+ 
   desc "check", "If MongoDB is deployed in a classified environment:
 
   In the MongoDB database configuration file (default location:

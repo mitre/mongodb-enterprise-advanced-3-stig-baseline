@@ -31,16 +31,9 @@ control "V-81871" do
   tag "fix_id": "F-88721r1_fix"
   tag "cci": ["CCI-000186"]
   tag "nist": ["IA-5 (2) (b)", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "In the MongoDB database configuration file (default location:
   /etc/mongod.conf), review the following parameters:
 

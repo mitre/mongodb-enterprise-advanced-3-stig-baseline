@@ -23,16 +23,9 @@ control "V-81879" do
   tag "fix_id": "F-88729r1_fix"
   tag "cci": ["CCI-001188"]
   tag "nist": ["SC-23", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Check the MongoDB configuration file (default location:
   /etc/mongod.conf).
 

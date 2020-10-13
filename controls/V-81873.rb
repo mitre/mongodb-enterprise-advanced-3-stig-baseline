@@ -14,16 +14,9 @@ control "V-81873" do
   tag "fix_id": "F-88723r1_fix"
   tag "cci": ["CCI-000187"]
   tag "nist": ["IA-5", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "To authenticate with a client certificate, you must first add
   the value of the subject from the client certificate as a MongoDB user.
 

@@ -37,16 +37,9 @@ control "V-81849" do
   tag "fix_id": "F-88699r1_fix"
   tag "cci": ["CCI-000162", "CCI-000163", "CCI-000164"]
   tag "nist": ["AU-9", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Verify User ownership, Group ownership, and permissions on the
   \"<MongoDB auditLog directory>\":
 
