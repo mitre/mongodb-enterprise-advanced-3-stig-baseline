@@ -5,11 +5,9 @@ control "V-81925" do
   received. This requirement guards against adverse or unintended system behavior
   caused by invalid inputs, where information system responses to the invalid
   input may be disruptive or cause the system to fail into an unsafe state.
-
       The behavior will be derived from the organizational and system
   requirements and includes, but is not limited to, notification of the
   appropriate personnel, creating an audit record, and rejecting invalid input.
-
       This calls for inspection of application source code, which will require
   collaboration with the application developers. It is recognized that in many
   cases, the database administrator (DBA) is organizationally separate from the
@@ -33,23 +31,22 @@ control "V-81925" do
 
   desc "check", "As a user with the \"dbAdminAnyDatabase\" role, execute the
   following on the database of interest:
-
   use myDB
   db.getCollectionInfos()
-
   Where \"myDB\" is the name of the database on which validator rules are to be
   inspected. This returns an array of documents containing all collections
   information within myDB. For each collection's information received.
-
   If the \"options\" sub-document within each does not contain a \"validator\"
   sub-document, this is a finding."
   desc "fix", "Document validation can be added at the time of creation of a
   collection. Existing collections can also be modified with document validation
   rules. Use the \"validator\" option to create or update a collection with the
   desired validation rules."
-  describe 'A manual review is required to ensure when invalid inputs are received, MongoDB behaves in a predictable
-  and documented manner that reflects organizational and system objectives' do
-    skip 'A manual review is required to ensure when invalid inputs are received, MongoDB behaves in a predictable
-    and documented manner that reflects organizational and system objectives'
+  
+  describe yaml(input('mongod_conf')) do
+    its(%w{storage dbPath}) { should cmp 'data/db' }
+  end
+  describe yaml(input('mongod_conf')) do
+    its(%w{auditLog destination}) { should cmp 'syslog' }
   end
 end
