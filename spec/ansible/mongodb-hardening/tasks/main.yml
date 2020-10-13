@@ -142,6 +142,15 @@
     regexp: ".*auditLog:.*\n.*destination:.*"
     line: "auditLog:\n  destination: syslog"
 
+# V-81893 - works
+- name: Verify error messages 
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)redactClientLogData:.*"
+    line: "  redactClientLogData: true"
+    insertafter: "^security:$"
+  # notify: restart mongod
+
 # V-81903
 - name: set path of database files
   lineinfile:
@@ -186,3 +195,33 @@
     name: "mongoadmin"
     password: "mongoadmin"
     roles: "userAdminAnyDatabase"
+
+# # V-81915 -> erorr
+- name: configure saslauthd
+  lineinfile: 
+    path: "{{ saslauthd }}"
+    regexp: '^MECH=pam$'
+    line: 'MECH=ldap'
+  become: true
+  # notify: restart saslauthd
+
+- name: edit timeout cache
+  lineinfile:
+    path: "{{ saslauthd }}"
+    regexp: '^FLAGS=$'
+    line: "FLAGS=-t 900"
+  become: true
+  # notify: restart saslauthd
+
+- name: Edit LDAP timeout
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} LDAP config"
+    insertafter: "^security:$"
+    block: |2
+        ldap:
+          timeoutMS: 10000
+  # notify: restart mongod
+
+  # V-81873 
+  # V-81927 
