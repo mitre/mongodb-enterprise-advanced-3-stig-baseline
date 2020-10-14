@@ -38,5 +38,5 @@ is_docker: 'true'
 
 #disallowed: ['']
 
-mongo_use_ldap: 'true'
+mongo_use_ldap: 'false'
 mongo_use_saslauthd: 'true'

@@ -33,7 +33,7 @@
   file:
     path: "/var/log"
     state: directory
-    mode: '700'
+    mode: '755'
     owner: root
     group: root
 
