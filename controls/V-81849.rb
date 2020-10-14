@@ -37,16 +37,9 @@ control "V-81849" do
   tag "fix_id": "F-88699r1_fix"
   tag "cci": ["CCI-000162", "CCI-000163", "CCI-000164"]
   tag "nist": ["AU-9", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Verify User ownership, Group ownership, and permissions on the
   \"<MongoDB auditLog directory>\":
 
@@ -106,10 +99,19 @@ control "V-81849" do
   the output will be the \"<MongoDB auditLog directory>\"
 
   /var/lib/mongo"
-  mongodb_auditlog_dir = command('dirname /var/lib/mongo/auditLog.bson').stdout.strip
-  describe file(mongodb_auditlog_dir) do
-    it { should_not be_more_permissive_than('0700') } 
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+
+  if file(input('mongod_auditlog')).exist?
+    mongodb_auditlog_dir = command("dirname #{input('mongod_auditlog')}").stdout.strip
+    describe file(mongodb_auditlog_dir) do
+      it { should_not be_more_permissive_than('0700') } 
+      its('owner') { should be_in input('mongodb_service_account') }
+      its('group') { should be_in input('mongodb_service_group') }
+    end
+  else
+    describe file('/var/log') do
+      it { should_not be_more_permissive_than('0700') } 
+      its('owner') { should eq 'root' }
+      its('group') { should eq 'root' }
+    end
   end
 end

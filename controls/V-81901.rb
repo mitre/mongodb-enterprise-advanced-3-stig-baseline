@@ -24,16 +24,9 @@ control "V-81901" do
   tag "fix_id": "F-88751r1_fix"
   tag "cci": ["CCI-001914"]
   tag "nist": ["AU-12", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "The MongoDB auditing facility allows authorized administrators
   and users track system activity. Once auditing is configured and enabled,
   changes to the audit events and filters require restarting the mongod (and

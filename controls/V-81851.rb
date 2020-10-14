@@ -32,16 +32,9 @@ control "V-81851" do
   tag "fix_id": "F-88701r1_fix"
   tag "cci": ["CCI-001493", "CCI-001494", "CCI-001495"]
   tag "nist": ["AU-9", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Verify User ownership, Group ownership, and permissions on the
   “<MongoDB configuration file>\":
 
@@ -73,9 +66,10 @@ control "V-81851" do
   > chown mongod /etc/mongod.conf
   > chgrp mongod /etc/mongod.conf
   > chmod 700 /etc/mongod.conf"
+  
   describe file(input('mongod_conf')) do
     it { should_not be_more_permissive_than('0700') } 
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
 end

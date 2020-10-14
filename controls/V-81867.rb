@@ -18,16 +18,9 @@ control "V-81867" do
   tag "fix_id": "F-88717r1_fix"
   tag "cci": ["CCI-000196"]
   tag "nist": ["IA-5", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "MongoDB supports x.509 certificate authentication for use with
   a secure TLS/SSL connection.
 

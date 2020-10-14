@@ -21,16 +21,9 @@ control "V-81929" do
   tag "fix_id": "F-88779r1_fix"
   tag "cci": ["CCI-000366"]
   tag "nist": ["CM-6 b", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Review the MongoDB documentation and configuration to determine
   it is configured in accordance with DoD security configuration and
   implementation guidance, including STIGs, NSA configuration guides, CTOs, DTMs,

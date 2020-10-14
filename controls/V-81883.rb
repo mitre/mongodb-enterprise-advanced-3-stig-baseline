@@ -24,16 +24,9 @@ control "V-81883" do
   tag "fix_id": "F-88733r1_fix"
   tag "cci": ["CCI-001199"]
   tag "nist": ["SC-28", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "If the MongoDB Encrypted Storage Engines is being used, ensure
   that the \"security.enableEncryption\" option is set to \"true\" in the MongoDB
   configuration file (default location: /etc/mongod.conf) or that MongoDB was

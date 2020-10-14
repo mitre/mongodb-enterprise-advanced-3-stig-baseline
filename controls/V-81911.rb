@@ -23,16 +23,9 @@ control "V-81911" do
   tag "fix_id": "F-88761r1_fix"
   tag "cci": ["CCI-001813"]
   tag "nist": ["CM-5 (1)", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Review the security configuration of the MongoDB database(s).
 
   If unauthorized users can start the mongod or mongos processes or edit the

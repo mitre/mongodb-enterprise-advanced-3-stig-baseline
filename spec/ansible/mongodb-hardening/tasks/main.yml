@@ -164,6 +164,15 @@
       auditLog:
         destination: syslog
 
+# V-81893 - works
+- name: Verify error messages 
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)redactClientLogData:.*"
+    line: "  redactClientLogData: true"
+    insertafter: "^security:$"
+  # notify: restart mongod
+
 # V-81903
 - name: set path of database files
   lineinfile:
@@ -252,3 +261,61 @@
     nohup /usr/local/bin/pykmip-server &
   args:
     executable: /bin/bash
+
+# V-81909 & V-81911 & V-81865 & V-81899 & V-81845
+- name: Create MongoDB Admin user 
+  mongodb_user:
+    database: "admin"
+    name: "mongodb_admin"
+    password: "mongodb_admin"
+    roles: "userAdminAnyDatabase"
+
+- name: Create MongoDB Regular user 
+  mongodb_user:
+    database: "admin"
+    name: "mongoadmin"
+    password: "mongoadmin"
+    roles: "userAdminAnyDatabase"
+
+# # V-81915
+- name: Check if saslauthd is required
+  shell: "echo {{ mongo_use_saslauthd }}"
+  register: use_saslauthd
+
+- name: configure saslauthd
+  lineinfile: 
+    path: "{{ saslauthd }}"
+    regexp: '^MECH=pam$'
+    line: 'MECH=ldap'
+  become: true
+  when:
+    - use_saslauthd.stdout == 'true'
+  # notify: restart saslauthd
+
+- name: edit timeout cache
+  lineinfile:
+    path: "{{ saslauthd }}"
+    regexp: '^FLAGS=$'
+    line: "FLAGS=-t 900"
+  become: true
+  when:
+    - use_saslauthd.stdout == 'true'
+  # notify: restart saslauthd
+
+- name: Check if LDAP is required
+  shell: "echo {{ mongo_use_ldap }}"
+  register: use_ldap
+
+- name: Edit LDAP timeout
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} LDAP config"
+    insertafter: "^security:$"
+    block: |2
+        ldap:
+          timeoutMS: 10000
+  when:
+    - use_ldap.stdout == 'true'
+
+  # V-81873 
+  # V-81927 

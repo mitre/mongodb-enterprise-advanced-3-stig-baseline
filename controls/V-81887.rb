@@ -19,16 +19,9 @@ control "V-81887" do
   tag "fix_id": "F-88737r1_fix"
   tag "cci": ["CCI-001090"]
   tag "nist": ["SC-4", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Verify the permissions for the following database files or
   directories:
 
@@ -48,14 +41,16 @@ control "V-81887" do
   MongoDB data file directory (default location):
   chown -R mongod:mongod/var/lib/mongo
   chmod -R 755/var/lib/mongo"
+
   describe file(input('mongod_conf')) do
     it { should_not be_more_permissive_than('0755') } 
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
-  describe directory('/var/lib/mongo') do
+  
+  describe directory(input('mongo_dir')) do
     it { should_not be_more_permissive_than('0755') } 
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
 end

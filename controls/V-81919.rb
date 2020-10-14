@@ -31,16 +31,9 @@ control "V-81919" do
   tag "fix_id": "F-88769r1_fix"
   tag "cci": ["CCI-002475"]
   tag "nist": ["SC-28", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Review the documentation and/or specification for the
   organization-defined information.
 
@@ -74,7 +67,7 @@ control "V-81919" do
   end
   describe yaml(input('mongod_conf')) do
     its(%w{security kmip port}) { should_not be_nil }
-  end
+  end  
   describe yaml(input('mongod_conf')) do
     its(%w{security kmip serverCAFile}) { should_not be_nil }
   end
@@ -83,5 +76,5 @@ control "V-81919" do
   end
   describe yaml(input('mongod_conf')) do
     its(['security' , 'enableEncryption']) { should cmp 'true' }
-  end
+  end    
 end

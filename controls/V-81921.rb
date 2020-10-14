@@ -23,16 +23,9 @@ control "V-81921" do
   tag "fix_id": "F-88771r1_fix"
   tag "cci": ["CCI-002420"]
   tag "nist": ["SC-8 (2)", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Review the system information/specification for information
   indicating a strict requirement for data integrity and confidentiality when
   data is being prepared to be transmitted.

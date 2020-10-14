@@ -41,16 +41,9 @@ control "V-81899" do
   tag "cci": ["CCI-002165", "CCI-002235"]
   tag "nist": ["AC-3 (4)", "Rev_4"]
   tag "nist": ["AC-6 (10)", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "Review the system documentation to obtain the definition of the
   database/DBMS functionality considered privileged in the context of the system
   in question.

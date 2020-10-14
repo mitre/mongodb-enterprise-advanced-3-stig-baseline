@@ -33,16 +33,9 @@ control "V-81909" do
   tag "fix_id": "F-88759r1_fix"
   tag "cci": ["CCI-001812"]
   tag "nist": ["CM-11 (2)", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "If MongoDB supports only software development, experimentation,
   and/or developer-level testing (that is, excluding production systems,
   integration testing, stress testing, and user acceptance testing), this is not
