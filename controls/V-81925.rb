@@ -55,10 +55,9 @@ control "V-81925" do
   rules. Use the \"validator\" option to create or update a collection with the
   desired validation rules."
   
-  describe yaml(input('mongod_conf')) do
-    its(%w{storage dbPath}) { should cmp 'data/db' }
-  end
-  describe yaml(input('mongod_conf')) do
-    its(%w{auditLog destination}) { should cmp 'syslog' }
+  describe 'A manual review is required to ensure when invalid inputs are received, MongoDB behaves in a predictable
+  and documented manner that reflects organizational and system objectives' do
+    skip 'A manual review is required to ensure when invalid inputs are received, MongoDB behaves in a predictable
+    and documented manner that reflects organizational and system objectives'
   end
 end

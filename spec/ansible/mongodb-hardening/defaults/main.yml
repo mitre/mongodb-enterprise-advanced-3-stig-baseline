@@ -4,6 +4,9 @@ mongod_lib: '/var/lib/mongo/'
 mongod_auditlog: '/var/lib/mongo/auditLog.bson'
 saslauthd: '/etc/sysconfig/saslauthd'
 
+mongo_use_saslauthd: 'true'
+mongo_use_ldap: 'false'
+
 mongodb_packages_used: [
   'mongodb-org-tools-4.0.5-1.el7.x86_64',
   'mongodb-org-server-4.0.5-1.el7.x86_64',

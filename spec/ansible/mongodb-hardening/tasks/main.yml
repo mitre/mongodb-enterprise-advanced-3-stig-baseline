@@ -63,7 +63,7 @@
   yum:
     name: 
       - mongodb-enterprise-mongos
-      - mongodb-enterprise-shell
+      # - mongodb-enterprise-shell
       - mongodb-enterprise-tools
     state: absent
 
@@ -99,7 +99,7 @@
           certificateKeyFile: /etc/ssl/mongodb.pem
           PEMKeyFile: /etc/ssl/mongodb.pem
           CAFile: /etc/ssl/mongodbca.pem
-  # notify: restart mongod
+  # notify: restart 
 
 # V-81875
 - name: enable NIST FIPS 140-2-validated cryptographic modules
@@ -177,25 +177,27 @@
           serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
  # notify: restart mongod
 
-# V-81873 
-
-# V-81893 - works
+# V-81893
 - name: Verify error messages 
   lineinfile:
     path: "{{ mongod_conf }}"
     regexp: "(|#)redactClientLogData:.*"
     line: "  redactClientLogData: true"
     insertafter: "^security:$"
-  # notify: restart mongod
 
-# # V-81915 - works
+# # V-81915
+- name: Check if saslauthd is Required
+  shell: "echo {{ mongo_use_saslauthd }}"
+  register: use_saslauthd
+
 - name: configure saslauthd
   lineinfile: 
     path: "{{ saslauthd }}"
     regexp: '^MECH=pam$'
     line: 'MECH=ldap'
   become: true
-  # notify: restart saslauthd
+  when: 
+      - use_saslauthd.stdout == 'true'
 
 - name: edit timeout cache
   lineinfile:
@@ -203,7 +205,8 @@
     regexp: '^FLAGS=$'
     line: "FLAGS=-t 900"
   become: true
-  # notify: restart saslauthd
+  when: 
+      - use_saslauthd.stdout == 'true'
 
 - name: Edit LDAP timeout
   blockinfile:
@@ -213,21 +216,7 @@
     block: |2
         ldap:
           timeoutMS: 10000
-  # notify: restart mongod
+  when: 
+    - use_saslauthd.stdout == 'true'
 
-# V-81925 #  works
-- name: enable auditing
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^#auditLog:$'
-    line: 'auditLog:'
-    
-- name: Document validation at time of creation
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^destination:$'
-    line: "  destination: syslog"
-    insertafter: "^auditLog:$"
-
-# V-81927 
 
