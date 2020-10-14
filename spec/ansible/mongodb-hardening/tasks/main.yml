@@ -29,6 +29,14 @@
     - /var/lib/mongo/
     - /data/db/
 
+- name: secure access to syslog directory
+  file:
+    path: "/var/log"
+    state: directory
+    mode: '700'
+    owner: root
+    group: root
+
 # V-81851
 - name: verify User ownership, Group ownership, and permssions
   file:
