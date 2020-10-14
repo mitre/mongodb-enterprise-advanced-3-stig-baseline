@@ -244,7 +244,7 @@
     sed -i 's/Server Certificate/MONGODB/g' create.py
     python create.py
     cat client_certificate_john_doe.pem client_key_john_doe.pem > /etc/ssl/mongodb_kmip_client.pem
-    cp server_certificate.pem /etc/ssl/mongodb_kmip_ca.pem
+    cp root_certificate.pem /etc/ssl/mongodb_kmip_ca.pem
     mkdir /etc/pykmip/
     cp server_certificate.pem /etc/pykmip/server.crt
     cp server_key.pem /etc/pykmip/server.key
