@@ -109,7 +109,7 @@ control "V-81909" do
           allowed_role = username
           describe "The database role for user: #{username}" do
             subject { rr }
-            it { should be_in attribute("#{allowed_role}_allowed_role") }
+            it { should be_in input("#{allowed_role}_allowed_role") }
           end
         end
       end
