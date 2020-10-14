@@ -4,6 +4,21 @@
     name: mongod
     state: started
 
+# V-81909 & V-81911 & V-81865 & V-81899 & V-81845
+- name: Create MongoDB Admin user 
+  mongodb_user:
+    database: "admin"
+    name: "mongodb_admin"
+    password: "mongodb_admin"
+    roles: "userAdminAnyDatabase"
+
+- name: Create MongoDB Regular user 
+  mongodb_user:
+    database: "admin"
+    name: "mongoadmin"
+    password: "mongoadmin"
+    roles: "userAdminAnyDatabase"
+
 # V-81843
 - name: enable security
   lineinfile:
@@ -250,7 +265,12 @@
       logging_level=DEBUG
       database_path=/tmp/pykmip.db
 
-- name: generate client certficate for KMIP and copy server certs
+- name: check if KMIP certs exists exists
+  stat:
+    path: /etc/pykmip/ca.crt
+  register: kmip_cert_result
+
+- name: generate and copy certficate for KMIP
   shell: |
     pip3 install pykmip
     echo "127.0.0.1 MONGODB" >> /etc/hosts
@@ -264,26 +284,14 @@
     cp server_certificate.pem /etc/pykmip/server.crt
     cp server_key.pem /etc/pykmip/server.key
     cp root_certificate.pem /etc/pykmip/ca.crt
-    nohup /usr/local/bin/pykmip-server &
-    service mongod restart
   args:
     executable: /bin/bash
-  run_once: true
+  when: not kmip_cert_result.stat.exists
 
-# V-81909 & V-81911 & V-81865 & V-81899 & V-81845
-- name: Create MongoDB Admin user 
-  mongodb_user:
-    database: "admin"
-    name: "mongodb_admin"
-    password: "mongodb_admin"
-    roles: "userAdminAnyDatabase"
-
-- name: Create MongoDB Regular user 
-  mongodb_user:
-    database: "admin"
-    name: "mongoadmin"
-    password: "mongoadmin"
-    roles: "userAdminAnyDatabase"
+- name: start KMIP server and restart mongodb
+  shell: |
+    nohup /usr/local/bin/pykmip-server &
+    service mongod restart
 
 # # V-81915
 - name: Check if saslauthd is required
