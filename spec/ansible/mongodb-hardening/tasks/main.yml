@@ -42,6 +42,14 @@
     - /data/db/
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
+- name: secure access to syslog directory
+  file:
+    path: "/var/log"
+    state: directory
+    mode: '700'
+    owner: root
+    group: root
+
 # V-81851
 - name: secure access to config file
   file:
