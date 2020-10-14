@@ -54,20 +54,29 @@ control "V-81915" do
   can be changed from the default \"30\" seconds.
 
   This is accomplished by modifying the mongos configuration file (default
-  location: /etc/mongod.conf) and then restarting mongos."
+  location: /etc/mongod.conf) and then restarting mongos.
+  
+  In the mongod.conf, set timeoutMS to 1000.
+  security:
+  ldap:
+  timeoutMS: 1000
+  
+  In the saslauthd file ( default location: /etc/sysconfig/saslauthd ), set FLAGS to -t 900
+  FLAGS= -t 900
+  
+  Also, in the saslauthd file, set MECH to ldap
+  MECH=ldap "
 
-  # describe ini(input('saslauthd')) do
-  #   its(%w{MECH}) {should cmp 'ldap'}
-  # end
-  # describe ini(input('saslauthd')) do
-  #   its('FLAGS') {should eq '-t 900'}
-  # end
-  # describe yaml(input('mongod_conf')) do
-  #   its(%w{security authorization}) { should cmp 'enabled'}
-  # end
-  # describe yaml(input('mongod_conf')) do
-  #   its(%w{security ldap timeoutMS}) { should cmp '10000' }
-  # end 
-
-
+  describe ini(input('saslauthd')) do
+    its(%w{MECH}) {should cmp 'ldap'}
+  end
+  describe ini(input('saslauthd')) do
+    its('FLAGS') {should eq '-t 900'}
+  end
+  describe yaml(input('mongod_conf')) do
+    its(%w{security authorization}) { should cmp 'enabled'}
+  end
+  describe yaml(input('mongod_conf')) do
+    its(%w{security ldap timeoutMS}) { should cmp '10000' }
+  end 
 end
