@@ -109,7 +109,7 @@ control "V-81849" do
     end
   else
     describe file('/var/log') do
-      it { should_not be_more_permissive_than('0700') } 
+      it { should_not be_more_permissive_than('0755') } 
       its('owner') { should eq 'root' }
       its('group') { should eq 'root' }
     end

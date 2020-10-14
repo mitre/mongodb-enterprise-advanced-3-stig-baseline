@@ -53,26 +53,23 @@ control "V-81915" do
   Also, in the saslauthd file, set MECH to ldap
   MECH=ldap "
 
-  if input('mongo_use_saslauthd') == 'true'
-    if input('mongo_use_ldap') == 'true'
-      describe ini(input('saslauthd')) do
-        its(%w{MECH}) {should cmp 'ldap'}
-      end
-      describe ini(input('saslauthd')) do
-        its('FLAGS') {should eq '-t 900'}
-      end
-      describe yaml(input('mongod_conf')) do
-        its(%w{security authorization}) { should cmp 'enabled'}
-      end
-      describe yaml(input('mongod_conf')) do
-        its(%w{security ldap timeoutMS}) { should cmp '10000' }
-      end 
+  if input('mongo_use_saslauthd') == 'true' && input('mongo_use_ldap') == 'true'
+    describe ini(input('saslauthd')) do
+      its(%w{MECH}) {should cmp 'ldap'}
     end
+    describe ini(input('saslauthd')) do
+      its('FLAGS') {should eq '-t 900'}
+    end
+    describe yaml(input('mongod_conf')) do
+      its(%w{security authorization}) { should cmp 'enabled'}
+    end
+    describe yaml(input('mongod_conf')) do
+      its(%w{security ldap timeoutMS}) { should cmp '10000' }
+    end 
   else
-    impact 0.0 
-  end
+    impact 0.0
+    describe 'This control is Not Applicable because MongoDB is not configured to authenticate using SASL and LDAP.' do
+      skip 'This control is Not Applicable because MongoDB is not configured to authenticate using SASL and LDAP.'
+    end 
+  end 
 end
-
-
-
-
