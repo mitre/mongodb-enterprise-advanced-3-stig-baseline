@@ -5,16 +5,16 @@
         name: mongod
         state: started
 
-- name: Create MongoDB Admin user 
-  mongodb_user:
-    database: "admin"
-    name: "mongodb_admin"
-    password: "mongodb_admin"
-    roles: "userAdminAnyDatabase"
+    - name: Create MongoDB Admin user 
+      mongodb_user:
+        database: "admin"
+        name: "mongodb_admin"
+        password: "mongodb_admin"
+        roles: "userAdminAnyDatabase"
 
-- name: Create MongoDB Regular user 
-  mongodb_user:
-    database: "admin"
-    name: "mongoadmin"
-    password: "mongoadmin"
-    roles: "userAdminAnyDatabase"
+    - name: Create MongoDB Regular user 
+      mongodb_user:
+        database: "admin"
+        name: "mongoadmin"
+        password: "mongoadmin"
+        roles: "userAdminAnyDatabase"
