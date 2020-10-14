@@ -1,4 +1,5 @@
 mongod_conf: '/etc/mongod.conf'
+mongo_dir: '/var/lib/mongo'
 mongod_pem: '/etc/ssl/mongodbca.pem'
 mongod_lib: '/var/lib/mongo/'
 mongod_auditlog: '/var/lib/mongo/auditLog.bson'
