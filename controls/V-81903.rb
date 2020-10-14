@@ -41,15 +41,15 @@ control "V-81903" do
 
   To enable auditing and print audit events to the syslog in JSON format, specify
   the syslog for the --auditDestination setting:
-  mongod --dbpath data/db --auditDestination syslog
+  mongod --dbpath /data/db --auditDestination syslog
 
   Alternatively, these options can also be specified in the configuration file:
   storage:
-  dbPath: data/db
+  dbPath: /data/db
   auditLog:
   destination: syslog"
   describe yaml(input('mongod_conf')) do
-    its(%w{storage dbPath}) { should cmp 'data/db' }
+    its(%w{storage dbPath}) { should cmp '/data/db' }
   end
   describe yaml(input('mongod_conf')) do
     its(%w{auditLog destination}) { should cmp 'syslog' }

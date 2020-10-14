@@ -46,7 +46,7 @@
   file:
     path: "/var/log"
     state: directory
-    mode: '700'
+    mode: '755'
     owner: root
     group: root
 
@@ -179,14 +179,13 @@
     regexp: "(|#)redactClientLogData:.*"
     line: "  redactClientLogData: true"
     insertafter: "^security:$"
-  # notify: restart mongod
 
 # V-81903
 - name: set path of database files
   lineinfile:
     path: "{{ mongod_conf }}"
     regexp: ".*dbPath:.*"
-    line: "  dbPath: data/db"
+    line: "  dbPath: /data/db"
     insertafter: "^storage:$"
 
 # V-81917
@@ -211,7 +210,6 @@
           port: 5696
           clientCertificateFile: /etc/ssl/mongodb_kmip_client.pem
           serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
-  notify: restart mongod
 
 - name: install KMIP packages
   apt: 
@@ -267,6 +265,7 @@
     cp server_key.pem /etc/pykmip/server.key
     cp root_certificate.pem /etc/pykmip/ca.crt
     nohup /usr/local/bin/pykmip-server &
+    service mongod restart
   args:
     executable: /bin/bash
 
