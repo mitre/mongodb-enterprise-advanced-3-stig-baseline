@@ -12,6 +12,8 @@ password: 'mongoadmin'
 
 admin_db_users: ["mongodb_admin"]
 config_db_users: ["config_admin"]
+mongodb_service_account: ['mongod', 'mongodb']
+mongodb_service_group: ['mongod', 'mongodb']
 myUserAdmin_allowed_role: ['[ 
   { "role" : "userAdminAnyDatabase", "db" : "admin" } 
   ] }']

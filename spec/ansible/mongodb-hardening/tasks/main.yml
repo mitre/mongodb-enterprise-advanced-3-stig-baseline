@@ -28,6 +28,19 @@
   with_items:
     - /var/lib/mongo/
     - /data/db/
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: secure access to mongo directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '700'
+    owner: mongodb
+    group: mongodb
+  with_items:
+    - /var/lib/mongo/
+    - /data/db/
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 # V-81851
 - name: secure access to config file
@@ -36,6 +49,15 @@
     mode: u+rw,g-rwx,o-rwx
     owner: mongod
     group: mongod
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: secure access to config file
+  file:
+    path: "{{ mongod_conf }}"
+    mode: u+rw,g-rwx,o-rwx
+    owner: mongodb
+    group: mongodb
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 # V-81871
 - name: secure access to SSL certs
@@ -50,14 +72,29 @@
       - /etc/ssl/mongodb.pem
       - /etc/ssl/mongodb_kmip_client.pem
       - /etc/ssl/mongodb_kmip_ca.pem
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: secure access to SSL certs
+  file:
+    path: "{{ item }}"
+    state: touch
+    mode: u+rw,g-rwx,o-rwx
+    owner: mongodb
+    group: mongodb
+  with_items:
+      - /etc/ssl/mongodbca.pem
+      - /etc/ssl/mongodb.pem
+      - /etc/ssl/mongodb_kmip_client.pem
+      - /etc/ssl/mongodb_kmip_ca.pem
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 # V-81859
 - name: uninstall unused packages
-  yum:
+  package:
     name: 
-      - mongodb-enterprise-mongos
-      - mongodb-enterprise-shell
-      - mongodb-enterprise-tools
+      - enterprise-mongos
+      - enterprise-shell
+      - enterprise-tools
     state: absent
 
 # V-81861
@@ -120,10 +157,12 @@
 
 # V-81847 V-81901 V-81905 V-81907 
 - name: set audit log destination
-  lineinfile:
+  blockinfile:
     path: "{{ mongod_conf }}"
-    regexp: ".*auditLog:.*\n.*destination:.*"
-    line: "auditLog:\n  destination: syslog"
+    marker: "# {mark} auditLog config"
+    block: |
+      auditLog:
+        destination: syslog
 
 # V-81903
 - name: set path of database files
@@ -141,8 +180,6 @@
     openssl x509 -req -in /tmp/server.csr -CA /tmp/ca.crt -CAkey /tmp/ca.key -CAcreateserial -out /tmp/server.crt
     cat /tmp/server.key /tmp/server.crt > /etc/ssl/mongodb.pem
     cat /tmp/ca.crt > /etc/ssl/mongodbca.pem
-    cp /etc/ssl/mongodb.pem /etc/ssl/mongodb_kmip_client.pem
-    cp /etc/ssl/mongodbca.pem /etc/ssl/mongodb_kmip_ca.pem
   changed_when: 1
 
 # V-81919
@@ -153,32 +190,65 @@
     insertafter: "^security:$"
     block: |2
         kmip:
-          serverName: 127.0.0.1
+          serverName: MONGODB
           port: 5696
           clientCertificateFile: /etc/ssl/mongodb_kmip_client.pem
           serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
   notify: restart mongod
 
-# V-81877
-#TODO check user roles
+- name: install KMIP packages
+  apt: 
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - python3-dev
+    - libffi-dev
+    - libssl-dev
+    - libsqlite3-dev
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
-# V-81863
-#TODO check user roles
+- name: install KMIP packages
+  yum: 
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - python3-devel
+    - libffi-devel
+    - openssl-devel
+    - libsqlite3x-devel
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
-# V-81857
-#TODO check user roles
+- name: set KMIP settings for PYKMIP
+  blockinfile:
+    path: /etc/pykmip/server.conf
+    marker: "# {mark} config"
+    create: yes
+    block: |
+      [server]
+      hostname=MONGODB
+      port=5696
+      certificate_path=/etc/pykmip/server.crt
+      key_path=/etc/pykmip/server.key
+      ca_path=/etc/pykmip/ca.crt
+      auth_suite=Basic
+      enable_tls_client_auth=True
+      logging_level=DEBUG
+      database_path=/tmp/pykmip.db
 
-# V-81909
-#TODO check user roles
-
-# V-81911
-#TODO check user roles
-
-# V-81899
-#TODO check user roles
-
-# V-81845
-#TODO check user roles
-
-# V-81865
-#TODO ldap auth check
+- name: generate client certficate for KMIP and copy server certs
+  shell: |
+    pip3 install pykmip
+    echo "127.0.0.1 MONGODB" >> /etc/hosts
+    cd /tmp/
+    wget https://github.com/OpenKMIP/PyKMIP/raw/master/bin/create_certificates.py -O create.py
+    sed -i 's/Server Certificate/MONGODB/g' create.py
+    python create.py
+    cat client_certificate_john_doe.pem client_key_john_doe.pem > /etc/ssl/mongodb_kmip_client.pem
+    cp server_certificate.pem /etc/ssl/mongodb_kmip_ca.pem
+    mkdir /etc/pykmip/
+    cp server_certificate.pem /etc/pykmip/server.crt
+    cp server_key.pem /etc/pykmip/server.key
+    cp root_certificate.pem /etc/pykmip/ca.crt
+    nohup /usr/local/bin/pykmip-server &
+  args:
+    executable: /bin/bash
