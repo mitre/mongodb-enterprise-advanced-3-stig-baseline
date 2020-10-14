@@ -53,16 +53,26 @@ control "V-81915" do
   Also, in the saslauthd file, set MECH to ldap
   MECH=ldap "
 
-  describe ini(input('saslauthd')) do
-    its(%w{MECH}) {should cmp 'ldap'}
+  if input('mongo_use_saslauthd') == 'true'
+    if input('mongo_use_ldap') == 'true'
+      describe ini(input('saslauthd')) do
+        its(%w{MECH}) {should cmp 'ldap'}
+      end
+      describe ini(input('saslauthd')) do
+        its('FLAGS') {should eq '-t 900'}
+      end
+      describe yaml(input('mongod_conf')) do
+        its(%w{security authorization}) { should cmp 'enabled'}
+      end
+      describe yaml(input('mongod_conf')) do
+        its(%w{security ldap timeoutMS}) { should cmp '10000' }
+      end 
+    end
+  else
+    impact 0.0 
   end
-  describe ini(input('saslauthd')) do
-    its('FLAGS') {should eq '-t 900'}
-  end
-  describe yaml(input('mongod_conf')) do
-    its(%w{security authorization}) { should cmp 'enabled'}
-  end
-  describe yaml(input('mongod_conf')) do
-    its(%w{security ldap timeoutMS}) { should cmp '10000' }
-  end 
 end
+
+
+
+
