@@ -106,11 +106,12 @@ control "V-81863" do
       allowed_db = dbs
       describe "Database users of database: #{dbs}" do
         subject { username }
-        it { should be_in attribute("#{allowed_db}_db_users") }
+        it { should be_in input("#{allowed_db}_db_users") }
       end
     end
   end
   describe yaml(input('mongod_conf')) do
     its(%w{security authorization}) { should cmp 'enabled' }
   end
+
 end
