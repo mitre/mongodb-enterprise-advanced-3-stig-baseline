@@ -198,7 +198,7 @@
 
 # # V-81915
 - name: Check if saslauthd is required
-  shell: "echo{{ mongo_use_saslauthd }}"
+  shell: "echo {{ mongo_use_saslauthd }}"
   register: use_saslauthd
 
 - name: configure saslauthd
@@ -222,7 +222,7 @@
   # notify: restart saslauthd
 
 - name: Check if LDAP is required
-  shell: "echo{{ mongo_use_ldap }}"
+  shell: "echo {{ mongo_use_ldap }}"
   register: use_ldap
 
 - name: Edit LDAP timeout
