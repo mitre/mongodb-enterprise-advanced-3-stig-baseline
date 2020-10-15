@@ -9,17 +9,6 @@ control "V-81867" do
   disclosure. Database passwords must always be in the form of one-way, salted
   hashes when stored internally or externally to MongoDB.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000171-DB-000074"
-  tag "gid": "V-81867"
-  tag "rid": "SV-96581r1_rule"
-  tag "stig_id": "MD3X-00-000330"
-  tag "fix_id": "F-88717r1_fix"
-  tag "cci": ["CCI-000196"]
-  tag "nist": ["IA-5", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
   
   desc "check", "MongoDB supports x.509 certificate authentication for use with
   a secure TLS/SSL connection.
@@ -55,6 +44,19 @@ control "V-81867" do
 
   Additionally, SSL/TLS must be on as documented here:
   https://docs.mongodb.com/v3.4/tutorial/configure-ssl/"
+ 
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000171-DB-000074"
+  tag "gid": "V-81867"
+  tag "rid": "SV-96581r1_rule"
+  tag "stig_id": "MD3X-00-000330"
+  tag "fix_id": "F-88717r1_fix"
+  tag "cci": ["CCI-000196"]
+  tag "nist": ["IA-5", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false 
+
   describe yaml(input('mongod_conf')) do
     its(%w{security authorization}) { should cmp 'enabled' }
   end

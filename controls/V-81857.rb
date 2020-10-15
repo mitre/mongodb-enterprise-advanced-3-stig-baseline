@@ -1,4 +1,4 @@
-control "V-81857" do
+  control "V-81857" do
   title "The role(s)/group(s) used to modify database structure (including but
   not necessarily limited to tables, indexes, storage, etc.) and logic modules
   (stored procedures, functions, triggers, links to software external to MongoDB,
@@ -15,17 +15,6 @@ control "V-81857" do
       Unmanaged changes that occur to the database software libraries or
   configuration can lead to unauthorized or compromised installations.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000133-DB-000362"
-  tag "gid": "V-81857"
-  tag "rid": "SV-96571r1_rule"
-  tag "stig_id": "MD3X-00-000270"
-  tag "fix_id": "F-88707r1_fix"
-  tag "cci": ["CCI-001499"]
-  tag "nist": ["CM-5 (6)", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
   
   desc "check", "Run the following command to get the roles from a MongoDB
   database.
@@ -56,6 +45,19 @@ control "V-81857" do
 
   MongoDB commands for role management can be found here:
   https://docs.mongodb.com/v3.4/reference/method/js-role-management/"
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000133-DB-000362"
+  tag "gid": "V-81857"
+  tag "rid": "SV-96571r1_rule"
+  tag "stig_id": "MD3X-00-000270"
+  tag "fix_id": "F-88707r1_fix"
+  tag "cci": ["CCI-001499"]
+  tag "nist": ["CM-5 (6)", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   a = []
   dbnames = []
   mongo_user = input('user')

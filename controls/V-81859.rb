@@ -1,4 +1,4 @@
-control "V-81859" do
+  control "V-81859" do
   title "Unused database components, DBMS software, and database objects must
   be removed."
   desc "Information systems are capable of providing a wide variety of
@@ -12,17 +12,6 @@ control "V-81859" do
       DBMSs must adhere to the principles of least functionality by providing
   only essential capabilities.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000141-DB-000091"
-  tag "gid": "V-81859"
-  tag "rid": "SV-96573r1_rule"
-  tag "stig_id": "MD3X-00-000280"
-  tag "fix_id": "F-88709r1_fix"
-  tag "cci": ["CCI-000381"]
-  tag "nist": ["CM-7 a", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
   
   desc "check", "Review the list of components and features installed with the
   MongoDB database.
@@ -45,6 +34,19 @@ control "V-81859" do
   On applications servers that typically run the mongos process when connecting
   to a shared cluster, the only package required is the mongodb-enterprise-mongos
   package."
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000141-DB-000091"
+  tag "gid": "V-81859"
+  tag "rid": "SV-96573r1_rule"
+  tag "stig_id": "MD3X-00-000280"
+  tag "fix_id": "F-88709r1_fix"
+  tag "cci": ["CCI-000381"]
+  tag "nist": ["CM-7 a", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+  
   mongodb_installed_packages = command('rpm -qa | grep mongodb').stdout.strip.split("\n")
 
   if mongodb_installed_packages.empty?

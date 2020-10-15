@@ -1,4 +1,4 @@
-control "V-81909" do
+  control "V-81909" do
   title "MongoDB must prohibit user installation of logic modules (stored
   procedures, functions, triggers, views, etc.) without explicit privileged
   status."
@@ -24,17 +24,6 @@ control "V-81909" do
   In the case of a database management system, this requirement covers stored
   procedures, functions, triggers, views, etc.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000378-DB-000365"
-  tag "gid": "V-81909"
-  tag "rid": "SV-96623r1_rule"
-  tag "stig_id": "MD3X-00-000650"
-  tag "fix_id": "F-88759r1_fix"
-  tag "cci": ["CCI-001812"]
-  tag "nist": ["CM-11 (2)", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "If MongoDB supports only software development, experimentation,
   and/or developer-level testing (that is, excluding production systems,
@@ -58,6 +47,19 @@ control "V-81909" do
   command.
 
   Create, as needed, new role(s) with associated privileges."
+  
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000378-DB-000365"
+  tag "gid": "V-81909"
+  tag "rid": "SV-96623r1_rule"
+  tag "stig_id": "MD3X-00-000650"
+  tag "fix_id": "F-88759r1_fix"
+  tag "cci": ["CCI-001812"]
+  tag "nist": ["CM-11 (2)", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   a = []
   dbnames = []
   mongo_user = input('user')

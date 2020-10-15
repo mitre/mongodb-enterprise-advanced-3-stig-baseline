@@ -1,4 +1,4 @@
-control "V-81923" do
+  control "V-81923" do
   title "MongoDB must maintain the confidentiality and integrity of information
   during reception."
   desc "Information can be either unintentionally or maliciously disclosed or
@@ -16,17 +16,6 @@ control "V-81923" do
       When receiving data, MongoDB, associated applications, and infrastructure
   must leverage protection mechanisms.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000442-DB-000379"
-  tag "gid": "V-81923"
-  tag "rid": "SV-96637r1_rule"
-  tag "stig_id": "MD3X-00-000770"
-  tag "fix_id": "F-88773r2_fix"
-  tag "cci": ["CCI-002422"]
-  tag "nist": ["SC-8 (2)", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "If the data owner does not have a strict requirement for
   ensuring data integrity and confidentiality is maintained at every step of the
@@ -58,6 +47,19 @@ control "V-81923" do
 
   Start/stop (restart) all mongod or mongos instances using the MongoDB
   configuration file (default location: /etc/mongod.conf)."
+  
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000442-DB-000379"
+  tag "gid": "V-81923"
+  tag "rid": "SV-96637r1_rule"
+  tag "stig_id": "MD3X-00-000770"
+  tag "fix_id": "F-88773r2_fix"
+  tag "cci": ["CCI-002422"]
+  tag "nist": ["SC-8 (2)", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   describe yaml(input('mongod_conf')) do
     its(%w{net ssl mode}) { should cmp 'requireSSL' }
   end

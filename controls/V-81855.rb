@@ -18,17 +18,6 @@ control "V-81855" do
   method that provides any level of separation of security context assists in the
   protection between applications.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000133-DB-000199"
-  tag "gid": "V-81855"
-  tag "rid": "SV-96569r1_rule"
-  tag "stig_id": "MD3X-00-000260"
-  tag "fix_id": "F-88705r1_fix"
-  tag "cci": ["CCI-001499"]
-  tag "nist": ["CM-5 (6)", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "Review the MongoDB software library directory and note other
   root directories located on the same disk directory or any subdirectories.
@@ -45,6 +34,19 @@ control "V-81855" do
   software library directory. Relocate any directories or reinstall other
   application software that currently shares the MongoDB software library
   directory."
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000133-DB-000199"
+  tag "gid": "V-81855"
+  tag "rid": "SV-96569r1_rule"
+  tag "stig_id": "MD3X-00-000260"
+  tag "fix_id": "F-88705r1_fix"
+  tag "cci": ["CCI-001499"]
+  tag "nist": ["CM-5 (6)", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+  
   if input('is_docker') == 'true'
     describe "The MongoDB is installed within a Docker container so it is 
     separate from the host OS, therefore this is not a finding." do

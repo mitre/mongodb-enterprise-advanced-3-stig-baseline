@@ -29,18 +29,6 @@ control "V-81881" do
       Abort refers to stopping a program or function before it has finished
   naturally. The term abort refers to both requested and unexpected terminations.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000225-DB-000153"
-  tag "satisfies": ["SRG-APP-000225-DB-000153", "SRG-APP-000226-DB-000147"]
-  tag "gid": "V-81881"
-  tag "rid": "SV-96595r1_rule"
-  tag "stig_id": "MD3X-00-000420"
-  tag "fix_id": "F-88731r1_fix"
-  tag "cci": ["CCI-001190", "CCI-001665"]
-  tag "nist": ["SC-24", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "Journaling is enabled by default in 64-bit systems.
 
@@ -67,6 +55,20 @@ control "V-81881" do
   enabled: true
 
   Stop/start (restart) any or all mongod processes."
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000225-DB-000153"
+  tag "satisfies": ["SRG-APP-000225-DB-000153", "SRG-APP-000226-DB-000147"]
+  tag "gid": "V-81881"
+  tag "rid": "SV-96595r1_rule"
+  tag "stig_id": "MD3X-00-000420"
+  tag "fix_id": "F-88731r1_fix"
+  tag "cci": ["CCI-001190", "CCI-001665"]
+  tag "nist": ["SC-24", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   describe yaml(input('mongod_conf')) do
     its(%w{storage journal enabled}) { should cmp 'true' }
   end

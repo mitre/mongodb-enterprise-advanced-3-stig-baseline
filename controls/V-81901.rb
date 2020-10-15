@@ -1,4 +1,4 @@
-control "V-81901" do
+  control "V-81901" do
   title "MongoDB must provide the means for individuals in authorized roles to
   change the auditing to be performed on all application components, based on all
   selectable event criteria within organization-defined time thresholds."
@@ -15,17 +15,6 @@ control "V-81901" do
   establish time thresholds in which audit actions are changed, for example, near
   real time, within minutes, or within hours.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000353-DB-000324"
-  tag "gid": "V-81901"
-  tag "rid": "SV-96615r1_rule"
-  tag "stig_id": "MD3X-00-000590"
-  tag "fix_id": "F-88751r1_fix"
-  tag "cci": ["CCI-001914"]
-  tag "nist": ["AU-12", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "The MongoDB auditing facility allows authorized administrators
   and users track system activity. Once auditing is configured and enabled,
@@ -45,6 +34,19 @@ control "V-81901" do
   1. Restart the mongod instance as a standalone.
   2. Perform the configure auditing task on the standalone instance.
   3. Restart the mongod instance as a member of the replica set."
+  
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000353-DB-000324"
+  tag "gid": "V-81901"
+  tag "rid": "SV-96615r1_rule"
+  tag "stig_id": "MD3X-00-000590"
+  tag "fix_id": "F-88751r1_fix"
+  tag "cci": ["CCI-001914"]
+  tag "nist": ["AU-12", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   describe yaml(input('mongod_conf')) do
     its(%w{auditLog destination}) { should cmp 'syslog' }
   end

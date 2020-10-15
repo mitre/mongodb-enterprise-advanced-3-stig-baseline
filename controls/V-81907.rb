@@ -1,4 +1,4 @@
-control "V-81907" do
+  control "V-81907" do
   title "MongoDB must provide a warning to appropriate support staff when
   allocated audit record storage volume reaches 75% of maximum audit record
   storage capacity."
@@ -16,17 +16,6 @@ control "V-81907" do
   The appropriate support staff include, at a minimum, the ISSO and the
   DBA/SA.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000359-DB-000319"
-  tag "gid": "V-81907"
-  tag "rid": "SV-96621r1_rule"
-  tag "stig_id": "MD3X-00-000630"
-  tag "fix_id": "F-88757r2_fix"
-  tag "cci": ["CCI-001855"]
-  tag "nist": ["AU-5 (1)", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
   
   desc "check", "A MongoDB audit log that is configured to be stored in a file
   is identified in the MongoDB configuration file (default: /etc/mongod.conf)
@@ -47,6 +36,19 @@ control "V-81907" do
 
   Configure the required alert in the monitoring software to send an alert where
   storage volume holding the auditLog file utilization reaches 75%."
+  
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000359-DB-000319"
+  tag "gid": "V-81907"
+  tag "rid": "SV-96621r1_rule"
+  tag "stig_id": "MD3X-00-000630"
+  tag "fix_id": "F-88757r2_fix"
+  tag "cci": ["CCI-001855"]
+  tag "nist": ["AU-5 (1)", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   describe yaml(input('mongod_conf')) do
     its(%w{auditLog destination}) { should_not cmp 'file' }
   end

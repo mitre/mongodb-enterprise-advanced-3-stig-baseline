@@ -1,4 +1,4 @@
-control "V-81849" do
+  control "V-81849" do
   title "The audit information produced by MongoDB must be protected from
   unauthorized read access."
   desc "If audit data were to become compromised, then competent forensic
@@ -26,19 +26,6 @@ control "V-81849" do
   settings, and audit reports) needed to successfully audit information system
   activity.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000118-DB-000059"
-  tag "satisfies": ["SRG-APP-000118-DB-000059", "SRG-APP-000119-DB-000060",
-                    "SRG-APP-000120-DB-000061"]
-  tag "gid": "V-81849"
-  tag "rid": "SV-96563r1_rule"
-  tag "stig_id": "MD3X-00-000190"
-  tag "fix_id": "F-88699r1_fix"
-  tag "cci": ["CCI-000162", "CCI-000163", "CCI-000164"]
-  tag "nist": ["AU-9", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "Verify User ownership, Group ownership, and permissions on the
   \"<MongoDB auditLog directory>\":
@@ -99,6 +86,20 @@ control "V-81849" do
   the output will be the \"<MongoDB auditLog directory>\"
 
   /var/lib/mongo"
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000118-DB-000059"
+  tag "satisfies": ["SRG-APP-000118-DB-000059", "SRG-APP-000119-DB-000060",
+                    "SRG-APP-000120-DB-000061"]
+  tag "gid": "V-81849"
+  tag "rid": "SV-96563r1_rule"
+  tag "stig_id": "MD3X-00-000190"
+  tag "fix_id": "F-88699r1_fix"
+  tag "cci": ["CCI-000162", "CCI-000163", "CCI-000164"]
+  tag "nist": ["AU-9", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
 
   if file(input('mongod_auditlog')).exist?
     mongodb_auditlog_dir = command("dirname #{input('mongod_auditlog')}").stdout.strip
