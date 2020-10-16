@@ -51,7 +51,7 @@
   tag "severity_override_guidance": false
 
   describe yaml(input('mongod_conf')) do
-    its(%w{storage dbPath}) { should cmp '/data/db' }
+    its(%w{storage dbPath}) { should cmp 'data/db' }
   end
   describe yaml(input('mongod_conf')) do
     its(%w{auditLog destination}) { should cmp 'syslog' }
