@@ -1,4 +1,4 @@
-control "V-81905" do
+  control "V-81905" do
   title "MongoDB must allocate audit record storage capacity in accordance with
   site audit record storage requirements."
   desc "In order to ensure sufficient storage capacity for the audit logs,
@@ -22,17 +22,6 @@ control "V-81905" do
   central log management system; and any limitations that exist on MongoDB's
   ability to reuse the space formerly occupied by off-loaded records.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000357-DB-000316"
-  tag "gid": "V-81905"
-  tag "rid": "SV-96619r1_rule"
-  tag "stig_id": "MD3X-00-000620"
-  tag "fix_id": "F-88755r3_fix"
-  tag "cci": ["CCI-001849"]
-  tag "nist": ["AU-4", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "Investigate whether there have been any incidents where MongoDB
   ran out of audit log space since the last time the space was allocated or other
@@ -58,6 +47,19 @@ control "V-81905" do
 
   Allocate sufficient space to the storage volume hosting the file identified in
   the MongoDB configuration \"auditLog.path\" to support audit file peak demand."
+  
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000357-DB-000316"
+  tag "gid": "V-81905"
+  tag "rid": "SV-96619r1_rule"
+  tag "stig_id": "MD3X-00-000620"
+  tag "fix_id": "F-88755r3_fix"
+  tag "cci": ["CCI-001849"]
+  tag "nist": ["AU-4", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   describe yaml(input('mongod_conf')) do
     its(%w{auditLog destination}) { should_not cmp 'file' }
   end

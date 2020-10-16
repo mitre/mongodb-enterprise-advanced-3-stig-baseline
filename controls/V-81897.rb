@@ -1,4 +1,4 @@
-control "V-81897" do
+  control "V-81897" do
   title "MongoDB must associate organization-defined types of security labels
   having organization-defined security label values with information in storage."
   desc  "Without the association of security labels to information, there is no
@@ -23,19 +23,6 @@ control "V-81897" do
     The mechanism used to support security labeling may be a feature of MongoDB
   product, a third-party product, or custom application code.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000311-DB-000308"
-  tag "satisfies": ["SRG-APP-000311-DB-000308", "SRG-APP-000313-DB-000309",
-                    "SRG-APP-000313-DB-000310"]
-  tag "gid": "V-81897"
-  tag "rid": "SV-96611r1_rule"
-  tag "stig_id": "MD3X-00-000540"
-  tag "fix_id": "F-88747r1_fix"
-  tag "cci": ["CCI-002262", "CCI-002263", "CCI-002264"]
-  tag "nist": ["AC-16 a", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "MongoDB supports role-based access control at the collection
   level. If enabled, the database process should be started with
@@ -69,6 +56,21 @@ control "V-81897" do
   Use the \"$redact\" operator to restrict the contents of the documents based on
   information stored in the documents themselves as documented here:
   https://docs.mongodb.com/master/reference/operator/aggregation/redact/"
+  
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000311-DB-000308"
+  tag "satisfies": ["SRG-APP-000311-DB-000308", "SRG-APP-000313-DB-000309",
+                    "SRG-APP-000313-DB-000310"]
+  tag "gid": "V-81897"
+  tag "rid": "SV-96611r1_rule"
+  tag "stig_id": "MD3X-00-000540"
+  tag "fix_id": "F-88747r1_fix"
+  tag "cci": ["CCI-002262", "CCI-002263", "CCI-002264"]
+  tag "nist": ["AC-16 a", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   describe 'A manual review is required to ensure MongoDB associates organization-defined types of security labels
   having organization-defined security label values with information in storage.' do
     skip 'A manual review is required to ensure MongoDB associates organization-defined types of security labels

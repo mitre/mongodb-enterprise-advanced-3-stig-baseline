@@ -1,4 +1,4 @@
-control "V-81925" do
+  control "V-81925" do
   title "When invalid inputs are received, MongoDB must behave in a predictable
   and documented manner that reflects organizational and system objectives."
   desc "A common vulnerability is unplanned behavior when invalid inputs are
@@ -17,17 +17,6 @@ control "V-81925" do
   to obtain assurances from the development organization that this issue has been
   addressed, and must document what has been discovered.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000447-DB-000393"
-  tag "gid": "V-81925"
-  tag "rid": "SV-96639r1_rule"
-  tag "stig_id": "MD3X-00-000780"
-  tag "fix_id": "F-88775r1_fix"
-  tag "cci": ["CCI-002754"]
-  tag "nist": ["SI-10 (3)", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "As a user with the \"dbAdminAnyDatabase\" role, execute the
   following on the database of interest:
@@ -42,6 +31,19 @@ control "V-81925" do
   collection. Existing collections can also be modified with document validation
   rules. Use the \"validator\" option to create or update a collection with the
   desired validation rules."
+  
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000447-DB-000393"
+  tag "gid": "V-81925"
+  tag "rid": "SV-96639r1_rule"
+  tag "stig_id": "MD3X-00-000780"
+  tag "fix_id": "F-88775r1_fix"
+  tag "cci": ["CCI-002754"]
+  tag "nist": ["SI-10 (3)", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   describe 'A manual review is required to ensure when invalid inputs are received, MongoDB behaves in a predictable
   and documented manner that reflects organizational and system objectives' do
     skip 'A manual review is required to ensure when invalid inputs are received, MongoDB behaves in a predictable

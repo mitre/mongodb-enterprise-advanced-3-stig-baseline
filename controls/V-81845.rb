@@ -1,22 +1,10 @@
-control "V-81845" do
+  control "V-81845" do
   title "MongoDB must enforce approved authorizations for logical access to
   information and system resources in accordance with applicable access control
   policies."
   desc "MongoDB must enforce approved authorizations for logical access to
   information and system resources in accordance with applicable access control
   policies."
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000033-DB-000084"
-  tag "gid": "V-81845"
-  tag "rid": "SV-96559r1_rule"
-  tag "stig_id": "MD3X-00-000020"
-  tag "fix_id": "F-88695r2_fix"
-  tag "cci": ["CCI-000213"]
-  tag "nist": ["AC-3", "Rev_4"]
-  tag "nist": ["Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
   
   desc "check", "Review the system documentation to determine the required
   levels of protection for DBMS server securables by type of login. Review the
@@ -39,6 +27,19 @@ control "V-81845" do
   MongoDB commands for role management can be found here:
   https://docs.mongodb.com/v3.4/reference/method/js-role-management/"
 
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000033-DB-000084"
+  tag "gid": "V-81845"
+  tag "rid": "SV-96559r1_rule"
+  tag "stig_id": "MD3X-00-000020"
+  tag "fix_id": "F-88695r2_fix"
+  tag "cci": ["CCI-000213"]
+  tag "nist": ["AC-3", "Rev_4"]
+  tag "nist": ["Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+  
   a = []
   dbnames = []
   mongo_user = input('user')

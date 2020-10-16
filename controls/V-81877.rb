@@ -1,4 +1,4 @@
-control "V-81877" do
+  control "V-81877" do
   title "MongoDB must uniquely identify and authenticate non-organizational
   users (or processes acting on behalf of non-organizational users)."
   desc  "Non-organizational users include all information system users other
@@ -20,21 +20,6 @@ control "V-81877" do
   organizational operations, organizational assets, individuals, other
   organizations, and the Nation.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000180-DB-000115"
-  tag "satisfies": ["SRG-APP-000180-DB-000115", "SRG-APP-000211-DB-000122",
-                    "SRG-APP-000211-DB-000124"]
-  tag "gid": "V-81877"
-  tag "rid": "SV-96591r1_rule"
-  tag "stig_id": "MD3X-00-000390"
-  tag "fix_id": "F-88727r2_fix"
-  tag "cci": ["CCI-000804", "CCI-001082", "CCI-001084"]
-  tag "nist": ["IA-8", "Rev_4"]
-  tag "nist": ["SC-2", "Rev_4"]
-  tag "nist": ["SC-3", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
   
   desc "check", "MongoDB grants access to data and commands through role-based
   authorization and provides built-in roles that provide the different levels of
@@ -86,6 +71,23 @@ control "V-81877" do
   To revoke a user's role from a database use the db.revokeRolesFromUser() method.
 
   To grant a role to a user use the db.grantRolesToUser() method."
+ 
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000180-DB-000115"
+  tag "satisfies": ["SRG-APP-000180-DB-000115", "SRG-APP-000211-DB-000122",
+                    "SRG-APP-000211-DB-000124"]
+  tag "gid": "V-81877"
+  tag "rid": "SV-96591r1_rule"
+  tag "stig_id": "MD3X-00-000390"
+  tag "fix_id": "F-88727r2_fix"
+  tag "cci": ["CCI-000804", "CCI-001082", "CCI-001084"]
+  tag "nist": ["IA-8", "Rev_4"]
+  tag "nist": ["SC-2", "Rev_4"]
+  tag "nist": ["SC-3", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false 
+
   a = []
   dbnames = []
   mongo_user = input('user')
