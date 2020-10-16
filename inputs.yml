@@ -1,8 +1,19 @@
 mongod_conf: '/etc/mongod.conf'
 mongo_dir: '/var/lib/mongo'
-mongod_pem: '/etc/ssl/mongodbca.pem'
+
+mongod_pem: '/etc/ssl/mongodb.pem'
+mongod_cafile: '/etc/ssl/mongodbca.pem'
+mongod_client_pem: '/etc/ssl/client.pem'
+
 mongod_auditlog: '/var/lib/mongo/auditLog.bson'
 saslauthd: '/etc/sysconfig/saslauthd'
+
+mongod_hostname: 'MONGODB'
+
+is_docker: 'true'
+mongo_use_pki: 'true'
+mongo_use_ldap: 'false'
+mongo_use_saslauthd: 'false'
 
 mongodb_packages_used: [
       'mongodb-enterprise-3.6.20-1.el7.x86_64',
@@ -27,6 +38,12 @@ mongoadmin_allowed_role: ['[ {
   "role" : "userAdminAnyDatabase", 
   "db" : "admin" 
   } ] }']
+
+mongodb_admin_allowed_role: ['[ { 
+  "role" : "userAdminAnyDatabase", 
+  "db" : "admin" 
+  } ] }']
+
 appAdmin_allowed_role: ['[
    { "role" : "readWrite", "db" : "config" }, 
    { "role" : "clusterAdmin", "db" : "admin" } 
@@ -37,9 +54,4 @@ accountAdmin01_allowed_role: ['[
   { "role" : "readWrite", "db" : "config" } 
   ] }
   ']
-is_docker: 'true'
 
-#disallowed: ['']
-
-mongo_use_ldap: 'true'
-mongo_use_saslauthd: 'true'

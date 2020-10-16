@@ -46,10 +46,15 @@ control "V-81865" do
 
   a = []
   dbnames = []
-  mongo_user = input('user')
-  mongo_password = input('password')
 
-  get_databases = command("mongo -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
+  if input('mongo_use_pki') == 'true'
+    get_databases = command("sudo mongo --ssl --sslPEMKeyFile #{input('mongod_client_pem')} --sslCAFile #{input('mongod_cafile')} \
+    --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 --host #{input('mongod_hostname')} \
+    --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
+  else
+    get_databases = command("mongo -u '#{input('user')}' -p '#{input('password')}' \
+    --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
+  end 
 
   get_databases.each do |db|
     if db.include? 'databases'
@@ -67,7 +72,15 @@ control "V-81865" do
   end
 
   dbnames.each do |dbs|
-    users = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
+    if input('mongo_use_pki') == 'true'
+      users = command("sudo mongo admin --ssl --sslPEMKeyFile #{input('mongod_client_pem')} --sslCAFile #{input('mongod_cafile')} \
+      --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 --host #{input('mongod_hostname')} \
+      --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
+    else
+      users = command("mongo admin -u '#{input('user')}' -p '#{input('password')}' \
+      --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
+    end 
+
     users.each do |t|
 
       loc_colon = t.index(':')
@@ -78,20 +91,24 @@ control "V-81865" do
 
       username = user[0, loc_quote]
 
-      getdb_roles = command("mongo admin -u '#{mongo_user}' -p '#{mongo_password}' --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"},{credentials: 1, _id: false})'").stdout.strip.split("\n")
+      if input('mongo_use_pki') == 'true'
+        getdb_roles = command("sudo mongo admin --ssl --sslPEMKeyFile #{input('mongod_client_pem')} --sslCAFile #{input('mongod_cafile')} \
+        --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 --host #{input('mongod_hostname')} \
+        --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"},{credentials: 1, _id: false})'").stdout.strip.split("\n")
+      else
+        getdb_roles = command("mongo admin -u '#{input('user')}' -p '#{input('password')}' \
+        --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"},{credentials: 1, _id: false})'").stdout.strip.split("\n")
+      end 
 
       getdb_roles.each do |r|
 
-        describe "The credential meachanim used for user: #{username}" do
+        describe "The credential meachanism used for user: #{username}" do
           subject { r }
-          it { should_not include 'SCRAM-SHA1' }
+          it { should_not include 'SCRAM-SHA-1' }
+          it { should_not include 'MONGODB-CR' }
         end
 
       end
     end
   end
-  describe yaml(input('mongod_conf')) do
-    its(%w{security ldap}) { should be nil }
-  end
-
 end

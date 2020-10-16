@@ -1,3 +1,20 @@
 - hosts: localhost
+  tasks:
+    - name: Create MongoDB Admin user - PKI
+      shell: |
+        mongo admin --ssl --sslPEMKeyFile "{{ mongod_client_pem }}" --sslCAFile "{{ mongod_cafile }}" --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 \
+        --host "{{ mongod_hostname }}" --eval "db.getSiblingDB('admin').createUser({user: 'mongodb_admin', pwd: 'mongodb_admin', roles: ['userAdminAnyDatabase']})"
+      become: true
+      when:
+        - use_pki.stdout == 'true'
+
+    - name: Create MongoDB Admin user - PKI
+      shell: |
+        mongo admin --ssl --sslPEMKeyFile "{{ mongod_client_pem }}" --sslCAFile "{{ mongod_cafile }}" --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 \
+        --host "{{ mongod_hostname }}" --eval "db.getSiblingDB('admin').createUser({user: 'mongoadmin', pwd: 'mongoadmin', roles: ['userAdminAnyDatabase']})"
+      become: true
+      when:
+        - use_pki.stdout == 'true'
+
   roles:
     - mongodb-hardening
