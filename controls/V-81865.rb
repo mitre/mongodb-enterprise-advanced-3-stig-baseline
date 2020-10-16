@@ -15,17 +15,6 @@ control "V-81865" do
   must be configured to do so. For other DBMSs, the rules must be enforced using
   available configuration parameters or custom code.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000164-DB-000401"
-  tag "gid": "V-81865"
-  tag "rid": "SV-96579r1_rule"
-  tag "stig_id": "MD3X-00-000320"
-  tag "fix_id": "F-88715r1_fix"
-  tag "cci": ["CCI-000192"]
-  tag "nist": ["IA-5", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
   
   desc "check", "If MongoDB is using Native LDAP authentication where the LDAP
   server is configured to enforce password complexity and lifetime, this is not a
@@ -44,6 +33,18 @@ control "V-81865" do
   Configure MongoDB Kerberos authentication where Kerberos is configured to
   enforce password complexity and lifetime."
 
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000164-DB-000401"
+  tag "gid": "V-81865"
+  tag "rid": "SV-96579r1_rule"
+  tag "stig_id": "MD3X-00-000320"
+  tag "fix_id": "F-88715r1_fix"
+  tag "cci": ["CCI-000192"]
+  tag "nist": ["IA-5", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+  
   a = []
   dbnames = []
 
@@ -107,7 +108,6 @@ control "V-81865" do
           it { should_not include 'SCRAM-SHA-1' }
           it { should_not include 'MONGODB-CR' }
         end
-
       end
     end
   end

@@ -1,4 +1,4 @@
-control "V-81911" do
+  control "V-81911" do
   title "MongoDB must enforce access restrictions associated with changes to
   the configuration of MongoDB or database(s)."
   desc "Failure to provide logical access restrictions associated with changes
@@ -14,17 +14,6 @@ control "V-81911" do
   obtain access to system components for the purposes of initiating changes,
   including upgrades and modifications.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000380-DB-000360"
-  tag "gid": "V-81911"
-  tag "rid": "SV-96625r1_rule"
-  tag "stig_id": "MD3X-00-000670"
-  tag "fix_id": "F-88761r1_fix"
-  tag "cci": ["CCI-001813"]
-  tag "nist": ["CM-5 (1)", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "Review the security configuration of the MongoDB database(s).
 
@@ -64,6 +53,19 @@ control "V-81911" do
 
   To grant a role to a user use the db.grantRolesToUser() method.
   https://docs.mongodb.com/v3.4/reference/method/db.grantRolesToUser/"
+  
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000380-DB-000360"
+  tag "gid": "V-81911"
+  tag "rid": "SV-96625r1_rule"
+  tag "stig_id": "MD3X-00-000670"
+  tag "fix_id": "F-88761r1_fix"
+  tag "cci": ["CCI-001813"]
+  tag "nist": ["CM-5 (1)", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   a = []
   dbnames = []
 

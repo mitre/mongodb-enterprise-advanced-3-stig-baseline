@@ -1,21 +1,10 @@
-control "V-81843" do
+  control "V-81843" do
   title "MongoDB must integrate with an organization-level
   authentication/access mechanism providing account management and automation for
   all users, groups, roles, and any other principals."
   desc "MongoDB must integrate with an organization-level
   authentication/access mechanism providing account management and automation for
   all users, groups, roles, and any other principals."
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000023-DB-000001"
-  tag "gid": "V-81843"
-  tag "rid": "SV-96557r1_rule"
-  tag "stig_id": "MD3X-00-000010"
-  tag "fix_id": "F-88693r1_fix"
-  tag "cci": ["CCI-000015"]
-  tag "nist": ["AC-2 (1)", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
   
   desc "check", "Verify that the MongoDB configuration file (default location:
   /etc/mongod.conf) contains the following:
@@ -44,6 +33,18 @@ control "V-81843" do
   4. Restart the MongoDB instance with access control.
   5. Connect and authenticate as the user administrator.
   6. Create additional users as needed for your deployment."
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000023-DB-000001"
+  tag "gid": "V-81843"
+  tag "rid": "SV-96557r1_rule"
+  tag "stig_id": "MD3X-00-000010"
+  tag "fix_id": "F-88693r1_fix"
+  tag "cci": ["CCI-000015"]
+  tag "nist": ["AC-2 (1)", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
 
   describe yaml(input('mongod_conf')) do
     its(%w{security authorization}) { should cmp 'enabled' }

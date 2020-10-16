@@ -1,19 +1,8 @@
-control "V-81915" do
+  control "V-81915" do
   title "MongoDB must prohibit the use of cached authenticators after an
   organization-defined time period."
   desc "If cached authentication information is out-of-date, the validity of
   the authentication information may be questionable."
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000400-DB-000367"
-  tag "gid": "V-81915"
-  tag "rid": "SV-96629r1_rule"
-  tag "stig_id": "MD3X-00-000710"
-  tag "fix_id": "F-88765r1_fix"
-  tag "cci": ["CCI-002007"]
-  tag "nist": ["IA-5", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "If MongoDB is configured to authenticate using SASL and
   LDAP/Active Directory check the saslauthd command line options in the system
@@ -52,6 +41,18 @@ control "V-81915" do
   
   Also, in the saslauthd file, set MECH to ldap
   MECH=ldap "
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000400-DB-000367"
+  tag "gid": "V-81915"
+  tag "rid": "SV-96629r1_rule"
+  tag "stig_id": "MD3X-00-000710"
+  tag "fix_id": "F-88765r1_fix"
+  tag "cci": ["CCI-002007"]
+  tag "nist": ["IA-5", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
 
   if input('mongo_use_saslauthd') == 'true' && input('mongo_use_ldap') == 'true'
     describe ini(input('saslauthd')) do

@@ -1,4 +1,4 @@
-control "V-81863" do
+  control "V-81863" do
   title "MongoDB must uniquely identify and authenticate organizational users
   (or processes acting on behalf of organizational users)."
   desc "To assure accountability and prevent unauthenticated access,
@@ -18,17 +18,6 @@ control "V-81863" do
   identification of individuals using shared accounts, for detailed
   accountability of individual activity.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000148-DB-000103"
-  tag "gid": "V-81863"
-  tag "rid": "SV-96577r1_rule"
-  tag "stig_id": "MD3X-00-000310"
-  tag "fix_id": "F-88713r1_fix"
-  tag "cci": ["CCI-000764"]
-  tag "nist": ["IA-2", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "To view another user’s information, you must have the
   \"viewUser\" action on the other user’s database.
@@ -67,6 +56,18 @@ control "V-81863" do
 
   Edit the MongoDB configuration file, add these parameters, stop/start (restart)
   any mongod or mongos process using this MongoDB configuration file."
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000148-DB-000103"
+  tag "gid": "V-81863"
+  tag "rid": "SV-96577r1_rule"
+  tag "stig_id": "MD3X-00-000310"
+  tag "fix_id": "F-88713r1_fix"
+  tag "cci": ["CCI-000764"]
+  tag "nist": ["IA-2", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
 
   a = []
   dbnames = []

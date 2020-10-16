@@ -1,4 +1,4 @@
-control "V-81871" do
+  control "V-81871" do
   title "MongoDB must enforce authorized access to all PKI private keys
   stored/utilized by MongoDB."
   desc "The DoD standard for authentication is DoD-approved PKI certificates.
@@ -19,17 +19,6 @@ control "V-81871" do
   use them to impersonate the database on the network or otherwise perform
   unauthorized actions.
   "
-  impact 0.7
-  tag "severity": "high"
-  tag "gtitle": "SRG-APP-000176-DB-000068"
-  tag "gid": "V-81871"
-  tag "rid": "SV-96585r1_rule"
-  tag "stig_id": "MD3X-00-000360"
-  tag "fix_id": "F-88721r1_fix"
-  tag "cci": ["CCI-000186"]
-  tag "nist": ["IA-5 (2) (b)", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
   
   desc "check", "In the MongoDB database configuration file (default location:
   /etc/mongod.conf), review the following parameters:
@@ -57,15 +46,28 @@ control "V-81871" do
   \"chmod 600 /etc/ssl/mongodb.pem\"
   \"chown mongod:mongod /etc/ssl/mongodbca.pem\"
   \"chmod 600 /etc/ssl/mongodbca.pem\""
+
+  impact 0.7
+  tag "severity": "high"
+  tag "gtitle": "SRG-APP-000176-DB-000068"
+  tag "gid": "V-81871"
+  tag "rid": "SV-96585r1_rule"
+  tag "stig_id": "MD3X-00-000360"
+  tag "fix_id": "F-88721r1_fix"
+  tag "cci": ["CCI-000186"]
+  tag "nist": ["IA-5 (2) (b)", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+  
   describe file('/etc/ssl/mongodb.pem') do
     its('mode') { should cmp <= 0600 }
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
 
   describe file('/etc/ssl/mongodbca.pem') do
     its('mode') { should cmp <= 0600 }
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
 end

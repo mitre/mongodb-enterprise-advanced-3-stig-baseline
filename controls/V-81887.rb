@@ -1,4 +1,4 @@
-control "V-81887" do
+  control "V-81887" do
   title "MongoDB must prevent unauthorized and unintended information transfer
   via shared system resources."
   desc "The purpose of this control is to prevent information, including
@@ -9,18 +9,6 @@ control "V-81887" do
   storage) after the resource has been released back to the information system.
   Control of information in shared resources is also referred to as object reuse.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000243-DB-000373"
-  tag "satisfies": ["SRG-APP-000243-DB-000373", "SRG-APP-000243-DB-000374"]
-  tag "gid": "V-81887"
-  tag "rid": "SV-96601r1_rule"
-  tag "stig_id": "MD3X-00-000470"
-  tag "fix_id": "F-88737r1_fix"
-  tag "cci": ["CCI-001090"]
-  tag "nist": ["SC-4", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "Verify the permissions for the following database files or
   directories:
@@ -41,6 +29,19 @@ control "V-81887" do
   MongoDB data file directory (default location):
   chown -R mongod:mongod/var/lib/mongo
   chmod -R 755/var/lib/mongo"
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000243-DB-000373"
+  tag "satisfies": ["SRG-APP-000243-DB-000373", "SRG-APP-000243-DB-000374"]
+  tag "gid": "V-81887"
+  tag "rid": "SV-96601r1_rule"
+  tag "stig_id": "MD3X-00-000470"
+  tag "fix_id": "F-88737r1_fix"
+  tag "cci": ["CCI-001090"]
+  tag "nist": ["SC-4", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
 
   describe file(input('mongod_conf')) do
     it { should_not be_more_permissive_than('0755') } 

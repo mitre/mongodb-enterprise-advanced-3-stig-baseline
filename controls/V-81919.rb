@@ -1,4 +1,4 @@
-control "V-81919" do
+  control "V-81919" do
   title "MongoDB must implement cryptographic mechanisms to prevent
   unauthorized modification of organization-defined information at rest (to
   include, at a minimum, PII and classified information) on organization-defined
@@ -21,18 +21,6 @@ control "V-81919" do
   media on which the information resides.
 
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000428-DB-000386"
-  tag "satisfies": ["SRG-APP-000428-DB-000386", "SRG-APP-000429-DB-000387"]
-  tag "gid": "V-81919"
-  tag "rid": "SV-96633r1_rule"
-  tag "stig_id": "MD3X-00-000740"
-  tag "fix_id": "F-88769r1_fix"
-  tag "cci": ["CCI-002475"]
-  tag "nist": ["SC-28", "Rev_4"]
-  tag "documentable": false
-  tag "severity_override_guidance": false
 
   desc "check", "Review the documentation and/or specification for the
   organization-defined information.
@@ -58,6 +46,19 @@ control "V-81919" do
 
   https://docs.mongodb.com/v3.4/core/security-encryption-at-rest/
   https://docs.mongodb.com/v3.4/tutorial/configure-encryption/"
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000428-DB-000386"
+  tag "satisfies": ["SRG-APP-000428-DB-000386", "SRG-APP-000429-DB-000387"]
+  tag "gid": "V-81919"
+  tag "rid": "SV-96633r1_rule"
+  tag "stig_id": "MD3X-00-000740"
+  tag "fix_id": "F-88769r1_fix"
+  tag "cci": ["CCI-002475"]
+  tag "nist": ["SC-28", "Rev_4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
 
   describe yaml(input('mongod_conf')) do
     its(%w{security kmip serverName}) { should_not be_nil }

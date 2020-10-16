@@ -1,4 +1,4 @@
-control "V-81913" do
+  control "V-81913" do
   title "MongoDB must require users to reauthenticate when organization-defined
   circumstances or situations require reauthentication."
   desc "The DoD standard for authentication of an interactive user is the
@@ -28,6 +28,14 @@ control "V-81913" do
   Within the DoD, the minimum circumstances requiring reauthentication are
   privilege escalation and role changes.
   "
+  
+  desc "check", "If organization-defined circumstances or situations require
+  reauthentication, and these situations are not configured to terminate existing
+  logins to require reauthentication, this is a finding."
+  desc "fix", "Determine the organization-defined circumstances or situations
+  that require reauthentication and ensure that the mongod and mongos processes
+  are stopped/started (restart)."
+  
   impact 0.5
   tag "severity": "medium"
   tag "gtitle": "SRG-APP-000389-DB-000372"
@@ -39,13 +47,7 @@ control "V-81913" do
   tag "nist": ["IA-11", "Rev_4"]
   tag "documentable": false
   tag "severity_override_guidance": false
-  
-  desc "check", "If organization-defined circumstances or situations require
-  reauthentication, and these situations are not configured to terminate existing
-  logins to require reauthentication, this is a finding."
-  desc "fix", "Determine the organization-defined circumstances or situations
-  that require reauthentication and ensure that the mongod and mongos processes
-  are stopped/started (restart)."
+
   describe 'A manual review is required to ensure MongoDB requires users to reauthenticate when organization-defined
   circumstances or situations require reauthentication.' do
     skip 'A manual review is required to ensure MongoDB requires users to reauthenticate when organization-defined

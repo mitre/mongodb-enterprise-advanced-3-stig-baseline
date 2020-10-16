@@ -1,9 +1,46 @@
-control "V-81847" do
+  control "V-81847" do
   title "MongoDB must provide audit record generation for DoD-defined auditable
   events within all DBMS/database components."
   desc "MongoDB must provide audit record generation capability for
   DoD-defined auditable events within all DBMS/database components.
   "
+  desc "check", "Check the MongoDB configuration file (default location:
+  '/etc/mongod.conf)' for a key named 'auditLog:'.
+
+  Example shown below:
+
+  auditLog:
+  destination: syslog
+
+  If an \"auditLog:\" key is not present, this is a finding indicating that
+  auditing is not turned on.
+
+  If the \"auditLog:\" key is present and contains a subkey of \"filter:\" with
+  an associated filter value string, this is a finding.
+
+  The site auditing policy must be reviewed to determine if the \"filter:\" being
+  applied meets the site auditing requirements. If not, then the filter being
+  applied will need to be modified to comply.
+
+  Example show below:
+
+  auditLog:
+  destination: syslog
+  filter: '{ atype: { $in: [ \"createCollection\", \"dropCollection\" ] } }'"
+  desc "fix", "If the \"auditLog\" setting was not present in the MongoDB
+  configuration file (default location: '/etc/mongod.conf)' edit this file and
+  add a configured \"auditLog\" setting:
+
+  auditLog:
+  destination: syslog
+
+  Stop/start (restart) the mongod or mongos instance using this configuration.
+
+  If the \"auditLog\" setting was present and contained a \"filter:\" parameter,
+  ensure the \"filter:\" expression does not prevent the auditing of events that
+  should be audited or remove the \"filter:\" parameter to enable auditing all
+  events."
+  
   impact 0.5
   tag "severity": "medium"
   tag "gtitle": "SRG-APP-000089-DB-000064"
@@ -52,43 +89,7 @@ control "V-81847" do
   tag "nist": ["CM-5 (1)", "Rev_4"]
   tag "documentable": false
   tag "severity_override_guidance": false
-  
-  desc "check", "Check the MongoDB configuration file (default location:
-  '/etc/mongod.conf)' for a key named 'auditLog:'.
 
-  Example shown below:
-
-  auditLog:
-  destination: syslog
-
-  If an \"auditLog:\" key is not present, this is a finding indicating that
-  auditing is not turned on.
-
-  If the \"auditLog:\" key is present and contains a subkey of \"filter:\" with
-  an associated filter value string, this is a finding.
-
-  The site auditing policy must be reviewed to determine if the \"filter:\" being
-  applied meets the site auditing requirements. If not, then the filter being
-  applied will need to be modified to comply.
-
-  Example show below:
-
-  auditLog:
-  destination: syslog
-  filter: '{ atype: { $in: [ \"createCollection\", \"dropCollection\" ] } }'"
-  desc "fix", "If the \"auditLog\" setting was not present in the MongoDB
-  configuration file (default location: '/etc/mongod.conf)' edit this file and
-  add a configured \"auditLog\" setting:
-
-  auditLog:
-  destination: syslog
-
-  Stop/start (restart) the mongod or mongos instance using this configuration.
-
-  If the \"auditLog\" setting was present and contained a \"filter:\" parameter,
-  ensure the \"filter:\" expression does not prevent the auditing of events that
-  should be audited or remove the \"filter:\" parameter to enable auditing all
-  events."
   describe yaml(input('mongod_conf')) do
     its(%w{auditLog destination}) { should cmp 'syslog' }
   end

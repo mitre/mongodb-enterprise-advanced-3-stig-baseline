@@ -34,6 +34,19 @@
     password: "mongoadmin"
     roles: "userAdminAnyDatabase"
 
+# V-81843
+- name: Enable authentication methods
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: '^#setParameter:$'
+    line: 'setParameter:'
+- name: set authentication methods
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)setParameter:.*"
+    line: "  authenticationMechanisms: PLAIN,MONGODB-X50"
+    insertafter: "^setParameter:$"
+
 # V-81849 V-81887
 - name: secure access to mongo directory
   file:
