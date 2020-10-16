@@ -84,14 +84,10 @@ control "V-81865" do
 
         describe "The credential meachanim used for user: #{username}" do
           subject { r }
-          it { should_not include 'SCRAM-SHA1' }
+          it { should_not include 'SCRAM-SHA-1' }
+          it { should_not include 'MONGODB-CR' }
         end
-
       end
     end
   end
-  describe yaml(input('mongod_conf')) do
-    its(%w{security ldap}) { should be nil }
-  end
-
 end

@@ -14,7 +14,10 @@ mongodb_packages_used: [
 user: 'mongoadmin'
 password: 'mongoadmin'
 
+mongodb_service_account: ["mongodb", "mongod"]
+mongodb_service_group: ["mongodb", "mongod"]
 admin_db_users: ["mongodb_admin", "mongoadmin"]
+db_owners: ["mongodb", "mongod"]
 config_db_users: ["config_admin"]
 myUserAdmin_allowed_role: ['[ 
   { "role" : "userAdminAnyDatabase", "db" : "admin" } 

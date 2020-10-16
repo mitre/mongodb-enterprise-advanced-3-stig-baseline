@@ -49,7 +49,7 @@ control "V-81903" do
   auditLog:
   destination: syslog"
   describe yaml(input('mongod_conf')) do
-    its(%w{storage dbPath}) { should cmp 'data/db' }
+    its(%w{storage dbPath}) { should cmp '/data/db' }
   end
   describe yaml(input('mongod_conf')) do
     its(%w{auditLog destination}) { should cmp 'syslog' }
