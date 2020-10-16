@@ -4,34 +4,6 @@
     name: mongod
     state: started
 
-# # V-81843
-# - name: Enable authentication methods
-#   lineinfile:
-#     path: "{{ mongod_conf }}"
-#     regexp: '^#setParameter:$'
-#     line: 'setParameter:'
-# - name: set authentication methods
-#   lineinfile:
-#     path: "{{ mongod_conf }}"
-#     regexp: "(|#)setParameter:.*"
-#     line: "  authenticationMechanisms: PLAIN,MONGODB-X50"
-#     insertafter: "^setParameter:$"
-
-# V-81909 & V-81911 & V-81865 & V-81899 & V-81845
-- name: Create MongoDB Admin user 
-  mongodb_user:
-    database: "admin"
-    name: "mongodb_admin"
-    password: "mongodb_admin"
-    roles: "userAdminAnyDatabase"
-
-- name: Create MongoDB Regular user 
-  mongodb_user:
-    database: "admin"
-    name: "mongoadmin"
-    password: "mongoadmin"
-    roles: "userAdminAnyDatabase"
-
 # V-81843
 - name: enable security
   lineinfile:
@@ -45,6 +17,19 @@
     line: "  authorization: enabled"
     insertafter: "^security:$"
 
+# V-81843
+- name: Enable authentication methods
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: '^#setParameter:$'
+    line: 'setParameter:'
+- name: set authentication methods
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)setParameter:.*"
+    line: "  authenticationMechanisms: PLAIN,MONGODB-X50"
+    insertafter: "^setParameter:$"
+
 # V-81849 V-81887
 - name: secure access to mongo directory
   file:
@@ -56,19 +41,6 @@
   with_items:
     - /var/lib/mongo/
     - /data/db/
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
-
-- name: secure access to mongo directory
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: '700'
-    owner: mongodb
-    group: mongodb
-  with_items:
-    - /var/lib/mongo/
-    - /data/db/
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: secure access to syslog directory
   file:
@@ -79,65 +51,57 @@
     group: root
 
 # V-81851
-- name: secure access to config file
+- name: verify User ownership, Group ownership, and permssions
   file:
     path: "{{ mongod_conf }}"
+    state: touch
     mode: u+rw,g-rwx,o-rwx
-    owner: mongod
-    group: mongod
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
-- name: secure access to config file
+- name: Change file ownership, group and permissions
   file:
     path: "{{ mongod_conf }}"
-    mode: u+rw,g-rwx,o-rwx
-    owner: mongodb
-    group: mongodb
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    owner: "mongod"
+    group: "mongod"
 
 # V-81871
-- name: secure access to SSL certs
+- name: verify User ownership, Group ownership, and permssions
   file:
     path: "{{ item }}"
     state: touch
     mode: u+rw,g-rwx,o-rwx
-    owner: mongod
-    group: mongod
   with_items:
       - /etc/ssl/mongodbca.pem
       - /etc/ssl/mongodb.pem
-      - /etc/ssl/mongodb_kmip_client.pem
-      - /etc/ssl/mongodb_kmip_ca.pem
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
-- name: secure access to SSL certs
+- name: Change file ownership, group and permissions
   file:
     path: "{{ item }}"
-    state: touch
-    mode: u+rw,g-rwx,o-rwx
-    owner: mongodb
-    group: mongodb
+    owner: "mongod"
+    group: "mongod"
   with_items:
       - /etc/ssl/mongodbca.pem
       - /etc/ssl/mongodb.pem
-      - /etc/ssl/mongodb_kmip_client.pem
-      - /etc/ssl/mongodb_kmip_ca.pem
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 # V-81859
-- name: uninstall unused packages
+- name: Uninstall unused packages
   package:
     name: 
-      - enterprise-mongos
       - enterprise-shell
+      - enterprise-mongos
       - enterprise-tools
     state: absent
 
 # V-81861
-# this needs to be null for 3.6
-
-# V-81881
-# storage journal already enabled by default
+- name: disable http access
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} http config"
+    insertafter: "^net:$"
+    block: |2
+        http:
+          enabled: false
+          JSONPEnabled: false
+          RESTInterfaceEnabled: false
 
 # V-81867
 - name: set certificate authenticaion mode
@@ -156,6 +120,7 @@
     block: |2
         ssl:
           mode: requireSSL
+          certificateKeyFile: /etc/ssl/mongodb.pem
           PEMKeyFile: /etc/ssl/mongodb.pem
           CAFile: /etc/ssl/mongodbca.pem
 
@@ -175,8 +140,8 @@
     line: "  enableEncryption: true"
     insertafter: "^security:$"
 
-# V-81891 V-81889
-- name: disable the use of javascript
+# V-81891
+- name: redact sensative data in log file
   lineinfile:
     path: "{{ mongod_conf }}"
     regexp: "(|#)javascriptEnabled:.*"
@@ -193,12 +158,10 @@
 
 # V-81847 V-81901 V-81905 V-81907 
 - name: set audit log destination
-  blockinfile:
+  lineinfile:
     path: "{{ mongod_conf }}"
-    marker: "# {mark} auditLog config"
-    block: |
-      auditLog:
-        destination: syslog
+    regexp: ".*auditLog:.*\n.*destination:.*"
+    line: "auditLog:\n  destination: syslog"
 
 # V-81893 - works
 - name: Verify error messages 
@@ -207,13 +170,14 @@
     regexp: "(|#)redactClientLogData:.*"
     line: "  redactClientLogData: true"
     insertafter: "^security:$"
+  # notify: restart mongod
 
 # V-81903
 - name: set path of database files
   lineinfile:
     path: "{{ mongod_conf }}"
     regexp: ".*dbPath:.*"
-    line: "  dbPath: /data/db"
+    line: "  dbPath: data/db"
     insertafter: "^storage:$"
 
 # V-81917
@@ -223,7 +187,6 @@
     openssl req -nodes -newkey rsa:2048 -keyout /tmp/server.key -out /tmp/server.csr -subj "/C=US/ST=DC/L=GOV/O=DoD/OU=server/CN=MONGODB/emailAddress=ansible@mongodb.config"
     openssl x509 -req -in /tmp/server.csr -CA /tmp/ca.crt -CAkey /tmp/ca.key -CAcreateserial -out /tmp/server.crt
     cat /tmp/server.key /tmp/server.crt > /etc/ssl/mongodb.pem
-    cat /tmp/ca.crt > /etc/ssl/mongodbca.pem
   changed_when: 1
 
 # V-81919
@@ -234,59 +197,25 @@
     insertafter: "^security:$"
     block: |2
         kmip:
-          serverName: MONGODB
+          serverName: server.ip
           port: 5696
           clientCertificateFile: /etc/ssl/mongodb_kmip_client.pem
           serverCAFile: /etc/ssl/mongodb_kmip_ca.pem
 
-- name: install KMIP packages
-  apt: 
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - python3-dev
-    - libffi-dev
-    - libssl-dev
-    - libsqlite3-dev
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+# V-81909 & V-81911 & V-81865 & V-81899 & V-81845
+- name: Create MongoDB Admin user 
+  mongodb_user:
+    database: "admin"
+    name: "mongodb_admin"
+    password: "mongodb_admin"
+    roles: "userAdminAnyDatabase"
 
-- name: install KMIP packages
-  yum: 
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - python3-devel
-    - libffi-devel
-    - openssl-devel
-    - libsqlite3x-devel
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
-
-- name: set KMIP settings for PYKMIP
-  blockinfile:
-    path: /etc/pykmip/server.conf
-    marker: "# {mark} config"
-    create: yes
-    block: |
-      [server]
-      hostname=MONGODB
-      port=5696
-      certificate_path=/etc/pykmip/server.crt
-      key_path=/etc/pykmip/server.key
-      ca_path=/etc/pykmip/ca.crt
-      auth_suite=Basic
-      enable_tls_client_auth=True
-      logging_level=DEBUG
-      database_path=/tmp/pykmip.db
-
-- name: check if KMIP certs exists exists
-  stat:
-    path: /etc/pykmip/ca.crt
-  register: kmip_cert_result
-
-- name: start KMIP server and restart mongodb
-  shell: |
-    nohup /usr/local/bin/pykmip-server &
-    service mongod restart
+- name: Create MongoDB Regular user 
+  mongodb_user:
+    database: "admin"
+    name: "mongoadmin"
+    password: "mongoadmin"
+    roles: "userAdminAnyDatabase"
 
 # # V-81915
 - name: Check if saslauthd is required
