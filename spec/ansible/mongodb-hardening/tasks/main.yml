@@ -34,19 +34,6 @@
     password: "mongoadmin"
     roles: "userAdminAnyDatabase"
 
-# V-81843
-- name: Enable authentication methods
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: '^#setParameter:$'
-    line: 'setParameter:'
-- name: set authentication methods
-  lineinfile:
-    path: "{{ mongod_conf }}"
-    regexp: "(|#)setParameter:.*"
-    line: "  authenticationMechanisms: PLAIN,MONGODB-X50"
-    insertafter: "^setParameter:$"
-
 # V-81849 V-81887
 - name: secure access to mongo directory
   file:
@@ -84,7 +71,7 @@
 - name: secure access to config file
   file:
     path: "{{ mongod_conf }}"
-    mode: u+rw,g-rwx,o-rwx
+    mode: '700'
     owner: mongod
     group: mongod
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
@@ -92,7 +79,7 @@
 - name: secure access to config file
   file:
     path: "{{ mongod_conf }}"
-    mode: u+rw,g-rwx,o-rwx
+    mode: '700'
     owner: mongodb
     group: mongodb
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
@@ -102,7 +89,7 @@
   file:
     path: "{{ item }}"
     state: touch
-    mode: u+rw,g-rwx,o-rwx
+    mode: '600'
     owner: mongod
     group: mongod
   with_items:
@@ -117,7 +104,7 @@
   file:
     path: "{{ item }}"
     state: touch
-    mode: u+rw,g-rwx,o-rwx
+    mode: '600'
     owner: mongodb
     group: mongodb
   with_items:

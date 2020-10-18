@@ -59,15 +59,31 @@
   tag "documentable": false
   tag "severity_override_guidance": false
   
-  describe file('/etc/ssl/mongodb.pem') do
-    its('mode') { should cmp <= 0600 }
-    its('owner') { should be_in input('mongodb_service_account') }
-    its('group') { should be_in input('mongodb_service_group') }
-  end
+  if file(input('mongod_pem')).exist?
+    describe file(input('mongod_pem')) do
+      it { should_not be_more_permissive_than('0600') } 
+      its('owner') { should be_in input('mongodb_service_account') }
+      its('group') { should be_in input('mongodb_service_group') }
+    end
+  else
+    describe 'This control must be reviewed manually because the pem file is not found 
+    at the location specified.' do
+      skip 'This control must be reviewed manually because the pem file is not found 
+      at the location specified.'
+    end 
+  end 
 
-  describe file('/etc/ssl/mongodbca.pem') do
-    its('mode') { should cmp <= 0600 }
-    its('owner') { should be_in input('mongodb_service_account') }
-    its('group') { should be_in input('mongodb_service_group') }
+  if file(input('mongod_cafile')).exist?
+    describe file(input('mongod_cafile')) do
+      it { should_not be_more_permissive_than('0600') } 
+      its('owner') { should be_in input('mongodb_service_account') }
+      its('group') { should be_in input('mongodb_service_group') }
+    end
+  else 
+    describe 'This control must be reviewed manually because the CA file is not found 
+    at the location specified.' do
+      skip 'This control must be reviewed manually because the CA file is not found 
+      at the location specified.'
+    end 
   end
 end

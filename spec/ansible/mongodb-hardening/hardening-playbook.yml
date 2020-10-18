@@ -1,5 +1,9 @@
 - hosts: localhost
   tasks:
+    - name: Start service mongodb-server, if not started
+      service:
+        name: mongod
+        state: started
     - name: Create MongoDB Admin user - PKI
       shell: |
         mongo admin --ssl --sslPEMKeyFile "{{ mongod_client_pem }}" --sslCAFile "{{ mongod_cafile }}" --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 \
