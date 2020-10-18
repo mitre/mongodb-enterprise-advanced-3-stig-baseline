@@ -253,6 +253,7 @@
     - libffi-dev
     - libssl-dev
     - libsqlite3-dev
+    - python3-pip
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: install KMIP packages
