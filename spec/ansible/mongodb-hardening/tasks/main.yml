@@ -292,6 +292,7 @@
 - name: generate and copy certficate for KMIP
   shell: |
     pip3 install pykmip
+    pip3 install pyOpenSSL -U
     echo "127.0.0.1 MONGODB" >> /etc/hosts
     cd /tmp/
     wget https://github.com/OpenKMIP/PyKMIP/raw/master/bin/create_certificates.py -O create.py
@@ -305,7 +306,29 @@
     cp root_certificate.pem /etc/pykmip/ca.crt
   args:
     executable: /bin/bash
-  when: not kmip_cert_result.stat.exists
+  when: 
+    - ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    - not kmip_cert_result.stat.exists
+
+- name: generate and copy certficate for KMIP
+  shell: |
+    pip3 install pykmip
+    echo "127.0.0.1 MONGODB" >> /etc/hosts
+    cd /tmp/
+    wget https://github.com/OpenKMIP/PyKMIP/raw/master/bin/create_certificates.py -O create.py
+    sed -i 's/Server Certificate/MONGODB/g' create.py
+    python create.py
+    cat client_certificate_john_doe.pem client_key_john_doe.pem > /etc/ssl/mongodb_kmip_client.pem
+    cp root_certificate.pem /etc/ssl/mongodb_kmip_ca.pem
+    mkdir /etc/pykmip/
+    cp server_certificate.pem /etc/pykmip/server.crt
+    cp server_key.pem /etc/pykmip/server.key
+    cp root_certificate.pem /etc/pykmip/ca.crt
+  args:
+    executable: /bin/bash
+  when: 
+    - ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+    - not kmip_cert_result.stat.exists
 
 - name: start KMIP server and restart mongodb
   shell: |
