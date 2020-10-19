@@ -43,15 +43,31 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe file(input('mongod_conf')) do
-    it { should_not be_more_permissive_than('0755') } 
-    its('owner') { should be_in input('mongodb_service_account') }
-    its('group') { should be_in input('mongodb_service_group') }
+  if file(input('mongod_conf')).exist?
+    describe file(input('mongod_conf')) do
+      it { should_not be_more_permissive_than('0755') } 
+      its('owner') { should be_in input('mongodb_service_account') }
+      its('group') { should be_in input('mongodb_service_group') }
+    end
+  else
+    describe 'This control must be reviewed manually because the configuration
+    file is not found at the location specified.' do
+      skip 'This control must be reviewed manually because the configuration
+      file is not found at the location specified.'
+    end 
   end
   
-  describe directory(input('mongo_dir')) do
-    it { should_not be_more_permissive_than('0755') } 
-    its('owner') { should be_in input('mongodb_service_account') }
-    its('group') { should be_in input('mongodb_service_group') }
-  end
+  if file(input('mongo_data_dir')).exist?
+    describe directory(input('mongo_data_dir')) do
+      it { should_not be_more_permissive_than('0755') } 
+      its('owner') { should be_in input('mongodb_service_account') }
+      its('group') { should be_in input('mongodb_service_group') }
+    end
+  else
+    describe 'This control must be reviewed manually because the Mongodb data
+    directory is not found at the location specified.' do
+      skip 'This control must be reviewed manually because the Mongodb data
+      directory is not found at the location specified.'
+    end 
+  end 
 end

@@ -19,7 +19,7 @@ inputs:
     value: '/etc/mongod.conf'
     required: true
 
-  - name: mongo_dir
+  - name: mongo_data_dir
     description: 'MongoDB Home Directory'
     type: string
     value: '/var/lib/mongo'
@@ -79,15 +79,27 @@ inputs:
     value: 'false'
     required: true
 
-  - name: mongodb_packages_used
-    description: 'List of mongodb packages used'
+  - name: mongodb_redhat_packages
+    description: 'List of MongoDB Redhat Packages'
     type: array
     value: [
-      'mongodb-enterprise-3.6.20-1.el7.x86_64',
-      'mongodb-enterprise-mongos-3.6.20-1.el7.x86_64',
-      'mongodb-enterprise-server-3.6.20-1.el7.x86_64',
-      'mongodb-enterprise-shell-3.6.20-1.el7.x86_64',
-      'mongodb-enterprise-tools-3.6.20-1.el7.x86_64'
+      'mongodb-enterprise-3.6.20-1.el7',
+      'mongodb-enterprise-mongos-3.6.20-1.el7',
+      'mongodb-enterprise-server-3.6.20-1.el7',
+      'mongodb-enterprise-shell-3.6.20-1.el7',
+      'mongodb-enterprise-tools-3.6.20-1.el7'
+    ]
+    required: true
+
+  - name: mongodb_debian_packages
+    description: 'List of MongoDB Debian Packages'
+    type: array
+    value: [
+      'mongodb-enterprise',
+      'mongodb-enterprise-mongos',
+      'mongodb-enterprise-server',
+      'mongodb-enterprise-shell',
+      'mongodb-enterprise-tools'
     ]
     required: true
 

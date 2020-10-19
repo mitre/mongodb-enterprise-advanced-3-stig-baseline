@@ -1,5 +1,5 @@
 mongod_conf: '/etc/mongod.conf'
-mongo_dir: '/var/lib/mongo'
+mongo_data_dir: '/var/lib/mongo'
 
 mongod_pem: '/etc/ssl/mongodb.pem'
 mongod_cafile: '/etc/ssl/mongodbca.pem'
@@ -15,13 +15,21 @@ mongo_use_pki: 'true'
 mongo_use_ldap: 'false'
 mongo_use_saslauthd: 'false'
 
-mongodb_packages_used: [
-      'mongodb-enterprise-3.6.20-1.el7.x86_64',
-      'mongodb-enterprise-mongos-3.6.20-1.el7.x86_64',
-      'mongodb-enterprise-server-3.6.20-1.el7.x86_64',
-      'mongodb-enterprise-shell-3.6.20-1.el7.x86_64',
-      'mongodb-enterprise-tools-3.6.20-1.el7.x86_64'
-    ]
+mongodb_redhat_packages: [
+  'mongodb-enterprise-3.6.20-1.el7',
+  'mongodb-enterprise-mongos-3.6.20-1.el7',
+  'mongodb-enterprise-server-3.6.20-1.el7',
+  'mongodb-enterprise-shell-3.6.20-1.el7',
+  'mongodb-enterprise-tools-3.6.20-1.el7'
+]
+
+mongodb_debian_packages: [
+    'mongodb-enterprise',
+    'mongodb-enterprise-mongos',
+    'mongodb-enterprise-server',
+    'mongodb-enterprise-shell',
+    'mongodb-enterprise-tools'
+]
 
 user: 'mongoadmin'
 password: 'mongoadmin'

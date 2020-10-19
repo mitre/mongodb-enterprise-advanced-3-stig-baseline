@@ -54,6 +54,7 @@
     mode: '700'
     owner: mongodb
     group: mongodb
+    recurse: yes
   with_items:
     - "{{ mongod_lib }}"
     - /data/db/
@@ -157,6 +158,7 @@
     regexp: "(|#)FIPSMode:.*"
     line: "    FIPSMode: true"
     insertafter: "^ +ssl:$"
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
   notify: restart mongod
 
 # V-81883
