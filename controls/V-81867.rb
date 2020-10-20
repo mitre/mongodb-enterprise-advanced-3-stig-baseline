@@ -53,7 +53,7 @@ control "V-81867" do
   tag "stig_id": "MD3X-00-000330"
   tag "fix_id": "F-88717r1_fix"
   tag "cci": ["CCI-000196"]
-  tag "nist": ["IA-5", "Rev_4"]
+  tag "nist": ["IA-5 (1) (c)"]
   tag "documentable": false
   tag "severity_override_guidance": false 
 

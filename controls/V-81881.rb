@@ -65,7 +65,7 @@ control "V-81881" do
   tag "stig_id": "MD3X-00-000420"
   tag "fix_id": "F-88731r1_fix"
   tag "cci": ["CCI-001190", "CCI-001665"]
-  tag "nist": ["SC-24", "Rev_4"]
+  tag "nist": ["SC-24"]
   tag "documentable": false
   tag "severity_override_guidance": false
 

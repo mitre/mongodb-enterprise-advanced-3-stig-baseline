@@ -5,7 +5,7 @@
   DoD-defined auditable events within all DBMS/database components.
   "
   desc "check", "Check the MongoDB configuration file (default location:
-  '/etc/mongod.conf)' for a key named 'auditLog:'.
+  "/etc/mongod.conf)" for a key named "auditLog:".
 
   Example shown below:
 
@@ -26,9 +26,9 @@
 
   auditLog:
   destination: syslog
-  filter: '{ atype: { $in: [ \"createCollection\", \"dropCollection\" ] } }'"
+  filter: "{ atype: { $in: [ \"createCollection\", \"dropCollection\" ] } }""
   desc "fix", "If the \"auditLog\" setting was not present in the MongoDB
-  configuration file (default location: '/etc/mongod.conf)' edit this file and
+  configuration file (default location: "/etc/mongod.conf)" edit this file and
   add a configured \"auditLog\" setting:
 
   auditLog:
@@ -75,18 +75,9 @@
               "CCI-000134", "CCI-000135", "CCI-000140", "CCI-000166", "CCI-000171",
               "CCI-000172", "CCI-001462", "CCI-001464", "CCI-001487", "CCI-001814",
               "CCI-001844", "CCI-001851", "CCI-001858"]
-  tag "nist": ["AU-3", "Rev_4"]
-  tag "nist": ["AU-3 (1)", "Rev_4"]
-  tag "nist": ["AU-3 (2)", "Rev_4"]
-  tag "nist": ["AU-4 (1)", "Rev_4"]
-  tag "nist": ["AU-5 b", "Rev_4"]
-  tag "nist": ["AU-5 (2)", "Rev_4"]
-  tag "nist": ["AU-10", "Rev_4"]
-  tag "nist": ["AU-12 b", "Rev_4"]
-  tag "nist": ["AU-12 c", "Rev_4"]
-  tag "nist": ["AU-14 (2)", "Rev_4"]
-  tag "nist": ["AU-14 (1)", "Rev_4"]
-  tag "nist": ["CM-5 (1)", "Rev_4"]
+  tag "nist": ["AU-3", "AU-3", "AU-3", "AU-3", "AU-3", "AU-3 (1)", "AU-5 b",
+  "AU-10", "AU-12 b", "AU-12 c", "AU-14 (2)", "AU-14 (1)", "AU-3", "CM-5 (1)",
+  "AU-3 (2)", "AU-4 (1)", "AU-5 (2)"]
   tag "documentable": false
   tag "severity_override_guidance": false
 

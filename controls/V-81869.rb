@@ -56,7 +56,7 @@ allowInvalidCertificates: true"
   tag "stig_id": "MD3X-00-000340"
   tag "fix_id": "F-88719r1_fix"
   tag "cci": ["CCI-000185", "CCI-000197"]
-  tag "nist": ["IA-5", "Rev_4"]
+  tag "nist": ["IA-5 (2) (a)", "IA-5 (1) (c)"]
   tag "documentable": false
   tag "severity_override_guidance": false
 

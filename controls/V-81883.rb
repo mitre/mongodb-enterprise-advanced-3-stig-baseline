@@ -51,7 +51,7 @@
   tag "stig_id": "MD3X-00-000440"
   tag "fix_id": "F-88733r1_fix"
   tag "cci": ["CCI-001199"]
-  tag "nist": ["SC-28", "Rev_4"]
+  tag "nist": ["SC-28"]
   tag "documentable": false
   tag "severity_override_guidance": false
 

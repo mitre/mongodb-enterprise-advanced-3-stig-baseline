@@ -41,7 +41,7 @@ control "V-81865" do
   tag "stig_id": "MD3X-00-000320"
   tag "fix_id": "F-88715r1_fix"
   tag "cci": ["CCI-000192"]
-  tag "nist": ["IA-5", "Rev_4"]
+  tag "nist": ["IA-5 (1) (a)"]
   tag "documentable": false
   tag "severity_override_guidance": false
   
