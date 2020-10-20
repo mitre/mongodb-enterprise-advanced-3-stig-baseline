@@ -5,7 +5,7 @@
   DoD-defined auditable events within all DBMS/database components.
   "
   desc "check", "Check the MongoDB configuration file (default location:
-  "/etc/mongod.conf)" for a key named "auditLog:".
+  '/etc/mongod.conf)' for a key named 'auditLog:'.
 
   Example shown below:
 
@@ -26,9 +26,9 @@
 
   auditLog:
   destination: syslog
-  filter: "{ atype: { $in: [ \"createCollection\", \"dropCollection\" ] } }""
+  filter: '{ atype: { $in: [ \"createCollection\", \"dropCollection\" ] } }'"
   desc "fix", "If the \"auditLog\" setting was not present in the MongoDB
-  configuration file (default location: "/etc/mongod.conf)" edit this file and
+  configuration file (default location: '/etc/mongod.conf)' edit this file and
   add a configured \"auditLog\" setting:
 
   auditLog:
