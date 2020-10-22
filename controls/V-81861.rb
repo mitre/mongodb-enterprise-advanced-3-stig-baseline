@@ -1,4 +1,4 @@
-control "V-81861" do
+  control "V-81861" do
   title "Unused database components that are integrated in MongoDB and cannot
   be uninstalled must be disabled."
   desc "Information systems are capable of providing a wide variety of
@@ -21,26 +21,7 @@ control "V-81861" do
   configuration settings, OS service settings, OS file access security, and DBMS
   user/role permissions.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000141-DB-000092"
-  tag "satisfies": ["SRG-APP-000141-DB-000092", "SRG-APP-000142-DB-000094"]
-  tag "gid": "V-81861"
-  tag "rid": "SV-96575r1_rule"
-  tag "stig_id": "MD3X-00-000290"
-  tag "fix_id": "F-88711r1_fix"
-  tag "cci": ["CCI-000381", "CCI-000382"]
-  tag "nist": ["CM-7 b", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
-  tag "documentable": false
-  tag "mitigations": nil
-  tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "In the MongoDB database configuration file (default location:
   /etc/mongod.conf), review the following parameters:
 
@@ -62,6 +43,19 @@ control "V-81861" do
   enabled: false
   JSONPEnabled: false
   RESTInterfaceEnabled: false"
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000141-DB-000092"
+  tag "satisfies": ["SRG-APP-000141-DB-000092", "SRG-APP-000142-DB-000094"]
+  tag "gid": "V-81861"
+  tag "rid": "SV-96575r1_rule"
+  tag "stig_id": "MD3X-00-000290"
+  tag "fix_id": "F-88711r1_fix"
+  tag "cci": ["CCI-000381", "CCI-000382"]
+  tag "nist": ["CM-7 a", "CM-7 b"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
 
   mongo_conf_file = input('mongod_conf')
   describe.one do

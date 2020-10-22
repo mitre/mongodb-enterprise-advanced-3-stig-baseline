@@ -1,4 +1,4 @@
-- name: restart mongodb
+- name: restart mongod
   service:
-    name: "mongodb-server"
+    name: "mongod"
     state: restarted

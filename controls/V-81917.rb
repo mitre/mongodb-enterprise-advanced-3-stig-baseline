@@ -1,4 +1,4 @@
-control "V-81917" do
+  control "V-81917" do
   title "MongoDB must only accept end entity certificates issued by DoD PKI or
   DoD-approved PKI Certification Authorities (CAs) for the establishment of all
   encrypted sessions."
@@ -15,25 +15,7 @@ control "V-81917" do
   This requirement focuses on communications protection for MongoDB session
   rather than for the network packet.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000427-DB-000385"
-  tag "gid": "V-81917"
-  tag "rid": "SV-96631r1_rule"
-  tag "stig_id": "MD3X-00-000730"
-  tag "fix_id": "F-88767r1_fix"
-  tag "cci": ["CCI-002470"]
-  tag "nist": ["SC-23", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
-  tag "documentable": false
-  tag "mitigations": nil
-  tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "To run MongoDB in SSL mode, you have to obtain a valid
   certificate singed by a single certificate authority.
 
@@ -47,6 +29,19 @@ control "V-81917" do
   certificate authority. Contact the organization's certificate issuer and
   request a new certificate that is issued by a valid DoD certificate
   authorities."
+  
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000427-DB-000385"
+  tag "gid": "V-81917"
+  tag "rid": "SV-96631r1_rule"
+  tag "stig_id": "MD3X-00-000730"
+  tag "fix_id": "F-88767r1_fix"
+  tag "cci": ["CCI-002470"]
+  tag "nist": ["SC-23 (5)"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   describe 'The mongodb ssl certificate issuer' do
     subject { command("openssl x509 -in /etc/ssl/mongodb.pem -text | grep -i 'issuer'").stdout }
     it { should include 'DoD' }

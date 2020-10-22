@@ -1,29 +1,11 @@
-control "V-81873" do
+  control "V-81873" do
   title "MongoDB must map the PKI-authenticated identity to an associated user
   account."
   desc "The DoD standard for authentication is DoD-approved PKI certificates.
   Once a PKI certificate has been validated, it must be mapped to a DBMS user
   account for the authenticated identity to be meaningful to MongoDB and useful
   for authorization decisions."
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000177-DB-000069"
-  tag "gid": "V-81873"
-  tag "rid": "SV-96587r1_rule"
-  tag "stig_id": "MD3X-00-000370"
-  tag "fix_id": "F-88723r1_fix"
-  tag "cci": ["CCI-000187"]
-  tag "nist": ["IA-5", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
-  tag "documentable": false
-  tag "mitigations": nil
-  tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "To authenticate with a client certificate, you must first add
   the value of the subject from the client certificate as a MongoDB user.
 
@@ -95,6 +77,19 @@ control "V-81873" do
 
   use $external
   db.dropUser(\"<RDN of user>\")"
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000177-DB-000069"
+  tag "gid": "V-81873"
+  tag "rid": "SV-96587r1_rule"
+  tag "stig_id": "MD3X-00-000370"
+  tag "fix_id": "F-88723r1_fix"
+  tag "cci": ["CCI-000187"]
+  tag "nist": ["IA-5 (2) (c)"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+  
   describe 'A manual review is required to ensure MongoDB maps the PKI-authenticated identity to an associated user
   account' do
     skip 'A manual review is required to ensure MongoDB maps the PKI-authenticated identity to an associated user

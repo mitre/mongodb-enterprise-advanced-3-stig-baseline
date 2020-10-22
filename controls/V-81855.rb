@@ -6,7 +6,6 @@ control "V-81855" do
   changes to the hardware, software, and/or firmware components of the
   information system and/or application can potentially have significant effects
   on the overall security of the system.
-
       Multiple applications can provide a cumulative negative effect. A
   vulnerability and subsequent exploit to one application can lead to an exploit
   of other applications sharing the same security context. For example, an
@@ -19,6 +18,23 @@ control "V-81855" do
   method that provides any level of separation of security context assists in the
   protection between applications.
   "
+
+  desc "check", "Review the MongoDB software library directory and note other
+  root directories located on the same disk directory or any subdirectories.
+  If any non-MongoDB software directories exist on the disk directory, examine or
+  investigate their use. If any of the directories are used by other
+  applications, including third-party applications that use the MongoDB this is a
+  finding.
+  Only applications that are required for the functioning and administration, not
+  use, of the MongoDB should be located in the same disk directory as the MongoDB
+  software libraries.
+  If other applications are located in the same directory as the MongoDB database
+  this is a finding."
+  desc "fix", "Install all applications on directories separate from the MongoDB
+  software library directory. Relocate any directories or reinstall other
+  application software that currently shares the MongoDB software library
+  directory."
+
   impact 0.5
   tag "severity": "medium"
   tag "gtitle": "SRG-APP-000133-DB-000199"
@@ -27,40 +43,23 @@ control "V-81855" do
   tag "stig_id": "MD3X-00-000260"
   tag "fix_id": "F-88705r1_fix"
   tag "cci": ["CCI-001499"]
-  tag "nist": ["CM-5 (6)", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
+  tag "nist": ["CM-5 (6)"]
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
-  desc "check", "Review the MongoDB software library directory and note other
-  root directories located on the same disk directory or any subdirectories.
-
-  If any non-MongoDB software directories exist on the disk directory, examine or
-  investigate their use. If any of the directories are used by other
-  applications, including third-party applications that use the MongoDB this is a
-  finding.
-
-  Only applications that are required for the functioning and administration, not
-  use, of the MongoDB should be located in the same disk directory as the MongoDB
-  software libraries.
-
-  If other applications are located in the same directory as the MongoDB database
-  this is a finding."
-  desc "fix", "Install all applications on directories separate from the MongoDB
-  software library directory. Relocate any directories or reinstall other
-  application software that currently shares the MongoDB software library
-  directory."
-  describe 'A manual review is required to ensure all database software, including DBMS configuration files, is stored
-  in dedicated directories, or DASD pools, separate from the host OS and other
-  applications' do
-    skip 'A manual review is required to ensure all database software, including DBMS configuration files, is stored
-  in dedicated directories, or DASD pools, separate from the host OS and other
-  applications'
-  end
+  
+  if input('is_docker') == 'true'
+    describe "The MongoDB is installed within a Docker container so it is 
+    separate from the host OS, therefore this is not a finding." do
+      subject { virtualization.system }
+      it {should cmp 'docker'}
+    end
+  else
+    describe "This test requires a Manual Review: Ensure all database software, 
+    including DBMS configuration files, is stored in dedicated directories, or 
+    DASD pools, separate from the host OS and other applications." do
+      skip "This test requires a Manual Review: Ensure all database software, 
+      including DBMS configuration files, is stored in dedicated directories, or 
+      DASD pools, separate from the host OS and other applications."
+    end
+  end  
 end

@@ -1,5 +1,378 @@
----
-- name: Start service couchbase-server, if not started
+# ---
+- name: Start service mongodb-server, if not started
   service:
     name: mongod
     state: started
+
+# V-81843
+- name: enable security
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: '^#security:$'
+    line: 'security:'
+  notify: restart mongod
+
+- name: set authorization enabled
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)authorization:.*"
+    line: "  authorization: enabled"
+    insertafter: "^security:$"
+  notify: restart mongod
+
+- name: Create MongoDB Admin user 
+  mongodb_user:
+    database: "admin"
+    name: "mongodb_admin"
+    password: "mongodb_admin"
+    roles: "userAdminAnyDatabase"
+
+- name: Create MongoDB Regular user 
+  mongodb_user:
+    database: "admin"
+    name: "mongoadmin"
+    password: "mongoadmin"
+    roles: "userAdminAnyDatabase"
+
+# V-81849 V-81887
+- name: secure access to mongo directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '700'
+    owner: mongod
+    group: mongod
+  with_items:
+    - "{{ mongod_lib }}"
+    - /data/db/
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: secure access to mongo directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '700'
+    owner: mongodb
+    group: mongodb
+    recurse: yes
+  with_items:
+    - "{{ mongod_lib }}"
+    - /data/db/
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: secure access to syslog directory
+  file:
+    path: "/var/log"
+    state: directory
+    mode: '755'
+    owner: root
+    group: root
+
+# V-81851
+- name: secure access to config file
+  file:
+    path: "{{ mongod_conf }}"
+    mode: '700'
+    owner: mongod
+    group: mongod
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: secure access to config file
+  file:
+    path: "{{ mongod_conf }}"
+    mode: '700'
+    owner: mongodb
+    group: mongodb
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+# V-81871
+- name: secure access to SSL certs
+  file:
+    path: "{{ item }}"
+    state: touch
+    mode: '600'
+    owner: mongod
+    group: mongod
+  with_items:
+      - "{{ mongod_cafile }}"
+      - "{{ mongod_pem }}"
+      - "{{ mongod_kmp_client_pem }}"
+      - "{{ mongod_kmp_cafile }}"
+      - "{{ mongod_client_pem }}"
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: secure access to SSL certs
+  file:
+    path: "{{ item }}"
+    state: touch
+    mode: '600'
+    owner: mongodb
+    group: mongodb
+  with_items:
+      - "{{ mongod_cafile }}"
+      - "{{ mongod_pem }}"
+      - "{{ mongod_kmp_client_pem }}"
+      - "{{ mongod_kmp_cafile }}"
+      - "{{ mongod_client_pem }}"
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+# V-81859
+- name: uninstall unused packages
+  package:
+    name: 
+      - enterprise-mongos
+      - enterprise-tools
+    state: absent
+
+# V-81867
+- name: set certificate authenticaion mode
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)clusterAuthMode:.*"
+    line: "  clusterAuthMode: x509"
+    insertafter: "^security:$"
+
+# V-81879 V-81921 V-81923 V-81869
+- name: Check if PKI is required
+  shell: "echo {{ mongo_use_pki }}"
+  register: use_pki
+
+- name: set SSL as required with custom key file
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} SSL config"
+    insertafter: "^net:$"
+    block: |2
+        ssl:
+          mode: requireSSL
+          PEMKeyFile: "{{ mongod_pem }}"
+          CAFile: "{{ mongod_cafile }}"
+  when:
+    - use_pki.stdout == 'true'
+  notify: restart mongod
+
+# V-81875
+- name: enable NIST FIPS 140-2-validated cryptographic modules
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)FIPSMode:.*"
+    line: "    FIPSMode: true"
+    insertafter: "^ +ssl:$"
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  notify: restart mongod
+
+# V-81883
+- name: enable MongoDB Encrypted Storage Engine
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)enableEncryption:.*"
+    line: "  enableEncryption: true"
+    insertafter: "^security:$"
+  notify: restart mongod
+
+# V-81891 V-81889
+- name: disable the use of javascript
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)javascriptEnabled:.*"
+    line: "  javascriptEnabled: false"
+    insertafter: "^security:$"
+  notify: restart mongod
+
+# V-81895
+- name: redact sensative data in log file
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)redactClientLogData:.*"
+    line: "  redactClientLogData: true"
+    insertafter: "^security:$"
+  notify: restart mongod
+
+# V-81847 V-81901 V-81905 V-81907 
+- name: set audit log destination
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} auditLog config"
+    block: |
+      auditLog:
+        destination: syslog
+  notify: restart mongod
+
+# V-81893 - works
+- name: Verify error messages 
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: "(|#)redactClientLogData:.*"
+    line: "  redactClientLogData: true"
+    insertafter: "^security:$"
+  notify: restart mongod
+
+# V-81903
+- name: set path of database files
+  lineinfile:
+    path: "{{ mongod_conf }}"
+    regexp: ".*dbPath:.*"
+    line: "  dbPath: /data/db"
+    insertafter: "^storage:$"
+  notify: restart mongod
+
+# V-81917
+- name: generate self-signed ssl certificate and key
+  shell: |
+    openssl req -nodes -x509 -newkey rsa:2048 -keyout /tmp/ca.key -out /tmp/ca.crt -subj "/C=US/ST=DC/L=GOV/O=DoD/OU=root/CN=MONGODB/emailAddress=ansible@mongodb.config"
+    openssl req -nodes -newkey rsa:2048 -keyout /tmp/server.key -out /tmp/server.csr -subj "/C=US/ST=DC/L=GOV/O=DoD/OU=server/CN=MONGODB/emailAddress=ansible@mongodb.config"
+    openssl x509 -req -in /tmp/server.csr -CA /tmp/ca.crt -CAkey /tmp/ca.key -CAcreateserial -out /tmp/server.crt
+    cat /tmp/server.key /tmp/server.crt > "{{ mongod_pem }}"
+    cat /tmp/ca.crt /tmp/server.crt > "{{ mongod_cafile }}"
+  changed_when: 1
+
+- name: generate client certificate
+  shell: |
+    openssl req -nodes -newkey rsa:2048 -keyout /tmp/client.key -out /tmp/client.csr -subj "/C=US/ST=DC/L=GOV/O=DoD/OU=server/CN=MONGODB/emailAddress=ansible@mongodb.config"
+    openssl x509 -req -in /tmp/client.csr -CA /tmp/ca.crt -CAkey /tmp/ca.key -CAcreateserial -out /tmp/client.crt
+    cat /tmp/client.key /tmp/client.crt > "{{ mongod_client_pem }}"
+  changed_when: 1
+
+# V-81919
+- name: set KMIP settings for data at rest encryption
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} KMIP config"
+    insertafter: "^security:$"
+    block: |2
+        kmip:
+          serverName: MONGODB
+          port: 5696
+          clientCertificateFile: "{{ mongod_kmp_client_pem }}"
+          serverCAFile: "{{ mongod_kmp_cafile }}"
+
+- name: install KMIP packages
+  apt: 
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - python3-dev
+    - libffi-dev
+    - libssl-dev
+    - libsqlite3-dev
+    - python3-pip
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: install KMIP packages
+  yum: 
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - python3-devel
+    - libffi-devel
+    - openssl-devel
+    - libsqlite3x-devel
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: set KMIP settings for PYKMIP
+  blockinfile:
+    path: /etc/pykmip/server.conf
+    marker: "# {mark} config"
+    create: yes
+    block: |
+      [server]
+      hostname=MONGODB
+      port=5696
+      certificate_path=/etc/pykmip/server.crt
+      key_path=/etc/pykmip/server.key
+      ca_path=/etc/pykmip/ca.crt
+      auth_suite=Basic
+      enable_tls_client_auth=True
+      logging_level=DEBUG
+      database_path=/tmp/pykmip.db
+
+- name: check if KMIP certs exists exists
+  stat:
+    path: /etc/pykmip/ca.crt
+  register: kmip_cert_result
+
+- name: generate and copy certficate for KMIP
+  shell: |
+    pip3 install pykmip
+    pip install pyOpenSSL -U
+    echo "127.0.0.1 MONGODB" >> /etc/hosts
+    cd /tmp/
+    wget https://github.com/OpenKMIP/PyKMIP/raw/master/bin/create_certificates.py -O create.py
+    sed -i 's/Server Certificate/MONGODB/g' create.py
+    python create.py
+    cat client_certificate_john_doe.pem client_key_john_doe.pem > /etc/ssl/mongodb_kmip_client.pem
+    cp root_certificate.pem /etc/ssl/mongodb_kmip_ca.pem
+    mkdir /etc/pykmip/
+    cp server_certificate.pem /etc/pykmip/server.crt
+    cp server_key.pem /etc/pykmip/server.key
+    cp root_certificate.pem /etc/pykmip/ca.crt
+  args:
+    executable: /bin/bash
+  when: 
+    - ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    - not kmip_cert_result.stat.exists
+
+- name: generate and copy certficate for KMIP
+  shell: |
+    pip3 install pykmip
+    echo "127.0.0.1 MONGODB" >> /etc/hosts
+    cd /tmp/
+    wget https://github.com/OpenKMIP/PyKMIP/raw/master/bin/create_certificates.py -O create.py
+    sed -i 's/Server Certificate/MONGODB/g' create.py
+    python create.py
+    cat client_certificate_john_doe.pem client_key_john_doe.pem > /etc/ssl/mongodb_kmip_client.pem
+    cp root_certificate.pem /etc/ssl/mongodb_kmip_ca.pem
+    mkdir /etc/pykmip/
+    cp server_certificate.pem /etc/pykmip/server.crt
+    cp server_key.pem /etc/pykmip/server.key
+    cp root_certificate.pem /etc/pykmip/ca.crt
+  args:
+    executable: /bin/bash
+  when: 
+    - ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+    - not kmip_cert_result.stat.exists
+
+- name: start KMIP server and restart mongodb
+  shell: |
+    nohup /usr/local/bin/pykmip-server &
+    service mongod restart
+
+# # V-81915
+- name: Check if saslauthd is required
+  shell: "echo {{ mongo_use_saslauthd }}"
+  register: use_saslauthd
+
+- name: configure saslauthd
+  lineinfile: 
+    path: "{{ saslauthd }}"
+    regexp: '^MECH=pam$'
+    line: 'MECH=ldap'
+  become: true
+  when:
+    - use_saslauthd.stdout == 'true'
+
+- name: edit timeout cache
+  lineinfile:
+    path: "{{ saslauthd }}"
+    regexp: '^FLAGS=$'
+    line: "FLAGS=-t 900"
+  become: true
+  when:
+    - use_saslauthd.stdout == 'true'
+
+- name: Check if LDAP is required
+  shell: "echo {{ mongo_use_ldap }}"
+  register: use_ldap
+
+- name: Edit LDAP timeout
+  blockinfile:
+    path: "{{ mongod_conf }}"
+    marker: "# {mark} LDAP config"
+    insertafter: "^security:$"
+    block: |2
+        ldap:
+          timeoutMS: 10000
+  when:
+    - use_ldap.stdout == 'true'
+  notify: restart mongod
+

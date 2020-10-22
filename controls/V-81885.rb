@@ -13,25 +13,7 @@ control "V-81885" do
       Copies of sensitive data must not be misplaced or left in a temporary
   location without the proper controls.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000243-DB-000128"
-  tag "gid": "V-81885"
-  tag "rid": "SV-96599r1_rule"
-  tag "stig_id": "MD3X-00-000460"
-  tag "fix_id": "F-88735r1_fix"
-  tag "cci": ["CCI-001090"]
-  tag "nist": ["SC-4", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
-  tag "documentable": false
-  tag "mitigations": nil
-  tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+ 
   desc "check", "Review the procedures for the refreshing of development/test
   data from production.
 
@@ -47,6 +29,19 @@ control "V-81885" do
   development/test systems to comply with the organization-defined data transfer
   policy, and to ensure copies of production data are not left in unsecured
   locations."
+ 
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000243-DB-000128"
+  tag "gid": "V-81885"
+  tag "rid": "SV-96599r1_rule"
+  tag "stig_id": "MD3X-00-000460"
+  tag "fix_id": "F-88735r1_fix"
+  tag "cci": ["CCI-001090"]
+  tag "nist": ["SC-4"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   describe 'A manual review is required to ensure that database contents are protected from unauthorized and unintended
   information transfer by enforcement of a data-transfer policy.' do
     skip 'A manual review is required to ensure that database contents are protected from unauthorized and unintended

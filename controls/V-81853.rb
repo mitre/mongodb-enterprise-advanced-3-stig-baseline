@@ -19,6 +19,14 @@ control "V-81853" do
   security and operation. It is especially important to grant privileged access
   to only those persons who are qualified and authorized to use them.
   "
+
+  desc "check", "Review procedures for controlling, granting access to, and
+  tracking use of the DBMS software installation account.
+
+  If access or use of this account is not restricted to the minimum number of
+  personnel required or if unauthorized access to the account has been granted,
+  this is a finding."
+
   impact 0.5
   tag "severity": "medium"
   tag "gtitle": "SRG-APP-000133-DB-000198"
@@ -27,23 +35,10 @@ control "V-81853" do
   tag "stig_id": "MD3X-00-000250"
   tag "fix_id": "F-88703r1_fix"
   tag "cci": ["CCI-001499"]
-  tag "nist": ["CM-5 (6)", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
+  tag "nist": ["CM-5 (6)"]
   tag "documentable": false
-  tag "mitigations": nil
   tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
-  desc "check", "Review procedures for controlling, granting access to, and
-  tracking use of the DBMS software installation account.
-
-  If access or use of this account is not restricted to the minimum number of
-  personnel required or if unauthorized access to the account has been granted,
-  this is a finding."
+  
   desc "fix", "Develop, document, and implement procedures to restrict and track
   use of the DBMS software installation account."
   describe 'A manual review is required to ensure there are procedures in place to restrict and track the use of the DBMS software installation account' do

@@ -1,4 +1,4 @@
-control "V-81851" do
+  control "V-81851" do
   title 'MongoDB must protect its audit features from unauthorized access.'
   desc  "Protecting audit data also includes identifying and protecting the
   tools used to view and manipulate log data.
@@ -21,27 +21,7 @@ control "V-81851" do
   logs for system weaknesses or weaknesses in the auditing itself. An attacker
   could also manipulate logs to hide evidence of malicious activity.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000121-DB-000202"
-  tag "satisfies": ["SRG-APP-000121-DB-000202", "SRG-APP-000122-DB-000203",
-                    "SRG-APP-000122-DB-000204"]
-  tag "gid": "V-81851"
-  tag "rid": "SV-96565r1_rule"
-  tag "stig_id": "MD3X-00-000220"
-  tag "fix_id": "F-88701r1_fix"
-  tag "cci": ["CCI-001493", "CCI-001494", "CCI-001495"]
-  tag "nist": ["AU-9", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
-  tag "documentable": false
-  tag "mitigations": nil
-  tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "Verify User ownership, Group ownership, and permissions on the
   “<MongoDB configuration file>\":
 
@@ -73,9 +53,24 @@ control "V-81851" do
   > chown mongod /etc/mongod.conf
   > chgrp mongod /etc/mongod.conf
   > chmod 700 /etc/mongod.conf"
+
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000121-DB-000202"
+  tag "satisfies": ["SRG-APP-000121-DB-000202", "SRG-APP-000122-DB-000203",
+                    "SRG-APP-000122-DB-000204"]
+  tag "gid": "V-81851"
+  tag "rid": "SV-96565r1_rule"
+  tag "stig_id": "MD3X-00-000220"
+  tag "fix_id": "F-88701r1_fix"
+  tag "cci": ["CCI-001493", "CCI-001494", "CCI-001495"]
+  tag "nist": ["AU-9"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+  
   describe file(input('mongod_conf')) do
     it { should_not be_more_permissive_than('0700') } 
-    its('owner') { should eq 'mongod' }
-    its('group') { should eq 'mongod' }
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
   end
 end

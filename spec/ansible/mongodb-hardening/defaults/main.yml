@@ -1,10 +1,22 @@
 mongod_conf: '/etc/mongod.conf'
-mongodb_packages_used: [
-  'mongodb-org-tools-4.0.5-1.el7.x86_64',
-  'mongodb-org-server-4.0.5-1.el7.x86_64',
-  'mongodb-org-shell-4.0.5-1.el7.x86_64',
-  'mongodb-org-4.0.5-1.el7.x86_64',
-  'mongodb-org-mongos-4.0.5-1.el7.x86_64']
+
+mongod_pem: '/etc/ssl/mongodb.pem'
+mongod_cafile: '/etc/ssl/mongodbca.pem'
+mongod_client_pem: '/etc/ssl/client.pem'
+mongod_lib: '/var/lib/mongo'
+
+mongod_kmp_client_pem: '/etc/ssl/mongodb_kmip_client.pem'
+mongod_kmp_cafile: '/etc/ssl/mongodb_kmip_ca.pem'
+
+mongod_auditlog: '/var/lib/mongo/auditLog.bson'
+saslauthd: '/etc/sysconfig/saslauthd'
+
+mongod_hostname: 'MONGODB'
+
+is_docker: 'true'
+mongo_use_pki: 'true'
+mongo_use_ldap: 'false'
+mongo_use_saslauthd: 'false'
 
 user: 'mongoadmin'
 password: 'mongoadmin'

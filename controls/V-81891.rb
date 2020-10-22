@@ -1,4 +1,4 @@
-control "V-81891" do
+  control "V-81891" do
   title "MongoDB and associated applications must reserve the use of dynamic
   code execution for situations that require it."
   desc  "With respect to database management systems, one class of threat is
@@ -28,26 +28,7 @@ control "V-81891" do
   to obtain assurances from the development organization that this issue has been
   addressed, and must document what has been discovered.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000251-DB-000391"
-  tag "satisfies": ["SRG-APP-000251-DB-000391", "SRG-APP-000251-DB-000392"]
-  tag "gid": "V-81891"
-  tag "rid": "SV-96605r1_rule"
-  tag "stig_id": "MD3X-00-000500"
-  tag "fix_id": "F-88741r1_fix"
-  tag "cci": ["CCI-001310"]
-  tag "nist": ["SI-10", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
-  tag "documentable": false
-  tag "mitigations": nil
-  tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "MongoDB operations permit arbitrary JavaScript expressions to
   be run directly on the server.
 
@@ -64,6 +45,20 @@ control "V-81891" do
 
   security:
   javascriptEnabled: false"
+  
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000251-DB-000391"
+  tag "satisfies": ["SRG-APP-000251-DB-000391", "SRG-APP-000251-DB-000392"]
+  tag "gid": "V-81891"
+  tag "rid": "SV-96605r1_rule"
+  tag "stig_id": "MD3X-00-000500"
+  tag "fix_id": "F-88741r1_fix"
+  tag "cci": ["CCI-001310"]
+  tag "nist": ["SI-10"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   describe yaml(input('mongod_conf')) do
     its(%w{security javascriptEnabled}) { should cmp 'false' }
   end

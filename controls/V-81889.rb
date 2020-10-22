@@ -1,4 +1,4 @@
-control "V-81889" do
+  control "V-81889" do
   title "MongoDB must check the validity of all data inputs except those
   specifically identified by the organization."
   desc "Invalid user input occurs when a user inserts data or characters into
@@ -30,25 +30,7 @@ control "V-81889" do
   to obtain assurances from the development organization that this issue has been
   addressed, and must document what has been discovered.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000251-DB-000160"
-  tag "gid": "V-81889"
-  tag "rid": "SV-96603r1_rule"
-  tag "stig_id": "MD3X-00-000490"
-  tag "fix_id": "F-88739r1_fix"
-  tag "cci": ["CCI-001310"]
-  tag "nist": ["SI-10", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
-  tag "documentable": false
-  tag "mitigations": nil
-  tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "As a client program assembles a query in MongoDB, it builds a
   BSON object, not a string. Thus traditional SQL injection attacks are not a
   problem. However, MongoDB operations permit arbitrary JavaScript expressions to
@@ -73,6 +55,19 @@ control "V-81889" do
   If document validation is needed, it should be configured according to the
   documentation page at
   https://docs.mongodb.com/manual/core/document-validation/."
+  
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000251-DB-000160"
+  tag "gid": "V-81889"
+  tag "rid": "SV-96603r1_rule"
+  tag "stig_id": "MD3X-00-000490"
+  tag "fix_id": "F-88739r1_fix"
+  tag "cci": ["CCI-001310"]
+  tag "nist": ["SI-10"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   describe yaml(input('mongod_conf')) do
     its(%w{security javascriptEnabled}) { should cmp 'false' }
   end

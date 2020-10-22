@@ -1,4 +1,4 @@
-control "V-81927" do
+  control "V-81927" do
   title "MongoDB must obscure feedback of authentication information during the
   authentication process to protect the information from possible
   exploitation/use by unauthorized individuals."
@@ -29,25 +29,7 @@ control "V-81927" do
   assurances from the development organization that this issue has been
   addressed, and must document what has been discovered.
   "
-  impact 0.7
-  tag "severity": "high"
-  tag "gtitle": "SRG-APP-000178-DB-000083"
-  tag "gid": "V-81927"
-  tag "rid": "SV-96641r1_rule"
-  tag "stig_id": "MD3X-00-000800"
-  tag "fix_id": "F-88777r1_fix"
-  tag "cci": ["CCI-000206"]
-  tag "nist": ["IA-6", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
-  tag "documentable": false
-  tag "mitigations": nil
-  tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+
   desc "check", "For the MongoDB command-line tools \"mongo shell\",
   \"mongodump\", \"mongorestore\", \"mongoimport\", \"mongoexport\", which cannot
   be configured not to accept a plain-text password, and any other essential tool
@@ -73,6 +55,19 @@ control "V-81927" do
   Train all users of the tool in the nature of using the plain-text password
   option and in how to keep the password protected from unauthorized
   viewing/capture and document they have been trained."
+  
+  impact 0.7
+  tag "severity": "high"
+  tag "gtitle": "SRG-APP-000178-DB-000083"
+  tag "gid": "V-81927"
+  tag "rid": "SV-96641r1_rule"
+  tag "stig_id": "MD3X-00-000800"
+  tag "fix_id": "F-88777r1_fix"
+  tag "cci": ["CCI-000206"]
+  tag "nist": ["IA-6"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+
   describe 'A manual review is required to ensure MongoDB obscures the feedback of authentication information during the
   authentication process to protect the information from possible
   exploitation/use by unauthorized individuals.' do

@@ -1,4 +1,4 @@
-control "V-81859" do
+  control "V-81859" do
   title "Unused database components, DBMS software, and database objects must
   be removed."
   desc "Information systems are capable of providing a wide variety of
@@ -12,25 +12,7 @@ control "V-81859" do
       DBMSs must adhere to the principles of least functionality by providing
   only essential capabilities.
   "
-  impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000141-DB-000091"
-  tag "gid": "V-81859"
-  tag "rid": "SV-96573r1_rule"
-  tag "stig_id": "MD3X-00-000280"
-  tag "fix_id": "F-88709r1_fix"
-  tag "cci": ["CCI-000381"]
-  tag "nist": ["CM-7 a", "Rev_4"]
-  tag "false_negatives": nil
-  tag "false_positives": nil
-  tag "documentable": false
-  tag "mitigations": nil
-  tag "severity_override_guidance": false
-  tag "potential_impacts": nil
-  tag "third_party_tools": nil
-  tag "mitigation_controls": nil
-  tag "responsibility": nil
-  tag "ia_controls": nil
+  
   desc "check", "Review the list of components and features installed with the
   MongoDB database.
 
@@ -52,19 +34,47 @@ control "V-81859" do
   On applications servers that typically run the mongos process when connecting
   to a shared cluster, the only package required is the mongodb-enterprise-mongos
   package."
-  mongodb_installed_packages = command('rpm -qa | grep mongodb').stdout.strip.split("\n")
 
-  if mongodb_installed_packages.empty?
-    describe 'There are no mongo database packages installed, therefore for this control is NA' do
-      skip 'There are no mongo database packages installed, therefore for this control is NA'
+  impact 0.5
+  tag "severity": "medium"
+  tag "gtitle": "SRG-APP-000141-DB-000091"
+  tag "gid": "V-81859"
+  tag "rid": "SV-96573r1_rule"
+  tag "stig_id": "MD3X-00-000280"
+  tag "fix_id": "F-88709r1_fix"
+  tag "cci": ["CCI-000381"]
+  tag "nist": ["CM-7 a"]
+  tag "documentable": false
+  tag "severity_override_guidance": false
+  
+  if os.debian?
+    dpkg_packages = command("dpkg --get-selections | grep mongodb").stdout.split("\n")
+    if dpkg_packages.empty?
+      describe 'There are no mongo database packages installed, therefore for this control is NA' do
+        skip 'There are no mongo database packages installed, therefore for this control is NA'
+      end
+    else
+      dpkg_packages.each do |package|
+        package = command("echo #{package} | sed 's/ hold$//'").stdout.split
+        describe "The installed mongodb package: #{package}" do
+          subject { package }
+          it { should be_in input('mongodb_debian_packages') }
+        end
+      end
     end
-  end
-
-  if !mongodb_installed_packages.empty?
-    mongodb_installed_packages.each do |package|
-      describe "The installed mongodb package: #{package}" do
-        subject { package }
-        it { should be_in input('mongodb_packages_used') }
+  elsif os.redhat?
+    rpm_packages = command("rpm -qa | grep mongodb").stdout.split("\n")
+    if rpm_packages.empty?
+      describe 'There are no mongo database packages installed, therefore for this control is NA' do
+        skip 'There are no mongo database packages installed, therefore for this control is NA'
+      end
+    else
+      rpm_packages.each do |package|
+        package = command("echo #{package} | sed 's/.x86.*//'").stdout.split
+        describe "The installed mongodb package: #{package}" do
+          subject { package }
+          it { should be_in input('mongodb_redhat_packages') }
+        end
       end
     end
   end
