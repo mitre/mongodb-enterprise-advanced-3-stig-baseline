@@ -38,14 +38,13 @@
           - sudo rm -r /var/log/mongodb
           - echo "deb [ arch=amd64,arm64 trusted=yes ] http://repo.mongodb.com/apt/ubuntu xenial/mongodb-enterprise/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-enterprise.list
           - sudo apt-get update
-          - sudo apt-get install -y python3 python3-pip mongodb-enterprise=3.6.9 mongodb-enterprise-server=3.6.9 mongodb-enterprise-shell=3.6.9 mongodb-enterprise-mongos=3.6.9 mongodb-enterprise-tools=3.6.9
-          - update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+          - sudo apt-get install -y python python-pip mongodb-enterprise=3.6.9 mongodb-enterprise-server=3.6.9 mongodb-enterprise-shell=3.6.9 mongodb-enterprise-mongos=3.6.9 mongodb-enterprise-tools=3.6.9
           - echo "mongodb-enterprise hold" | sudo dpkg --set-selections
           - echo "mongodb-enterprise-server hold" | sudo dpkg --set-selections
           - echo "mongodb-enterprise-shell hold" | sudo dpkg --set-selections
           - echo "mongodb-enterprise-mongos hold" | sudo dpkg --set-selections
           - echo "mongodb-enterprise-tools hold" | sudo dpkg --set-selections
-          - pip3 install pymongo
+          - pip install pymongo
 
   suites:
     - name: hardened
