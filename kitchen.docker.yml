@@ -44,6 +44,7 @@
           - echo "mongodb-enterprise-shell hold" | sudo dpkg --set-selections
           - echo "mongodb-enterprise-mongos hold" | sudo dpkg --set-selections
           - echo "mongodb-enterprise-tools hold" | sudo dpkg --set-selections
+          - pip install --upgrade pip
           - pip install pymongo
 
   suites:
