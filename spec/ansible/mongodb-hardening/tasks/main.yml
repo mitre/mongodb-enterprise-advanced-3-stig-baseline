@@ -293,8 +293,9 @@
 
 - name: generate and copy certficate for KMIP
   shell: |
-    sudo -H pip3 install pykmip
-    sudo -H pip install pyOpenSSL -U
+    sudo chown -R 1000:1000 /home/kitchen/.cache/pip
+    pip3 install pykmip
+    pip install pyOpenSSL -U
     echo "127.0.0.1 MONGODB" >> /etc/hosts
     cd /tmp/
     wget https://github.com/OpenKMIP/PyKMIP/raw/master/bin/create_certificates.py -O create.py
@@ -314,7 +315,7 @@
 
 - name: generate and copy certficate for KMIP
   shell: |
-    sudo -H pip3 install pykmip
+    pip3 install pykmip
     echo "127.0.0.1 MONGODB" >> /etc/hosts
     cd /tmp/
     wget https://github.com/OpenKMIP/PyKMIP/raw/master/bin/create_certificates.py -O create.py
