@@ -293,7 +293,7 @@
 
 - name: generate and copy certficate for KMIP
   shell: |
-    pip3 install pykmip
+    pip install pykmip
     pip install pyOpenSSL -U
     echo "127.0.0.1 MONGODB" >> /etc/hosts
     cd /tmp/
@@ -314,7 +314,7 @@
 
 - name: generate and copy certficate for KMIP
   shell: |
-    pip3 install pykmip
+    pip install pykmip
     echo "127.0.0.1 MONGODB" >> /etc/hosts
     cd /tmp/
     wget https://github.com/OpenKMIP/PyKMIP/raw/master/bin/create_certificates.py -O create.py
