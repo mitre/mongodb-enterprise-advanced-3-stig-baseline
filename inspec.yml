@@ -155,3 +155,12 @@ inputs:
     type: array
     value: ['[ { "role" : "clusterAdmin", "db" : "admin" }, { "role" : "readAnyDatabase", "db" : "admin" }, { "role" : "readWrite", "db" : "config" } ] }']
 
+  - name: mongodb_service_account
+    description: Mongodb Service Account
+    type: array
+    value: ["mongodb", "mongod"]
+
+  - name: mongodb_service_group
+    description: Mongodb Service Group
+    type: array
+    value: ["mongodb", "mongod"]

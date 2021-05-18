@@ -101,18 +101,16 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  if file(input('mongod_auditlog')).exist?
-    mongodb_auditlog_dir = command("dirname #{input('mongod_auditlog')}").stdout.strip
-    describe file(mongodb_auditlog_dir) do
-      it { should_not be_more_permissive_than('0700') } 
-      its('owner') { should be_in input('mongodb_service_account') }
-      its('group') { should be_in input('mongodb_service_group') }
-    end
-  else
-    describe file('/var/log') do
-      it { should_not be_more_permissive_than('0755') } 
-      its('owner') { should eq 'root' }
-      its('group') { should eq 'root' }
-    end
+  mongodb_auditlog_dir = yaml(input('mongod_conf'))['auditLog', 'path']
+
+  describe file(mongodb_auditlog_dir) do
+    it { should exist }
   end
+
+  describe file(mongodb_auditlog_dir) do
+    it { should_not be_more_permissive_than('0700') } 
+    its('owner') { should be_in input('mongodb_service_account') }
+    its('group') { should be_in input('mongodb_service_group') }
+  end
+
 end
