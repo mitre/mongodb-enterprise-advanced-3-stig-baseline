@@ -57,30 +57,30 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  mongo_conf_file = input('mongod_conf')
+  mongo_conf_file = input('mongod_conf').to_s
   describe.one do
-    describe yaml(mongo_conf_file.to_s) do
+    describe yaml(mongo_conf_file) do
       its(%w{net http enabled}) { should cmp 'false' }
     end
-    describe yaml(mongo_conf_file.to_s) do
+    describe yaml(mongo_conf_file) do
       its(%w{net http enabled}) { should be_nil }
     end
   end
 
   describe.one do
-    describe yaml(mongo_conf_file.to_s) do
+    describe yaml(mongo_conf_file) do
       its(%w{net http JSONPEnabled}) { should cmp 'false' }
     end
-    describe yaml(mongo_conf_file.to_s) do
+    describe yaml(mongo_conf_file) do
       its(%w{net http JSONPEnabled}) { should be_nil }
     end
   end
 
   describe.one do
-    describe yaml(mongo_conf_file.to_s) do
+    describe yaml(mongo_conf_file) do
       its(%w{net http RESTInterfaceEnabled}) { should cmp 'false' }
     end
-    describe yaml(mongo_conf_file.to_s) do
+    describe yaml(mongo_conf_file) do
       its(%w{net http RESTInterfaceEnabled}) { should be_nil }
     end
   end
