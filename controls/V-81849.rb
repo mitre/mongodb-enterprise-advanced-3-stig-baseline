@@ -102,6 +102,8 @@
   tag "severity_override_guidance": false
 
   mongodb_auditlog_dir = yaml(input('mongod_conf'))['auditLog', 'path']
+  mongodb_service_account = input('mongodb_service_account')
+  mongodb_service_group = input('mongodb_service_group')
 
   describe file(mongodb_auditlog_dir) do
     it { should exist }
@@ -109,8 +111,8 @@
 
   describe file(mongodb_auditlog_dir) do
     it { should_not be_more_permissive_than('0700') } 
-    its('owner') { should be_in input('mongodb_service_account') }
-    its('group') { should be_in input('mongodb_service_group') }
+    its('owner') { should be_in mongodb_service_account }
+    its('group') { should be_in mongodb_service_group }
   end
 
 end

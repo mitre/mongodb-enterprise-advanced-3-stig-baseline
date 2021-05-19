@@ -67,10 +67,13 @@
   tag "nist": ["AU-9"]
   tag "documentable": false
   tag "severity_override_guidance": false
+
+  mongodb_service_account = input('mongodb_service_account')
+  mongodb_service_group = input('mongodb_service_group')
   
   describe file(input('mongod_conf')) do
     it { should_not be_more_permissive_than('0700') } 
-    its('owner') { should be_in input('mongodb_service_account') }
-    its('group') { should be_in input('mongodb_service_group') }
+    its('owner') { should be_in mongodb_service_account }
+    its('group') { should be_in mongodb_service_group }
   end
 end

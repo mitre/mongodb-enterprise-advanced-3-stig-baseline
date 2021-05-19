@@ -47,12 +47,9 @@ control "V-81855" do
   tag "documentable": false
   tag "severity_override_guidance": false
   
-  if input('is_docker') == 'true'
-    describe "The MongoDB is installed within a Docker container so it is 
-    separate from the host OS, therefore this is not a finding." do
-      subject { virtualization.system }
-      it {should cmp 'docker'}
-    end
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    desc 'caveat', 'This is Not Applicable since the MongoDB is installed within a Docker container so it is separate from the host OS'
   else
     describe "This test requires a Manual Review: Ensure all database software, 
     including DBMS configuration files, is stored in dedicated directories, or 

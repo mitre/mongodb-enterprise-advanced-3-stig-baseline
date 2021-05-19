@@ -21,28 +21,10 @@ inputs:
     value: '/var/lib/mongo'
     required: true
 
-  - name: mongod_pem
-    description: 'MongoDB Server PEM File'
-    type: string
-    value: '/etc/ssl/mongodb.pem'
-    required: true
-
-  - name: mongod_cafile
-    description: 'MongoDB CA File'
-    type: string
-    value: '/etc/ssl/mongodbca.pem'
-    required: true
-
   - name: mongod_client_pem
     description: 'MongoDB Client PEM File'
     type: string
     value: '/etc/ssl/client.pem'
-    required: true
-
-  - name: mongod_auditlog
-    description: 'MongoDB Audit Log File'
-    type: string
-    value: '/var/lib/mongo/auditLog.bson'
     required: true
 
   - name: saslauthd
