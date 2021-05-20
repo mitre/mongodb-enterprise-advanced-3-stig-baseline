@@ -12,15 +12,7 @@ mongo_use_pki: 'true'
 mongo_use_ldap: 'false'
 mongo_use_saslauthd: 'false'
 
-mongodb_redhat_packages: [
-  'mongodb-enterprise-3.6.20-1.el7',
-  'mongodb-enterprise-mongos-3.6.20-1.el7',
-  'mongodb-enterprise-server-3.6.20-1.el7',
-  'mongodb-enterprise-shell-3.6.20-1.el7',
-  'mongodb-enterprise-tools-3.6.20-1.el7'
-]
-
-mongodb_debian_packages: [
+approved_mongo_packages: [
     'mongodb-enterprise',
     'mongodb-enterprise-mongos',
     'mongodb-enterprise-server',

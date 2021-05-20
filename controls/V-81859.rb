@@ -46,35 +46,20 @@
   tag "nist": ["CM-7 a"]
   tag "documentable": false
   tag "severity_override_guidance": false
-  
-  if os.debian?
-    dpkg_packages = command("dpkg --get-selections | grep mongodb").stdout.split("\n")
-    if dpkg_packages.empty?
-      describe 'There are no mongo database packages installed, therefore for this control is NA' do
-        skip 'There are no mongo database packages installed, therefore for this control is NA'
-      end
-    else
-      dpkg_packages.each do |package|
-        package = command("echo #{package} | sed 's/ hold$//'").stdout.split
-        describe "The installed mongodb package: #{package}" do
-          subject { package }
-          it { should be_in input('mongodb_debian_packages') }
-        end
-      end
+
+
+  approved_mongo_packages = input('approved_mongo_packages')
+
+  dpkg_packages = packages(/mongodb/).names
+  if dpkg_packages.empty?
+    describe 'There are no mongo database packages installed, therefore for this control is NA' do
+      skip 'There are no mongo database packages installed, therefore for this control is NA'
     end
-  elsif os.redhat?
-    rpm_packages = command("rpm -qa | grep mongodb").stdout.split("\n")
-    if rpm_packages.empty?
-      describe 'There are no mongo database packages installed, therefore for this control is NA' do
-        skip 'There are no mongo database packages installed, therefore for this control is NA'
-      end
-    else
-      rpm_packages.each do |package|
-        package = command("echo #{package} | sed 's/.x86.*//'").stdout.split
-        describe "The installed mongodb package: #{package}" do
-          subject { package }
-          it { should be_in input('mongodb_redhat_packages') }
-        end
+  else
+    dpkg_packages.each do |package|
+      describe "The installed mongodb package: #{package}" do
+        subject { package }
+        it { should be_in approved_mongo_packages }
       end
     end
   end

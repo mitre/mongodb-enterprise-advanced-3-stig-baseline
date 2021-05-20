@@ -57,20 +57,8 @@ inputs:
     value: 'false'
     required: true
 
-  - name: mongodb_redhat_packages
-    description: 'List of MongoDB Redhat Packages'
-    type: array
-    value: [
-      'mongodb-enterprise-3.6.20-1.el7',
-      'mongodb-enterprise-mongos-3.6.20-1.el7',
-      'mongodb-enterprise-server-3.6.20-1.el7',
-      'mongodb-enterprise-shell-3.6.20-1.el7',
-      'mongodb-enterprise-tools-3.6.20-1.el7'
-    ]
-    required: true
-
-  - name: mongodb_debian_packages
-    description: 'List of MongoDB Debian Packages'
+  - name: approved_mongo_packages
+    description: 'List of MongoDB Packages'
     type: array
     value: [
       'mongodb-enterprise',
