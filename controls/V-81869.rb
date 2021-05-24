@@ -60,8 +60,13 @@ allowInvalidCertificates: true"
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe yaml(input('mongod_conf')) do
-    its(%w{net ssl allowInvalidCertificates}) { should be nil }
+  describe.one do
+    describe yaml(input('mongod_conf')) do
+      its(%w{net ssl allowInvalidCertificates}) { should be nil }
+    end
+    describe yaml(input('mongod_conf')) do
+      its(%w{net ssl allowInvalidCertificates}) { should be false }
+    end
   end
   describe yaml(input('mongod_conf')) do
     its(%w{net ssl mode}) { should cmp 'requireSSL' }
