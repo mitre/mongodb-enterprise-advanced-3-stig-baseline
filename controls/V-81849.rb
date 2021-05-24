@@ -115,4 +115,8 @@
     its('group') { should be_in mongodb_service_group }
   end
 
+  describe command("dirname #{mongodb_auditlog_dir}") do
+    it { should cmp '/var/lib/mongo'}
+  end
+
 end
