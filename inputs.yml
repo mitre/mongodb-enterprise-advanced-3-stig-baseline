@@ -55,3 +55,4 @@ accountAdmin01_allowed_role: ['[
   ] }
   ']
 
+is_sensitive: true

@@ -74,7 +74,13 @@
   tag "documentable": false
   tag "severity_override_guidance": false
   
-  describe yaml(input('mongod_conf')) do
-    its(%w{net ssl FIPSMode}) { should cmp 'true' }
+  if input('is_sensitive')
+    describe yaml(input('mongod_conf')) do
+      its(%w{net ssl FIPSMode}) { should cmp 'true' }
+    end
+  else
+    describe 'The system is not a classified environment, therefore for this control is NA' do
+      skip 'The system is not a classified environment, therefore for this control is NA'
+    end
   end
 end

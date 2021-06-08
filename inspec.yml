@@ -134,3 +134,8 @@ inputs:
     description: Mongodb Service Group
     type: array
     value: ["mongodb", "mongod"]
+
+  - name: is_sensitive
+    description: MongoDB is deployed in a classified environment
+    type: boolean
+    value: true
