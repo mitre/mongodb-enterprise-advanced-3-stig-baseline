@@ -17,6 +17,7 @@ class MongoCommand < Inspec.resource(1)
     @password                 = options[:password]
     @database                 = options.fetch(:database, 'admin')
     @host                     = options.fetch(:host, '127.0.0.1')
+    @port                     = options.fetch(:port, '27017')
     @allow_auth_errors        = options.fetch(:allow_auth_errors, false)
     @ssl                      = options.fetch(:ssl, false)
     @ssl_pem_key_file         = options.fetch(:ssl_pem_key_file, nil)
@@ -120,7 +121,7 @@ class MongoCommand < Inspec.resource(1)
   end
 
   def format_command(command)
-    command = %{echo "#{command}" | mongo --quiet #{database} --host '#{@host}'}
+    command = %{echo "#{command}" | mongo --quiet #{database} --host '#{@host}' --port '#{@port}'}
     command += " --username #{@username}" unless @username.nil?
     command += " --password #{@password}" unless @password.nil?
 
