@@ -12,13 +12,18 @@ class MongoCommand < Inspec.resource(1)
   attr_reader :command, :database, :params
 
   def initialize(command, options = {})
-    @command           = command
-    @username          = options[:username]
-    @password          = options[:password]
-    @database          = options.fetch(:database, 'admin')
-    @allow_auth_errors = options.fetch(:allow_auth_errors, false)
-    @tls               = options.fetch(:tls, true)
-    @verify_ssl        = options.fetch(:verify_ssl, true)
+    @command                  = command
+    @username                 = options[:username]
+    @password                 = options[:password]
+    @database                 = options.fetch(:database, 'admin')
+    @host                     = options.fetch(:host, '127.0.0.1')
+    @allow_auth_errors        = options.fetch(:allow_auth_errors, false)
+    @ssl                      = options.fetch(:ssl, false)
+    @ssl_pem_key_file         = options.fetch(:ssl_pem_key_file, nil)
+    @ssl_ca_file              = options.fetch(:ssl_ca_file, nil)
+    @authentication_database  = options.fetch(:authentication_database, nil)
+    @authentication_mechanism = options.fetch(:authentication_mechanism, nil)
+    @verify_ssl               = options.fetch(:verify_ssl, true)
 
     check_for_cli_command
     @inspec_command = run_mongo_command(command)
@@ -35,8 +40,7 @@ class MongoCommand < Inspec.resource(1)
 
   def to_s
     str = "MongoDB Command (#{@command}"
-    str += ", username: #{@username}" unless @username.nil?
-    str += ", password: <hidden>" unless @password.nil?
+    str += ", database: #{@database}"
     str += ')'
 
     str
@@ -65,6 +69,10 @@ class MongoCommand < Inspec.resource(1)
     return skip_resource "User is not authorized to run command #{command}" if 
       is_auth_error?(output) && !auth_errors_allowed?
 
+    # skip the whole resource if we could not run the command at all
+    return skip_resource "Database connection error." if 
+      is_connection_error?(stdout+stderr)
+
     # if the output indicates there's an authorization error, and we allow auth
     # errors, we won't throw an exception, just set the params to an empty array.
     return [] if is_auth_error?(output) && auth_errors_allowed?
@@ -88,16 +96,22 @@ class MongoCommand < Inspec.resource(1)
     inspec.command(format_command(command))
   end
 
-  def tls_verify_disabled?
+  def ssl_verify_disabled?
     ['false', false].include?(@verify_ssl)
   end
 
-  def tls_disabled?
-    ['false', false].include?(@tls)
+  def ssl_enabled?
+    ['true', true].include?(@ssl)
   end
 
   def is_auth_error?(output)
-    output.include?('Error: not authorized')
+    output.include?('Error: not authorized') ||
+    output.include?('Error: there are no users authenticated') ||
+    output.include?('requires authentication')
+  end
+
+  def is_connection_error?(output)
+    output.include?('exception: connect failed')
   end
 
   def auth_errors_allowed?
@@ -105,12 +119,25 @@ class MongoCommand < Inspec.resource(1)
   end
 
   def format_command(command)
-    command = %{echo "#{command}" | mongo --quiet #{database}}
-    command += " --tls" unless tls_disabled?
+    command = %{echo "#{command}" | mongo --quiet #{database} --host '#{@host}'}
     command += " --username #{@username}" unless @username.nil?
     command += " --password #{@password}" unless @password.nil?
-    command += " --tlsAllowInvalidCertificates" if tls_verify_disabled? && tls_disabled?
-    command += " --tlsAllowInvalidHostnames" if tls_verify_disabled? && tls_disabled?
+
+    command += " --authenticationDatabase" unless @authentication_database.nil?
+    command += " --authenticationMechanism" unless @authentication_mechanism.nil?
+
+    command += " --ssl" if ssl_enabled?
+
+    if ssl_enabled?
+      command += " --sslAllowInvalidCertificates" if ssl_verify_disabled?
+      command += " --sslAllowInvalidHostnames"    if ssl_verify_disabled?
+
+      command += " --sslPEMKeyFile #{@ssl_pem_key_file}" unless @ssl_pem_key_file.nil?
+      command += " --sslCAFile #{@ssl_ca_file}"          unless @ssl_ca_file.nil?
+    end
+
+
+    puts command
     command
   end
 end
