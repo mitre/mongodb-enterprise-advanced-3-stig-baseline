@@ -55,7 +55,13 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe yaml(input('mongod_conf')) do
-    its(%w{security enableEncryption}) { should cmp 'true' }
+  describe.one do
+    describe yaml(input('mongod_conf')) do
+      its(%w{security enableEncryption}) { should cmp 'true' }
+    end
+    describe processes('mongod') do
+      its('commands.join') { should_not match /--enableEncryption false/}
+    end
   end
+
 end

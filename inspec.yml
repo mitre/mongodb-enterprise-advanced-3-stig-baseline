@@ -69,19 +69,54 @@ inputs:
     ]
     required: true
 
-  - name: user
+  - name: username
     description: 'User to log into the mongo database'
     type: string
-    value: 'mongoadmin'
+    value: nil
     required: true
     sensitive: true
 
   - name: password
     description: 'password to log into the mongo database'
     type: string
-    value: 'mongoadmin'
+    value: nil
     required: true
     sensitive: true
+
+  - name: mongod_hostname
+    description: hostname for mongodb database
+    type: string
+    value: '127.0.0.1'
+
+  - name: ssl
+    description: ssl enabled or not
+    type: boolean
+    value: false
+
+  - name: verify_ssl
+    description: verify ssl
+    type: boolean
+    value: false
+
+  - name: mongod_client_pem
+    description: PEM file for mongo authentication
+    type: string
+    value: nil
+
+  - name: mongod_cafile
+    description: cafile for mongo authentication
+    type: string
+    value: nil
+
+  - name: authentication_database
+    description: authentication database
+    type: string
+    value: nil
+
+  - name: authentication_mechanism
+    description: authentication mechanism
+    type: string
+    value: nil
 
   - name: admin_db_users
     description: 'List of authorized users of the admn database'
@@ -136,6 +171,6 @@ inputs:
     value: ["mongodb", "mongod"]
 
   - name: is_sensitive
-    description: MongoDB is deployed in a classified environment
+    description: MongoDB is deployed in a sensitive environment
     type: boolean
     value: true
