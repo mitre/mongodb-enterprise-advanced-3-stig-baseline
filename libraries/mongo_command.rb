@@ -67,7 +67,7 @@ class MongoCommand < Inspec.resource(1)
 
     # skip the whole resource if we could not run the command at all
     return skip_resource "User is not authorized to run command #{command}" if 
-      is_auth_error?(output) && !auth_errors_allowed?
+      is_auth_error?(stdout+stderr) && !auth_errors_allowed?
 
     # skip the whole resource if we could not run the command at all
     return skip_resource "Database connection error." if 
@@ -111,7 +111,8 @@ class MongoCommand < Inspec.resource(1)
   end
 
   def is_connection_error?(output)
-    output.include?('exception: connect failed')
+    output.include?('exception: connect failed') ||
+    output.include?('Failed global initialization')
   end
 
   def auth_errors_allowed?
