@@ -47,10 +47,7 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe yaml(input('mongod_conf')) do
-    its(%w{auditLog destination}) { should cmp 'syslog' }
-  end
-  describe yaml(input('mongod_conf')) do
-    its(%w{auditLog filter}) { should be_nil }
+  describe 'A manual review is required to check if replica sets or the rolling maintenance approach is not used for changes to the audit events & filters' do
+    skip 'A manual review is required to check if replica sets or the rolling maintenance approach is not used for changes to the audit events & filters'
   end
 end

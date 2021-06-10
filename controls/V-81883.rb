@@ -60,8 +60,12 @@
       its(%w{security enableEncryption}) { should cmp 'true' }
     end
     describe processes('mongod') do
-      its('commands.join') { should_not match /--enableEncryption false/}
+      its('commands.join') { should match /--enableEncryption true/}
     end
+  end
+
+  describe processes('mongod') do
+    its('commands.join') { should_not match /--enableEncryption false/}
   end
 
 end

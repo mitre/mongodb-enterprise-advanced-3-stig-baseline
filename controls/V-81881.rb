@@ -69,13 +69,12 @@ control "V-81881" do
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe.one do
-    describe yaml(input('mongod_conf')) do
-        its(%w{storage journal enabled}) { should cmp 'true' }
-      end
-    describe processes('mongod') do
-      its('commands.join') { should_not match /--nojournal/}
-    end
+  describe yaml(input('mongod_conf')) do
+      its(%w{storage journal enabled}) { should cmp 'true' }
+  end
+
+  describe processes('mongod') do
+    its('commands.join') { should_not match /--nojournal/}
   end
 
 end

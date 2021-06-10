@@ -55,10 +55,7 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe yaml(input('mongod_conf')) do
-    its(%w{security authorization}) { should cmp 'enabled' }
-  end
-  describe yaml(input('mongod_conf')) do
-    its(%w{security redactClientLogData}) { should cmp 'true' }
+  describe 'A manual review is required to check custom database code to verfiy that error messages do not contain information beyond what is needed for troubleshooting the issue.' do
+    skip 'A manual review is required to check custom database code to verfiy that error messages do not contain information beyond what is needed for troubleshooting the issue.'
   end
 end

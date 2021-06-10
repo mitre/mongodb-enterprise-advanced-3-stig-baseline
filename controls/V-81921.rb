@@ -62,6 +62,6 @@
     its(%w{net ssl mode}) { should cmp 'requireSSL' }
   end
   describe yaml(input('mongod_conf')) do
-    its(%w{net ssl PEMKeyFile}) { should cmp '/etc/ssl/mongodb.pem' }
+    its(%w{net ssl PEMKeyFile}) { should_not be nil }
   end
 end

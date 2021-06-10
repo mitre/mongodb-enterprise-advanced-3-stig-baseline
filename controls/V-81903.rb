@@ -50,10 +50,12 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe yaml(input('mongod_conf')) do
-    its(%w{storage dbPath}) { should cmp '/data/db' }
-  end
-  describe yaml(input('mongod_conf')) do
-    its(%w{auditLog destination}) { should cmp 'syslog' }
+  describe.one do
+    describe yaml(input('mongod_conf')) do
+      its(%w{auditLog destination}) { should cmp 'syslog' }
+    end
+    describe processes('mongod') do
+      its('commands.join') { should match /--auditDestination syslog/}
+    end
   end
 end

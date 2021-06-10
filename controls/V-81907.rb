@@ -51,5 +51,6 @@
 
   describe yaml(input('mongod_conf')) do
     its(%w{auditLog destination}) { should_not cmp 'file' }
+    its(%w{auditLog destination}) { should_not be_nil }
   end
 end
