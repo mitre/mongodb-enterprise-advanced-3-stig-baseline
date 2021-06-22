@@ -63,3 +63,5 @@ accountAdmin01_allowed_role: ['[
   ']
 
 is_sensitive: true
+
+x509_cert_file: "/etc/ssl/mongodb.pem"
