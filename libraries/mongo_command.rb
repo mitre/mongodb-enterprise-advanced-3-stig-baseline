@@ -40,6 +40,7 @@ class MongoCommand < Inspec.resource(1)
   end
 
   def to_s
+    puts "hi"
     str = "MongoDB Command (#{@command}"
     str += ", database: #{@database}"
     str += ')'
@@ -56,8 +57,8 @@ class MongoCommand < Inspec.resource(1)
     # strip any network warnings from the output
     # Unfortunately, it appears the --sslAllowInvalidHostnames doesn't actually squelch
     # any warnings, even when using --quiet mode
-    output_lines = output.lines.delete_if { |line| line.include?(' W NETWORK ')}
-    output_lines = output.lines.delete_if { |line| line.include?('UUID(')}
+
+    output_lines = output.lines.delete_if { |line| line.match?(/ W NETWORK |UUID/)}
 
     # if, after removing any network warnings, there are no lines to process,
     # we received no command output.
