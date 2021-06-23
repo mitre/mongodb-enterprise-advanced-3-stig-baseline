@@ -86,7 +86,7 @@
   tag "documentable": false
   tag "severity_override_guidance": false 
 
-  mongo_session = mongo_command(username: input('username'), password: input('password'), ssl: input('ssl'))
+  mongo_session = mongo_command(username: input('username'), password: input('password'), host: input('mongod_hostname'), ssl: input('ssl'))
 
   dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map{|x| x['name']}
 
