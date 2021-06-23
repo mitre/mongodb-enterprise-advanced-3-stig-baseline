@@ -1,14 +1,8 @@
 mongod_conf: '/etc/mongod.conf'
 mongo_data_dir: '/var/lib/mongo'
 
-mongod_client_pem: '/etc/ssl/client.pem'
-
-saslauthd: '/etc/sysconfig/saslauthd'
-
 mongod_hostname: 'MONGODB'
 
-is_docker: 'true'
-mongo_use_pki: 'true'
 mongo_use_ldap: 'false'
 mongo_use_saslauthd: 'false'
 
@@ -24,43 +18,12 @@ user: 'mongoadmin'
 password: 'mongoadmin'
 mongod_hostname: '127.0.0.1'
 ssl: false
-verify_ssl: false
-mongod_client_pem: nil
-mongod_cafile: nil
-authentication_database: nil
-authentication_mechanism: nil
 
 mongodb_service_account: ["mongodb", "mongod"]
 mongodb_service_group: ["mongodb", "mongod"]
-admin_db_users: ["mongodb_admin", "mongoadmin"]
 db_owners: ["mongodb", "mongod"]
-config_db_users: ["config_admin"]
 mongodb_service_account: ['mongod', 'mongodb']
 mongodb_service_group: ['mongod', 'mongodb']
-myUserAdmin_allowed_role: ['[ 
-  { "role" : "userAdminAnyDatabase", "db" : "admin" } 
-  ] }']
-
-mongoadmin_allowed_role: ['[ { 
-  "role" : "userAdminAnyDatabase", 
-  "db" : "admin" 
-  } ] }']
-
-mongodb_admin_allowed_role: ['[ { 
-  "role" : "userAdminAnyDatabase", 
-  "db" : "admin" 
-  } ] }']
-
-appAdmin_allowed_role: ['[
-   { "role" : "readWrite", "db" : "config" }, 
-   { "role" : "clusterAdmin", "db" : "admin" } 
-   ] }']
-accountAdmin01_allowed_role: ['[ 
-  { "role" : "clusterAdmin", "db" : "admin" }, 
-  { "role" : "readAnyDatabase", "db" : "admin" }, 
-  { "role" : "readWrite", "db" : "config" } 
-  ] }
-  ']
 
 is_sensitive: true
 

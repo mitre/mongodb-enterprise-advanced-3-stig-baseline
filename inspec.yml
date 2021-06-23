@@ -21,30 +21,6 @@ inputs:
     value: '/var/lib/mongo'
     required: true
 
-  - name: mongod_client_pem
-    description: 'MongoDB Client PEM File'
-    type: string
-    value: '/etc/ssl/client.pem'
-    required: true
-
-  - name: saslauthd
-    description: 'MongoDB SASLAUTHD File'
-    type: string
-    value: '/etc/sysconfig/saslauthd'
-    required: true
-
-  - name: is_docker
-    description: 'MongoDB is Running in Docker Environment - True/False'
-    type: string
-    value: 'false'
-    required: true
-
-  - name: mongo_use_pki
-    description: 'MongoDB is Using PKI Authentication - True/False'
-    type: string
-    value: 'true'
-    required: true
-
   - name: mongo_use_ldap
     description: 'MongoDB is Using LDAP - True/False'
     type: string
@@ -92,73 +68,6 @@ inputs:
     description: ssl enabled or not
     type: boolean
     value: false
-
-  - name: verify_ssl
-    description: verify ssl
-    type: boolean
-    value: false
-
-  - name: mongod_client_pem
-    description: PEM file for mongo authentication
-    type: string
-    value: nil
-
-  - name: mongod_cafile
-    description: cafile for mongo authentication
-    type: string
-    value: nil
-
-  - name: authentication_database
-    description: authentication database
-    type: string
-    value: nil
-
-  - name: authentication_mechanism
-    description: authentication mechanism
-    type: string
-    value: nil
-
-  - name: admin_db_users
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ["mongodb_admin"]
-    required: true
-    sensitive: true
-
-  - name: config_db_users
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ["config_admin"]
-    required: true
-    sensitive: true
-
-  - name: myUserAdmin_allowed_role
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ['[ { "role" : "userAdminAnyDatabase", "db" : "admin" } ] }']
-    required: true
-
-  - name: mongoadmin_allowed_role
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ['[ { "role" : "userAdminAnyDatabase", "db" : "admin" } ] }']
-    required: true
-
-  - name: mongodb_admin_allowed_role
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ['[ { "role" : "userAdminAnyDatabase", "db" : "admin" } ] }']
-    required: true
-
-  - name: appAdmin_allowed_role
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ['[ { "role" : "readWrite", "db" : "config" }, { "role" : "clusterAdmin", "db" : "admin" } ] }']
-
-  - name: accountAdmin01_allowed_role
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ['[ { "role" : "clusterAdmin", "db" : "admin" }, { "role" : "readAnyDatabase", "db" : "admin" }, { "role" : "readWrite", "db" : "config" } ] }']
 
   - name: mongodb_service_account
     description: Mongodb Service Account
