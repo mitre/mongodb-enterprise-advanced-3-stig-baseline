@@ -74,7 +74,7 @@
     skip "Manually verify enforces access restrictions associated with changes to the configuration of the database(s)"
   end
 
-  mongo_session = mongo_command(username: 'mongoadmin', password: 'mongoadmin', ssl: false)
+  mongo_session = mongo_command(username: input('username'), password: input('password'), ssl: input('ssl'))
 
   dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map{|x| x['name']}
 

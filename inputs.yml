@@ -14,7 +14,7 @@ approved_mongo_packages: [
     'mongodb-enterprise-tools'
 ]
 
-user: 'mongoadmin'
+username: 'mongoadmin'
 password: 'mongoadmin'
 mongod_hostname: '127.0.0.1'
 ssl: false
