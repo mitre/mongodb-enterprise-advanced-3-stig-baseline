@@ -174,3 +174,8 @@ inputs:
     description: MongoDB is deployed in a sensitive environment
     type: boolean
     value: true
+
+  - name: x509_cert_file
+    description: x509 cert file location
+    type: string
+    value: "/etc/ssl/mongodb.pem"

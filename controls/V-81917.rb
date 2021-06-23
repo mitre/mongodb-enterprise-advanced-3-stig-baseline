@@ -42,8 +42,22 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe 'The mongodb ssl certificate issuer' do
-    subject { command("openssl x509 -in /etc/ssl/mongodb.pem -text | grep -i 'issuer'").stdout }
-    it { should include 'DoD' }
+  # Process flag takes precedence over the conf file
+  x509_conf = yaml(input('mongod_conf'))['net', 'tls', 'certificateKeyFile']
+  x509_process_flag = processes('mongod').commands.join.gsub('--tlsCertificateKeyFile', '').strip
+
+  x509_cert_file = input('x509_cert_file') unless input('x509_cert_file').nil?
+  x509_cert_file = x509_conf unless x509_conf.nil?
+  x509_cert_file = x509_process_flag unless x509_process_flag.nil?
+  
+
+  if file(x509_cert_file).exist? 
+    describe x509_certificate(x509_cert_file) do
+      its('issuer_dn') { should eq input('authorized_certificate_authority') }
+    end
+  else
+    describe 'x509 file not found, manual review required' do
+      skip 'x509 file not found, manual review required'
+    end
   end
 end
