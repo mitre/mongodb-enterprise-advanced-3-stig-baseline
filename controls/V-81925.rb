@@ -44,9 +44,29 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe 'A manual review is required to ensure when invalid inputs are received, MongoDB behaves in a predictable
-  and documented manner that reflects organizational and system objectives' do
-    skip 'A manual review is required to ensure when invalid inputs are received, MongoDB behaves in a predictable
-    and documented manner that reflects organizational and system objectives'
+  validator_exception_dbs = ['admin','local','config']
+
+  mongo_session = mongo_command(username: 'mongoadmin', password: 'mongoadmin', ssl: false)
+
+  dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map{|x| x['name']}
+
+  dbs.each do |db|
+    next if validator_exception_dbs.include?(db)
+
+    db_command = "db = db.getSiblingDB('#{db}');db.getCollectionInfos()"
+    results = mongo_session.query(db_command)
+
+    results.each do |entry|
+      describe "Database: `#{db}`; Collection `#{entry['name']}`" do 
+        subject { entry }
+        its(['options', 'validator']) { should_not be nil }
+      end
+    end
+  end
+
+  if dbs.empty?
+    describe "No databases found on the target" do
+      skip
+    end
   end
 end

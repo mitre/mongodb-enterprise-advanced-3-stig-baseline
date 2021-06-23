@@ -11,8 +11,7 @@ class MongoCommand < Inspec.resource(1)
 
   attr_reader :command, :database, :params
 
-  def initialize(command, options = {})
-    @command                  = command
+  def initialize(options = {})
     @username                 = options[:username]
     @password                 = options[:password]
     @database                 = options.fetch(:database, 'admin')
@@ -27,9 +26,19 @@ class MongoCommand < Inspec.resource(1)
     @verify_ssl               = options.fetch(:verify_ssl, true)
 
     check_for_cli_command
+
+  end
+
+  def query(command)
     @inspec_command = run_mongo_command(command)
     @params = parse(@inspec_command.stdout)
   end
+
+  def to_s
+    str = "MongoDB Session"
+  end
+
+  private
 
   def stdout
     @inspec_command.stdout
@@ -39,17 +48,6 @@ class MongoCommand < Inspec.resource(1)
     @inspec_command.stderr
   end
 
-  def to_s
-    puts "hi"
-    str = "MongoDB Command (#{@command}"
-    str += ", database: #{@database}"
-    str += ')'
-
-    str
-  end
-
-  private
-
   def parse(output)
     # return right away if stdout is nil
     return [] if output.nil?
@@ -58,7 +56,8 @@ class MongoCommand < Inspec.resource(1)
     # Unfortunately, it appears the --sslAllowInvalidHostnames doesn't actually squelch
     # any warnings, even when using --quiet mode
 
-    output_lines = output.lines.delete_if { |line| line.match?(/ W NETWORK |UUID/)}
+    output_lines = output.lines.delete_if { |line| line.match?(/ W NETWORK /)}
+
 
     # if, after removing any network warnings, there are no lines to process,
     # we received no command output.
@@ -66,6 +65,9 @@ class MongoCommand < Inspec.resource(1)
 
     # put our output back together as a string
     output = output_lines.join
+
+    # Fix UUID field syntax to create a valid JSON
+    output = output.gsub(/UUID\("(.*)\"\)/,'"\1"')
 
     # skip the whole resource if we could not run the command at all
     return skip_resource "User is not authorized to run command #{command}" if 

@@ -60,7 +60,24 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe 'A manual review is required to determine if any permissions exist that are not documented and approved' do
-    skip 'A manual review is required to determine if any permissions exist that are not documented and approved'
+  mongo_session = mongo_command(username: 'mongoadmin', password: 'mongoadmin', ssl: false)
+  dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map{|x| x['name']}
+
+  dbs.each do |db|
+    db_command = "db = db.getSiblingDB('#{db}');db.getRoles({rolesInfo: 1,showPrivileges:true,showBuiltinRoles: true})"
+    results = mongo_session.query(db_command)
+
+    results.each do |entry|
+      describe "Manually verify privileges for Role: `#{entry['role']}` within Database: `#{db}`
+      Privileges: #{entry['privileges']}" do 
+        skip
+      end
+    end
+  end
+
+  if dbs.empty?
+    describe "No databases found on the target" do
+      skip
+    end
   end
 end

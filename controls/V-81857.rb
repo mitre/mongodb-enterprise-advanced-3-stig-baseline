@@ -58,7 +58,25 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe 'A manual review is required to determine if any roles or users have unauthorized access' do
-    skip 'A manual review is required to determine if any roles or users have unauthorized access'
+  mongo_session = mongo_command(username: 'mongoadmin', password: 'mongoadmin', ssl: false)
+
+  dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map{|x| x['name']}
+
+  dbs.each do |db|
+    db_command = "db = db.getSiblingDB('#{db}');db.getUsers()"
+    results = mongo_session.query(db_command)
+
+    results.each do |entry|
+      describe "Manually verify roles for User: `#{entry['user']}` within Database: `#{entry['db']}`
+      Roles: #{entry['roles']}" do 
+        skip
+      end
+    end
+  end
+
+  if dbs.empty?
+    describe "No databases found on the target" do
+      skip
+    end
   end
 end

@@ -68,11 +68,17 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe 'A manual review is required to ensure MongoDB obscures the feedback of authentication information during the
-  authentication process to protect the information from possible
-  exploitation/use by unauthorized individuals.' do
-    skip 'A manual review is required to ensure MongoDB obscures the feedback of authentication information during the
-    authentication process to protect the information from possible
-    exploitation/use by unauthorized individuals.'
+  tools = ['mongo','mongodump','mongorestore','mongoimport','mongoexport']
+
+  installed_tools = []
+
+  tools.each do |tool|
+    if command(tool).exist?
+      installed_tools << tool
+    end
+  end
+
+  describe "Manually review that the use presence of tools `#{installed_tools}.to_s` is authorized and the users have the required training." do
+    skip
   end
 end

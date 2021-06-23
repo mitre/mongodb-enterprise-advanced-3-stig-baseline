@@ -44,8 +44,15 @@ control "V-81865" do
   tag "nist": ["IA-5 (1) (a)"]
   tag "documentable": false
   tag "severity_override_guidance": false
-  
-  describe processes('mongod') do
-    its('commands.join') { should_not match /(SCRAM-SHA1|MONGODB-CR)/}
+
+
+  describe "MongoDB Server should be configured with a non-default authentication Mechanism" do
+    subject { processes('mongod') } 
+    its('commands.join') { should match /authenticationMechanisms/}
+  end
+
+  describe "MongoDB Server authentication Mechanism" do
+    subject { processes('mongod').commands.join }
+    it { should_not match /SCRAM-SHA1|MONGODB-CR|PLAIN/}
   end
 end
