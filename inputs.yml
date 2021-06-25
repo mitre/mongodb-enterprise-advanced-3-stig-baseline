@@ -17,7 +17,13 @@ approved_mongo_packages: [
 username: 'mongoadmin'
 password: 'mongoadmin'
 mongod_hostname: '127.0.0.1'
+mongod_port: '27017'
 ssl: false
+verify_ssl: false
+mongod_client_pem: nil
+mongod_cafile: nil
+authentication_database: nil
+authentication_mechanism: nil
 
 mongodb_service_account: ["mongodb", "mongod"]
 mongodb_service_group: ["mongodb", "mongod"]

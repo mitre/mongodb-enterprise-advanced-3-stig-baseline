@@ -64,10 +64,40 @@ inputs:
     type: string
     value: '127.0.0.1'
 
+  - name: mongod_port
+    description: Mongo Port
+    type: string
+    value: '27017'
+
   - name: ssl
     description: ssl enabled or not
     type: boolean
     value: false
+
+  - name: verify_ssl
+    description: Verify SSL
+    type: boolean
+    value: false
+
+  - name: mongod_client_pem
+    description: pem file location
+    type: string
+    value: nil
+
+  - name: mongod_cafile
+    description: cafile location
+    type: string
+    value: nil
+
+  - name: authentication_database
+    description: authentication database
+    type: string
+    value: nil
+
+  - name: authentication_mechanism
+    description: authentication mechanism
+    type: string
+    value: nil
 
   - name: mongodb_service_account
     description: Mongodb Service Account

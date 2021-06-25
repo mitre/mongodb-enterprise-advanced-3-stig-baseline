@@ -60,7 +60,7 @@
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  mongo_session = mongo_command(username: input('username'), password: input('password'), host: input('mongod_hostname'), ssl: input('ssl'))
+  mongo_session = mongo_command(username: input('username'), password: input('password'), host: input('mongod_hostname'), port: input('mongod_port'), ssl: input('ssl'), verify_ssl: input('verify_ssl'), ssl_pem_key_file: input('mongod_client_pem'), ssl_ca_file: input('mongod_cafile'), authentication_database: input('authentication_database'), authentication_mechanism: input('authentication_mechanism'))
   dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map{|x| x['name']}
 
   dbs.each do |db|
