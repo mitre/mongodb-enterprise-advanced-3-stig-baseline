@@ -1,4 +1,4 @@
-  control "V-81859" do
+control 'V-81859' do
   title "Unused database components, DBMS software, and database objects must
   be removed."
   desc "Information systems are capable of providing a wide variety of
@@ -12,8 +12,8 @@
       DBMSs must adhere to the principles of least functionality by providing
   only essential capabilities.
   "
-  
-  desc "check", "Review the list of components and features installed with the
+
+  desc 'check', "Review the list of components and features installed with the
   MongoDB database.
 
   If unused components are installed and are not documented and authorized, this
@@ -27,7 +27,7 @@
 
   If any packages displayed by this command are not being used, this is a
   finding."
-  desc "fix", "On data-bearing nodes and arbiter nodes, the
+  desc 'fix', "On data-bearing nodes and arbiter nodes, the
   mongodb-enterprise-tools, mongodb-enterprise-shell and
   mongodb-enterprise-mongos can be removed (or not installed).
 
@@ -36,17 +36,16 @@
   package."
 
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000141-DB-000091"
-  tag "gid": "V-81859"
-  tag "rid": "SV-96573r1_rule"
-  tag "stig_id": "MD3X-00-000280"
-  tag "fix_id": "F-88709r1_fix"
-  tag "cci": ["CCI-000381"]
-  tag "nist": ["CM-7 a"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000141-DB-000091'
+  tag "gid": 'V-81859'
+  tag "rid": 'SV-96573r1_rule'
+  tag "stig_id": 'MD3X-00-000280'
+  tag "fix_id": 'F-88709r1_fix'
+  tag "cci": ['CCI-000381']
+  tag "nist": ['CM-7 a']
   tag "documentable": false
   tag "severity_override_guidance": false
-
 
   approved_mongo_packages = input('approved_mongo_packages')
 

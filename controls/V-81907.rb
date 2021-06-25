@@ -1,4 +1,4 @@
-  control "V-81907" do
+control 'V-81907' do
   title "MongoDB must provide a warning to appropriate support staff when
   allocated audit record storage volume reaches 75% of maximum audit record
   storage capacity."
@@ -16,8 +16,8 @@
   The appropriate support staff include, at a minimum, the ISSO and the
   DBA/SA.
   "
-  
-  desc "check", "A MongoDB audit log that is configured to be stored in a file
+
+  desc 'check', "A MongoDB audit log that is configured to be stored in a file
   is identified in the MongoDB configuration file (default: /etc/mongod.conf)
   under the \"auditLog:\" key and subkey \"destination:\" where \"destination\"
   is \"file\".
@@ -29,28 +29,28 @@
   identify how the \"auditlog.destination\" is configured.
 
   When the \"auditlog.destination\" is \"file\", this is a finding."
-  desc "fix", "View the mongodb configuration file (default location:
+  desc 'fix', "View the mongodb configuration file (default location:
   /etc/mongod.conf) and view the \"auditlog.path\" to identify the storage volume.
 
   Install MongoDB Ops Manager or other organization approved monitoring software.
 
   Configure the required alert in the monitoring software to send an alert where
   storage volume holding the auditLog file utilization reaches 75%."
-  
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000359-DB-000319"
-  tag "gid": "V-81907"
-  tag "rid": "SV-96621r1_rule"
-  tag "stig_id": "MD3X-00-000630"
-  tag "fix_id": "F-88757r2_fix"
-  tag "cci": ["CCI-001855"]
-  tag "nist": ["AU-5 (1)"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000359-DB-000319'
+  tag "gid": 'V-81907'
+  tag "rid": 'SV-96621r1_rule'
+  tag "stig_id": 'MD3X-00-000630'
+  tag "fix_id": 'F-88757r2_fix'
+  tag "cci": ['CCI-001855']
+  tag "nist": ['AU-5 (1)']
   tag "documentable": false
   tag "severity_override_guidance": false
 
   describe yaml(input('mongod_conf')) do
-    its(%w{auditLog destination}) { should_not cmp 'file' }
-    its(%w{auditLog destination}) { should_not be_nil }
+    its(%w(auditLog destination)) { should_not cmp 'file' }
+    its(%w(auditLog destination)) { should_not be_nil }
   end
 end

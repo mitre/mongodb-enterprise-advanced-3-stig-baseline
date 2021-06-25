@@ -1,4 +1,4 @@
-  control "V-81883" do
+control 'V-81883' do
   title "MongoDB must protect the confidentiality and integrity of all
   information at rest."
   desc "This control is intended to address the confidentiality and integrity
@@ -16,7 +16,7 @@
   the data will be open to compromise and unauthorized modification.
   "
 
-  desc "check", "If the MongoDB Encrypted Storage Engines is being used, ensure
+  desc 'check', "If the MongoDB Encrypted Storage Engines is being used, ensure
   that the \"security.enableEncryption\" option is set to \"true\" in the MongoDB
   configuration file (default location: /etc/mongod.conf) or that MongoDB was
   started with the \"--enableEncryption\" command line option.
@@ -30,7 +30,7 @@
 
   If any mongod process is started with \"--enableEncryption false\", this is a
   finding."
-  desc "fix", "Ensure that the MongoDB Configuration file (default location:
+  desc 'fix', "Ensure that the MongoDB Configuration file (default location:
   /etc/mongod.conf) has the following set:
 
   security:
@@ -42,30 +42,29 @@
 
   Stop/start (restart) and mongod process using either the MongoDB configuration
   file or that contains the \"--enableEncryption\" option."
-  
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000231-DB-000154"
-  tag "gid": "V-81883"
-  tag "rid": "SV-96597r1_rule"
-  tag "stig_id": "MD3X-00-000440"
-  tag "fix_id": "F-88733r1_fix"
-  tag "cci": ["CCI-001199"]
-  tag "nist": ["SC-28"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000231-DB-000154'
+  tag "gid": 'V-81883'
+  tag "rid": 'SV-96597r1_rule'
+  tag "stig_id": 'MD3X-00-000440'
+  tag "fix_id": 'F-88733r1_fix'
+  tag "cci": ['CCI-001199']
+  tag "nist": ['SC-28']
   tag "documentable": false
   tag "severity_override_guidance": false
 
   describe.one do
     describe yaml(input('mongod_conf')) do
-      its(%w{security enableEncryption}) { should cmp 'true' }
+      its(%w(security enableEncryption)) { should cmp 'true' }
     end
     describe processes('mongod') do
-      its('commands.join') { should match /--enableEncryption true/}
+      its('commands.join') { should match /--enableEncryption true/ }
     end
   end
 
   describe processes('mongod') do
-    its('commands.join') { should_not match /--enableEncryption false/}
+    its('commands.join') { should_not match /--enableEncryption false/ }
   end
-
 end

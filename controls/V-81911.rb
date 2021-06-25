@@ -1,4 +1,4 @@
-  control "V-81911" do
+control 'V-81911' do
   title "MongoDB must enforce access restrictions associated with changes to
   the configuration of MongoDB or database(s)."
   desc "Failure to provide logical access restrictions associated with changes
@@ -15,7 +15,7 @@
   including upgrades and modifications.
   "
 
-  desc "check", "Review the security configuration of the MongoDB database(s).
+  desc 'check', "Review the security configuration of the MongoDB database(s).
 
   If unauthorized users can start the mongod or mongos processes or edit the
   MongoDB configuration file (default location: /etc/mongod.conf), this is a
@@ -35,7 +35,7 @@
 
   MongoDB commands to view roles in a particular database:
   db.getRoles( { rolesInfo: 1, showPrivileges:true, showBuiltinRoles: true })"
-  desc "fix", "Prereq: To view a user's roles, must have the \"viewUser\"
+  desc 'fix', "Prereq: To view a user's roles, must have the \"viewUser\"
   privilege.
   https://docs.mongodb.com/v3.4/reference/privilege-actions/
 
@@ -53,46 +53,44 @@
 
   To grant a role to a user use the db.grantRolesToUser() method.
   https://docs.mongodb.com/v3.4/reference/method/db.grantRolesToUser/"
-  
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000380-DB-000360"
-  tag "gid": "V-81911"
-  tag "rid": "SV-96625r1_rule"
-  tag "stig_id": "MD3X-00-000670"
-  tag "fix_id": "F-88761r1_fix"
-  tag "cci": ["CCI-001813"]
-  tag "nist": ["CM-5 (1)"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000380-DB-000360'
+  tag "gid": 'V-81911'
+  tag "rid": 'SV-96625r1_rule'
+  tag "stig_id": 'MD3X-00-000670'
+  tag "fix_id": 'F-88761r1_fix'
+  tag "cci": ['CCI-001813']
+  tag "nist": ['CM-5 (1)']
   tag "documentable": false
   tag "severity_override_guidance": false
-  
-  describe "Manually verify unauthorized users cannot start the mongod or mongos processes or edit the MongoDB configuration file" do
-    skip "Manually verify unauthorized users cannot start the mongod or mongos processes or edit the MongoDB configuration file"
+
+  describe 'Manually verify unauthorized users cannot start the mongod or mongos processes or edit the MongoDB configuration file' do
+    skip 'Manually verify unauthorized users cannot start the mongod or mongos processes or edit the MongoDB configuration file'
   end
 
-  describe "Manually verify enforces access restrictions associated with changes to the configuration of the database(s)" do
-    skip "Manually verify enforces access restrictions associated with changes to the configuration of the database(s)"
+  describe 'Manually verify enforces access restrictions associated with changes to the configuration of the database(s)' do
+    skip 'Manually verify enforces access restrictions associated with changes to the configuration of the database(s)'
   end
 
   mongo_session = mongo_command(username: input('username'), password: input('password'), host: input('mongod_hostname'), port: input('mongod_port'), ssl: input('ssl'), verify_ssl: input('verify_ssl'), ssl_pem_key_file: input('mongod_client_pem'), ssl_ca_file: input('mongod_cafile'), authentication_database: input('authentication_database'), authentication_mechanism: input('authentication_mechanism'))
 
-  dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map{|x| x['name']}
+  dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map { |x| x['name'] }
 
   dbs.each do |db|
     db_command = "db = db.getSiblingDB('#{db}');db.getUsers()"
     results = mongo_session.query(db_command)
 
-
     results.each do |entry|
-      if entry['roles'].map {|x| x['role']}.include?('userAdminAnyDatabase')
-        describe "Manually verify User: `#{entry['user']}` within Database: `#{entry['db']}` is authorized to have `userAdminAnyDatabase` role" do 
+      if entry['roles'].map { |x| x['role'] }.include?('userAdminAnyDatabase')
+        describe "Manually verify User: `#{entry['user']}` within Database: `#{entry['db']}` is authorized to have `userAdminAnyDatabase` role" do
           skip
         end
       end
-      if entry['roles'].map {|x| x['role']}.include?('userAdmin')
-        describe "Manually verify User: `#{entry['user']}` within Database: `#{entry['db']}` is authorized to have `userAdmin` role" do 
-          skip
-        end
+      next unless entry['roles'].map { |x| x['role'] }.include?('userAdmin')
+      describe "Manually verify User: `#{entry['user']}` within Database: `#{entry['db']}` is authorized to have `userAdmin` role" do
+        skip
       end
     end
   end

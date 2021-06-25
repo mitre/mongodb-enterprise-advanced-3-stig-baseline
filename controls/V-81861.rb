@@ -1,4 +1,4 @@
-  control "V-81861" do
+control 'V-81861' do
   title "Unused database components that are integrated in MongoDB and cannot
   be uninstalled must be disabled."
   desc "Information systems are capable of providing a wide variety of
@@ -21,8 +21,8 @@
   configuration settings, OS service settings, OS file access security, and DBMS
   user/role permissions.
   "
-  
-  desc "check", "In the MongoDB database configuration file (default location:
+
+  desc 'check', "In the MongoDB database configuration file (default location:
   /etc/mongod.conf), review the following parameters:
 
   net:
@@ -32,7 +32,7 @@
   RESTInterfaceEnabled: true
 
   If any of the <booleans> are \"True\" or \"Enabled\", this is a finding."
-  desc "fix", "In the MongoDB database configuration file (default location:
+  desc 'fix', "In the MongoDB database configuration file (default location:
   /etc/mongod.conf), ensure the following parameters either:
 
   Does not exist in the file
@@ -45,43 +45,43 @@
   RESTInterfaceEnabled: false"
 
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000141-DB-000092"
-  tag "satisfies": ["SRG-APP-000141-DB-000092", "SRG-APP-000142-DB-000094"]
-  tag "gid": "V-81861"
-  tag "rid": "SV-96575r1_rule"
-  tag "stig_id": "MD3X-00-000290"
-  tag "fix_id": "F-88711r1_fix"
-  tag "cci": ["CCI-000381", "CCI-000382"]
-  tag "nist": ["CM-7 a", "CM-7 b"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000141-DB-000092'
+  tag "satisfies": %w(SRG-APP-000141-DB-000092 SRG-APP-000142-DB-000094)
+  tag "gid": 'V-81861'
+  tag "rid": 'SV-96575r1_rule'
+  tag "stig_id": 'MD3X-00-000290'
+  tag "fix_id": 'F-88711r1_fix'
+  tag "cci": %w(CCI-000381 CCI-000382)
+  tag "nist": ['CM-7 a', 'CM-7 b']
   tag "documentable": false
   tag "severity_override_guidance": false
 
   mongo_conf_file = input('mongod_conf').to_s
   describe.one do
     describe yaml(mongo_conf_file) do
-      its(%w{net http enabled}) { should cmp 'false' }
+      its(%w(net http enabled)) { should cmp 'false' }
     end
     describe yaml(mongo_conf_file) do
-      its(%w{net http enabled}) { should be_nil }
-    end
-  end
-
-  describe.one do
-    describe yaml(mongo_conf_file) do
-      its(%w{net http JSONPEnabled}) { should cmp 'false' }
-    end
-    describe yaml(mongo_conf_file) do
-      its(%w{net http JSONPEnabled}) { should be_nil }
+      its(%w(net http enabled)) { should be_nil }
     end
   end
 
   describe.one do
     describe yaml(mongo_conf_file) do
-      its(%w{net http RESTInterfaceEnabled}) { should cmp 'false' }
+      its(%w(net http JSONPEnabled)) { should cmp 'false' }
     end
     describe yaml(mongo_conf_file) do
-      its(%w{net http RESTInterfaceEnabled}) { should be_nil }
+      its(%w(net http JSONPEnabled)) { should be_nil }
+    end
+  end
+
+  describe.one do
+    describe yaml(mongo_conf_file) do
+      its(%w(net http RESTInterfaceEnabled)) { should cmp 'false' }
+    end
+    describe yaml(mongo_conf_file) do
+      its(%w(net http RESTInterfaceEnabled)) { should be_nil }
     end
   end
 end

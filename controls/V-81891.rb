@@ -1,7 +1,7 @@
-  control "V-81891" do
+control 'V-81891' do
   title "MongoDB and associated applications must reserve the use of dynamic
   code execution for situations that require it."
-  desc  "With respect to database management systems, one class of threat is
+  desc "With respect to database management systems, one class of threat is
   known as SQL Injection, or more generally, code injection. It takes advantage
   of the dynamic execution capabilities of various programming languages,
   including dialects of SQL. In such cases, the attacker deduces the manner in
@@ -29,7 +29,7 @@
   addressed, and must document what has been discovered.
   "
 
-  desc "check", "MongoDB operations permit arbitrary JavaScript expressions to
+  desc 'check', "MongoDB operations permit arbitrary JavaScript expressions to
   be run directly on the server.
 
   If the following parameter is not present or not set as show below in the
@@ -38,28 +38,28 @@
 
   security:
   javascriptEnabled: \"false\""
-  desc "fix", "Disable the \"javascriptEnabled\" option.
+  desc 'fix', "Disable the \"javascriptEnabled\" option.
 
   Edit the MongoDB configuration file (default location: /etc/mongod.conf\" to
   include the following:
 
   security:
   javascriptEnabled: false"
-  
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000251-DB-000391"
-  tag "satisfies": ["SRG-APP-000251-DB-000391", "SRG-APP-000251-DB-000392"]
-  tag "gid": "V-81891"
-  tag "rid": "SV-96605r1_rule"
-  tag "stig_id": "MD3X-00-000500"
-  tag "fix_id": "F-88741r1_fix"
-  tag "cci": ["CCI-001310"]
-  tag "nist": ["SI-10"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000251-DB-000391'
+  tag "satisfies": %w(SRG-APP-000251-DB-000391 SRG-APP-000251-DB-000392)
+  tag "gid": 'V-81891'
+  tag "rid": 'SV-96605r1_rule'
+  tag "stig_id": 'MD3X-00-000500'
+  tag "fix_id": 'F-88741r1_fix'
+  tag "cci": ['CCI-001310']
+  tag "nist": ['SI-10']
   tag "documentable": false
   tag "severity_override_guidance": false
 
   describe yaml(input('mongod_conf')) do
-    its(%w{security javascriptEnabled}) { should cmp 'false' }
+    its(%w(security javascriptEnabled)) { should cmp 'false' }
   end
 end

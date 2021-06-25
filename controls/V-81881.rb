@@ -1,4 +1,4 @@
-control "V-81881" do
+control 'V-81881' do
   title "MongoDB must fail to a secure state if system initialization fails,
   shutdown fails, or aborts fail."
   desc "Failure to a known state can address safety or security in accordance
@@ -30,7 +30,7 @@ control "V-81881" do
   naturally. The term abort refers to both requested and unexpected terminations.
   "
 
-  desc "check", "Journaling is enabled by default in 64-bit systems.
+  desc 'check', "Journaling is enabled by default in 64-bit systems.
 
   With journaling enabled, if mongod stops unexpectedly, the program can recover
   everything written to the journal.
@@ -44,7 +44,7 @@ control "V-81881" do
 
   If the mongod process was started with the \"--nojournal\" option, this is a
   finding."
-  desc "fix", "Modify the mongod startup command-line options by removing the
+  desc 'fix', "Modify the mongod startup command-line options by removing the
   \"--nojournal\" option.
 
   Edit the MongoDB database configuration file (default location:
@@ -57,24 +57,23 @@ control "V-81881" do
   Stop/start (restart) any or all mongod processes."
 
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000225-DB-000153"
-  tag "satisfies": ["SRG-APP-000225-DB-000153", "SRG-APP-000226-DB-000147"]
-  tag "gid": "V-81881"
-  tag "rid": "SV-96595r1_rule"
-  tag "stig_id": "MD3X-00-000420"
-  tag "fix_id": "F-88731r1_fix"
-  tag "cci": ["CCI-001190", "CCI-001665"]
-  tag "nist": ["SC-24"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000225-DB-000153'
+  tag "satisfies": %w(SRG-APP-000225-DB-000153 SRG-APP-000226-DB-000147)
+  tag "gid": 'V-81881'
+  tag "rid": 'SV-96595r1_rule'
+  tag "stig_id": 'MD3X-00-000420'
+  tag "fix_id": 'F-88731r1_fix'
+  tag "cci": %w(CCI-001190 CCI-001665)
+  tag "nist": ['SC-24']
   tag "documentable": false
   tag "severity_override_guidance": false
 
   describe yaml(input('mongod_conf')) do
-      its(%w{storage journal enabled}) { should cmp 'true' }
+    its(%w(storage journal enabled)) { should cmp 'true' }
   end
 
   describe processes('mongod') do
-    its('commands.join') { should_not match /--nojournal/}
+    its('commands.join') { should_not match /--nojournal/ }
   end
-
 end

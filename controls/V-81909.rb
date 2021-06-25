@@ -1,4 +1,4 @@
-  control "V-81909" do
+control 'V-81909' do
   title "MongoDB must prohibit user installation of logic modules (stored
   procedures, functions, triggers, views, etc.) without explicit privileged
   status."
@@ -25,7 +25,7 @@
   procedures, functions, triggers, views, etc.
   "
 
-  desc "check", "If MongoDB supports only software development, experimentation,
+  desc 'check', "If MongoDB supports only software development, experimentation,
   and/or developer-level testing (that is, excluding production systems,
   integration testing, stress testing, and user acceptance testing), this is not
   a finding.
@@ -40,28 +40,28 @@
 
   If any such permissions exist and are not documented and approved, this is a
   finding."
-  desc "fix", "Revoke any roles with unnecessary privileges to privileged
+  desc 'fix', "Revoke any roles with unnecessary privileges to privileged
   functionality by executing the revoke command.
 
   Revoke any unnecessary privileges from any roles by executing the revoke
   command.
 
   Create, as needed, new role(s) with associated privileges."
-  
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000378-DB-000365"
-  tag "gid": "V-81909"
-  tag "rid": "SV-96623r1_rule"
-  tag "stig_id": "MD3X-00-000650"
-  tag "fix_id": "F-88759r1_fix"
-  tag "cci": ["CCI-001812"]
-  tag "nist": ["CM-11 (2)"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000378-DB-000365'
+  tag "gid": 'V-81909'
+  tag "rid": 'SV-96623r1_rule'
+  tag "stig_id": 'MD3X-00-000650'
+  tag "fix_id": 'F-88759r1_fix'
+  tag "cci": ['CCI-001812']
+  tag "nist": ['CM-11 (2)']
   tag "documentable": false
   tag "severity_override_guidance": false
 
   mongo_session = mongo_command(username: input('username'), password: input('password'), host: input('mongod_hostname'), port: input('mongod_port'), ssl: input('ssl'), verify_ssl: input('verify_ssl'), ssl_pem_key_file: input('mongod_client_pem'), ssl_ca_file: input('mongod_cafile'), authentication_database: input('authentication_database'), authentication_mechanism: input('authentication_mechanism'))
-  dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map{|x| x['name']}
+  dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map { |x| x['name'] }
 
   dbs.each do |db|
     db_command = "db = db.getSiblingDB('#{db}');db.getRoles({rolesInfo: 1,showPrivileges:true,showBuiltinRoles: true})"
@@ -69,14 +69,14 @@
 
     results.each do |entry|
       describe "Manually verify privileges for Role: `#{entry['role']}` within Database: `#{db}`
-      Privileges: #{entry['privileges']}" do 
+      Privileges: #{entry['privileges']}" do
         skip
       end
     end
   end
 
   if dbs.empty?
-    describe "No databases found on the target" do
+    describe 'No databases found on the target' do
       skip
     end
   end

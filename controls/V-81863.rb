@@ -1,4 +1,4 @@
-  control "V-81863" do
+control 'V-81863' do
   title "MongoDB must uniquely identify and authenticate organizational users
   (or processes acting on behalf of organizational users)."
   desc "To assure accountability and prevent unauthenticated access,
@@ -19,7 +19,7 @@
   accountability of individual activity.
   "
 
-  desc "check", "To view another user’s information, you must have the
+  desc 'check', "To view another user’s information, you must have the
   \"viewUser\" action on the other user’s database.
 
   For each database in the system, run the following command:
@@ -39,7 +39,7 @@
   authorization: \"enabled\"
 
   If this parameter is not present, this is a finding."
-  desc "fix", "Prereq: To drop a user from a database, must have the
+  desc 'fix', "Prereq: To drop a user from a database, must have the
   \"dropUser\" action on the database.
 
   For any user not a member of an appropriate organization and has access to a
@@ -58,14 +58,14 @@
   any mongod or mongos process using this MongoDB configuration file."
 
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000148-DB-000103"
-  tag "gid": "V-81863"
-  tag "rid": "SV-96577r1_rule"
-  tag "stig_id": "MD3X-00-000310"
-  tag "fix_id": "F-88713r1_fix"
-  tag "cci": ["CCI-000764"]
-  tag "nist": ["IA-2"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000148-DB-000103'
+  tag "gid": 'V-81863'
+  tag "rid": 'SV-96577r1_rule'
+  tag "stig_id": 'MD3X-00-000310'
+  tag "fix_id": 'F-88713r1_fix'
+  tag "cci": ['CCI-000764']
+  tag "nist": ['IA-2']
   tag "documentable": false
   tag "severity_override_guidance": false
 
@@ -74,7 +74,6 @@
   end
 
   describe yaml(input('mongod_conf')) do
-    its(%w{security authorization}) { should cmp 'enabled' }
+    its(%w(security authorization)) { should cmp 'enabled' }
   end
-
 end

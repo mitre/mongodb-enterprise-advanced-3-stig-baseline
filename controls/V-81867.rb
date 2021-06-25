@@ -1,4 +1,4 @@
-control "V-81867" do
+control 'V-81867' do
   title "If passwords are used for authentication, MongoDB must store only
   hashed, salted representations of passwords."
   desc "The DoD standard for authentication is DoD-approved PKI certificates.
@@ -9,8 +9,8 @@ control "V-81867" do
   disclosure. Database passwords must always be in the form of one-way, salted
   hashes when stored internally or externally to MongoDB.
   "
-  
-  desc "check", "MongoDB supports x.509 certificate authentication for use with
+
+  desc 'check', "MongoDB supports x.509 certificate authentication for use with
   a secure TLS/SSL connection.
 
   The x.509 client authentication allows clients to authenticate to servers with
@@ -31,7 +31,7 @@ control "V-81867" do
   client certificate for the user field.
 
   If the mechanism field is not set to \"MONGODB-X509\", this is a finding."
-  desc "fix", "Do the following:
+  desc 'fix', "Do the following:
   - Create local CA and signing keys.
   - Generate and sign server certificates for member authentication.
   - Generate and sign client certificates for client authentication.
@@ -44,23 +44,23 @@ control "V-81867" do
 
   Additionally, SSL/TLS must be on as documented here:
   https://docs.mongodb.com/v3.4/tutorial/configure-ssl/"
- 
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000171-DB-000074"
-  tag "gid": "V-81867"
-  tag "rid": "SV-96581r1_rule"
-  tag "stig_id": "MD3X-00-000330"
-  tag "fix_id": "F-88717r1_fix"
-  tag "cci": ["CCI-000196"]
-  tag "nist": ["IA-5 (1) (c)"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000171-DB-000074'
+  tag "gid": 'V-81867'
+  tag "rid": 'SV-96581r1_rule'
+  tag "stig_id": 'MD3X-00-000330'
+  tag "fix_id": 'F-88717r1_fix'
+  tag "cci": ['CCI-000196']
+  tag "nist": ['IA-5 (1) (c)']
   tag "documentable": false
-  tag "severity_override_guidance": false 
+  tag "severity_override_guidance": false
 
   describe yaml(input('mongod_conf')) do
-    its(%w{security authorization}) { should cmp 'enabled' }
+    its(%w(security authorization)) { should cmp 'enabled' }
   end
   describe yaml(input('mongod_conf')) do
-    its(%w{security clusterAuthMode}) { should cmp 'x509' }
+    its(%w(security clusterAuthMode)) { should cmp 'x509' }
   end
 end

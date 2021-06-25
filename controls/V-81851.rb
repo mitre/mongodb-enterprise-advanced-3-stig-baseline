@@ -1,6 +1,6 @@
-  control "V-81851" do
+control 'V-81851' do
   title 'MongoDB must protect its audit features from unauthorized access.'
-  desc  "Protecting audit data also includes identifying and protecting the
+  desc "Protecting audit data also includes identifying and protecting the
   tools used to view and manipulate log data.
 
       Depending upon the log format and application, system and application log
@@ -22,7 +22,7 @@
   could also manipulate logs to hide evidence of malicious activity.
   "
 
-  desc "check", "Verify User ownership, Group ownership, and permissions on the
+  desc 'check', "Verify User ownership, Group ownership, and permissions on the
   “<MongoDB configuration file>\":
 
   (default name and location is '/etc/mongod.conf')
@@ -39,7 +39,7 @@
   If the Group owner is not \"mongod\", this is a finding.
 
   If the filename is more permissive than \"700\", this is a finding."
-  desc "fix", "Run these commands:
+  desc 'fix', "Run these commands:
 
   \"chown mongod <MongoDB configuration file>\"
   \"chgrp mongod <MongoDB configuration file>\"
@@ -55,24 +55,24 @@
   > chmod 700 /etc/mongod.conf"
 
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000121-DB-000202"
-  tag "satisfies": ["SRG-APP-000121-DB-000202", "SRG-APP-000122-DB-000203",
-                    "SRG-APP-000122-DB-000204"]
-  tag "gid": "V-81851"
-  tag "rid": "SV-96565r1_rule"
-  tag "stig_id": "MD3X-00-000220"
-  tag "fix_id": "F-88701r1_fix"
-  tag "cci": ["CCI-001493", "CCI-001494", "CCI-001495"]
-  tag "nist": ["AU-9"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000121-DB-000202'
+  tag "satisfies": %w(SRG-APP-000121-DB-000202 SRG-APP-000122-DB-000203
+                    SRG-APP-000122-DB-000204)
+  tag "gid": 'V-81851'
+  tag "rid": 'SV-96565r1_rule'
+  tag "stig_id": 'MD3X-00-000220'
+  tag "fix_id": 'F-88701r1_fix'
+  tag "cci": %w(CCI-001493 CCI-001494 CCI-001495)
+  tag "nist": ['AU-9']
   tag "documentable": false
   tag "severity_override_guidance": false
 
   mongodb_service_account = input('mongodb_service_account')
   mongodb_service_group = input('mongodb_service_group')
-  
+
   describe file(input('mongod_conf')) do
-    it { should_not be_more_permissive_than('0700') } 
+    it { should_not be_more_permissive_than('0700') }
     its('owner') { should be_in mongodb_service_account }
     its('group') { should be_in mongodb_service_group }
   end

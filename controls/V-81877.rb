@@ -1,7 +1,7 @@
-  control "V-81877" do
+control 'V-81877' do
   title "MongoDB must uniquely identify and authenticate non-organizational
   users (or processes acting on behalf of non-organizational users)."
-  desc  "Non-organizational users include all information system users other
+  desc "Non-organizational users include all information system users other
   than organizational users, which include organizational employees or
   individuals the organization deems to have equivalent status of employees
   (e.g., contractors, guest researchers, individuals from allied nations).
@@ -20,8 +20,8 @@
   organizational operations, organizational assets, individuals, other
   organizations, and the Nation.
   "
-  
-  desc "check", "MongoDB grants access to data and commands through role-based
+
+  desc 'check', "MongoDB grants access to data and commands through role-based
   authorization and provides built-in roles that provide the different levels of
   access commonly needed in a database system. You can additionally create
   user-defined roles.
@@ -56,7 +56,7 @@
   the role does not inherit from other roles, the two fields are the same.
 
   If a user has a role with inappropriate privileges, this is a finding."
-  desc "fix", "Prereq: To view a user's roles, must have the \"viewUser\"
+  desc 'fix', "Prereq: To view a user's roles, must have the \"viewUser\"
   privilege.
 
   Connect to MongoDB.
@@ -73,22 +73,22 @@
   To grant a role to a user use the db.grantRolesToUser() method."
 
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000180-DB-000115"
-  tag "satisfies": ["SRG-APP-000180-DB-000115", "SRG-APP-000211-DB-000122",
-                    "SRG-APP-000211-DB-000124"]
-  tag "gid": "V-81877"
-  tag "rid": "SV-96591r1_rule"
-  tag "stig_id": "MD3X-00-000390"
-  tag "fix_id": "F-88727r2_fix"
-  tag "cci": ["CCI-000804", "CCI-001082", "CCI-001084"]
-  tag "nist": ["IA-8", "SC-2", "SC-3"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000180-DB-000115'
+  tag "satisfies": %w(SRG-APP-000180-DB-000115 SRG-APP-000211-DB-000122
+                    SRG-APP-000211-DB-000124)
+  tag "gid": 'V-81877'
+  tag "rid": 'SV-96591r1_rule'
+  tag "stig_id": 'MD3X-00-000390'
+  tag "fix_id": 'F-88727r2_fix'
+  tag "cci": %w(CCI-000804 CCI-001082 CCI-001084)
+  tag "nist": %w(IA-8 SC-2 SC-3)
   tag "documentable": false
-  tag "severity_override_guidance": false 
+  tag "severity_override_guidance": false
 
   mongo_session = mongo_command(username: input('username'), password: input('password'), host: input('mongod_hostname'), port: input('mongod_port'), ssl: input('ssl'), verify_ssl: input('verify_ssl'), ssl_pem_key_file: input('mongod_client_pem'), ssl_ca_file: input('mongod_cafile'), authentication_database: input('authentication_database'), authentication_mechanism: input('authentication_mechanism'))
 
-  dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map{|x| x['name']}
+  dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map { |x| x['name'] }
 
   dbs.each do |db|
     db_command = "db = db.getSiblingDB('#{db}');db.getUsers()"
@@ -96,14 +96,14 @@
 
     results.each do |entry|
       describe "Manually verify roles for User: `#{entry['user']}` within Database: `#{entry['db']}`
-      Roles: #{entry['roles']}" do 
+      Roles: #{entry['roles']}" do
         skip
       end
     end
   end
 
   if dbs.empty?
-    describe "No databases found on the target" do
+    describe 'No databases found on the target' do
       skip
     end
   end
