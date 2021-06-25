@@ -142,7 +142,7 @@ class MongoCommand < Inspec.resource(1)
     end
 
 
-    puts command
+    #puts command
     command
   end
 end
