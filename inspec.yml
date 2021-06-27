@@ -9,53 +9,17 @@ version: 1.2.0
 inspec_version: ">= 4.0"
 
 inputs:
-  - name: mongod_conf
-    description: 'MongoDB configuration file'
-    type: string
-    value: '/etc/mongod.conf'
-    required: true
-
-  - name: mongo_data_dir
-    description: 'MongoDB Home Directory'
-    type: string
-    value: '/var/lib/mongo'
-    required: true
-
-  - name: mongo_use_ldap
-    description: 'MongoDB is Using LDAP - True/False'
-    type: string
-    value: 'false'
-    required: true
-
-  - name: mongo_use_saslauthd
-    description: 'MongoDB is Using SASLAUTHD - True/False'
-    type: string
-    value: 'false'
-    required: true
-
-  - name: approved_mongo_packages
-    description: 'List of MongoDB Packages'
-    type: array
-    value: [
-      'mongodb-enterprise',
-      'mongodb-enterprise-mongos',
-      'mongodb-enterprise-server',
-      'mongodb-enterprise-shell',
-      'mongodb-enterprise-tools'
-    ]
-    required: true
-
   - name: username
     description: 'User to log into the mongo database'
     type: string
-    value: nil
+    value: 'mongoadmin'
     required: true
     sensitive: true
 
   - name: password
     description: 'password to log into the mongo database'
     type: string
-    value: nil
+    value: 'mongoadmin'
     required: true
     sensitive: true
 
@@ -99,6 +63,42 @@ inputs:
     type: string
     value: nil
 
+  - name: mongod_conf
+    description: 'MongoDB configuration file'
+    type: string
+    value: '/etc/mongod.conf'
+    required: true
+
+  - name: mongo_data_dir
+    description: 'MongoDB Home Directory'
+    type: string
+    value: '/var/lib/mongo'
+    required: true
+
+  - name: mongo_use_ldap
+    description: 'MongoDB is Using LDAP - True/False'
+    type: string
+    value: 'false'
+    required: true
+
+  - name: mongo_use_saslauthd
+    description: 'MongoDB is Using SASLAUTHD - True/False'
+    type: string
+    value: 'false'
+    required: true
+
+  - name: approved_mongo_packages
+    description: 'List of MongoDB Packages'
+    type: array
+    value: [
+      'mongodb-enterprise',
+      'mongodb-enterprise-mongos',
+      'mongodb-enterprise-server',
+      'mongodb-enterprise-shell',
+      'mongodb-enterprise-tools'
+    ]
+    required: true
+
   - name: mongodb_service_account
     description: Mongodb Service Account
     type: array
@@ -110,11 +110,11 @@ inputs:
     value: ["mongodb", "mongod"]
 
   - name: is_sensitive
-    description: MongoDB is deployed in a sensitive environment
+    description: Set to true if target is sensitive as described in control V-81875 and V-81919
     type: boolean
     value: true
 
-  - name: x509_cert_file
-    description: x509 cert file location
+  - name: certificate_key_file
+    description: path to server certificate key file
     type: string
     value: "/etc/ssl/mongodb.pem"
