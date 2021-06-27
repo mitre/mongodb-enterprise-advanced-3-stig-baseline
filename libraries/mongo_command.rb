@@ -140,9 +140,6 @@ class MongoCommand < Inspec.resource(1)
       command += " --sslPEMKeyFile #{@ssl_pem_key_file}" unless @ssl_pem_key_file.nil?
       command += " --sslCAFile #{@ssl_ca_file}"          unless @ssl_ca_file.nil?
     end
-
-
-    puts command
     command
   end
 end

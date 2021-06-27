@@ -11,57 +11,49 @@ inspec_version: ">= 4.0"
 inputs:
   - name: username
     description: 'User to log into the mongo database'
-    type: string
-    value: 'mongoadmin'
-    required: true
+    value: null
     sensitive: true
 
   - name: password
-    description: 'password to log into the mongo database'
-    type: string
-    value: 'mongoadmin'
-    required: true
+    description: 'Password to log into the mongo database'
+    value: null
     sensitive: true
 
   - name: mongod_hostname
-    description: hostname for mongodb database
+    description: 'Hostname for mongodb database'
     type: string
     value: '127.0.0.1'
 
   - name: mongod_port
-    description: Mongo Port
+    description: 'Port number for the mongodb database'
     type: string
     value: '27017'
 
   - name: ssl
-    description: ssl enabled or not
+    description: 'Is ssl enabled'
     type: boolean
     value: false
 
   - name: verify_ssl
-    description: Verify SSL
+    description: 'Flag for sslAllowInvalidCertificates'
     type: boolean
     value: false
 
   - name: mongod_client_pem
-    description: pem file location
-    type: string
-    value: nil
+    description: 'PEM file location on the scan target'
+    value: null
 
   - name: mongod_cafile
-    description: cafile location
-    type: string
-    value: nil
+    description: 'CAFILE location on the scan target'
+    value: null
 
   - name: authentication_database
-    description: authentication database
-    type: string
-    value: nil
+    description: 'Flag for authentication database'
+    value: null
 
   - name: authentication_mechanism
-    description: authentication mechanism
-    type: string
-    value: nil
+    description: 'Flag for authenticaiton mechanism'
+    value: null
 
   - name: mongod_conf
     description: 'MongoDB configuration file'
@@ -100,21 +92,21 @@ inputs:
     required: true
 
   - name: mongodb_service_account
-    description: Mongodb Service Account
+    description: 'Mongodb Service Account'
     type: array
     value: ["mongodb", "mongod"]
 
   - name: mongodb_service_group
-    description: Mongodb Service Group
+    description: 'Mongodb Service Group'
     type: array
     value: ["mongodb", "mongod"]
 
   - name: is_sensitive
-    description: Set to true if target is sensitive as described in control V-81875 and V-81919
+    description: 'Set to true if target is sensitive as described in control V-81875 and V-81919'
     type: boolean
     value: true
 
   - name: certificate_key_file
-    description: path to server certificate key file
+    description: 'Path to server certificate key file'
     type: string
     value: "/etc/ssl/mongodb.pem"
