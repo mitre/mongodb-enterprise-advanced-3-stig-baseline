@@ -13,71 +13,107 @@ Latest versions and installation options are available at the [InSpec](http://in
 The following inputs must be configured in an inputs ".yml" file for the profile to run correctly for your specific environment. More information about InSpec inputs can be found in the [InSpec Profile Documentation](https://www.inspec.io/docs/reference/profiles/).
 
 ```yaml
-# MongoDB configuration file
-mongod_conf: ''
+  - name: username
+    description: 'User to log into the mongo database'
+    value: null
+    sensitive: true
 
-# MongoDB Home Directory'
-mongo_data_dir: ''
+  - name: password
+    description: 'Password to log into the mongo database'
+    value: null
+    sensitive: true
 
-# MongoDB Server PEM File'
-mongod_pem: ''
+  - name: mongod_hostname
+    description: 'Hostname for mongodb database'
+    type: string
+    value: '127.0.0.1'
 
-# MongoDB CA File
-mongod_cafile: ''
+  - name: mongod_port
+    description: 'Port number for the mongodb database'
+    type: string
+    value: '27017'
 
-# MongoDB Client PEM File
-mongod_client_pem: ''
+  - name: ssl
+    description: 'Is ssl enabled'
+    type: boolean
+    value: false
 
-# MongoDB Audit Log File
-mongod_auditlog: ''
+  - name: verify_ssl
+    description: 'Flag for sslAllowInvalidCertificates'
+    type: boolean
+    value: false
 
-# MongoDB SASLAUTHD File
-saslauthd: ''
+  - name: mongod_client_pem
+    description: 'PEM file location on the scan target'
+    value: null
 
-# MongoDB is Running in Docker Environment - True/False
-is_docker: ''
+  - name: mongod_cafile
+    description: 'CAFILE location on the scan target'
+    value: null
 
-# MongoDB is Using PKI Authentication - True/False
-mongo_use_pki: ''
+  - name: authentication_database
+    description: 'Flag for authentication database'
+    value: null
 
-# MongoDB is Using LDAP - True/False
-mongo_use_ldap: ''
+  - name: authentication_mechanism
+    description: 'Flag for authentication mechanism'
+    value: null
 
-# MongoDB is Using SASLAUTHD - True/False
-mongo_use_saslauthd: ''
+  - name: mongod_conf
+    description: 'MongoDB configuration file'
+    type: string
+    value: '/etc/mongod.conf'
+    required: true
 
-# List of MongoDB Redhat Packages
-mongodb_redhat_packages: []
+  - name: mongo_data_dir
+    description: 'MongoDB Home Directory'
+    type: string
+    value: '/var/lib/mongo'
+    required: true
 
-# List of MongoDB Debian Packages
-mongodb_debian_packages: []
+  - name: mongo_use_ldap
+    description: 'MongoDB is Using LDAP - True/False'
+    type: boolean
+    value: false
+    required: true
 
-# User to log into the mongo database
-user: ''
+  - name: mongo_use_saslauthd
+    description: 'MongoDB is Using SASLAUTHD - True/False'
+    type: boolean
+    value: false
+    required: true
 
-# password to log into the mongo database
-password: ''
+  - name: approved_mongo_packages
+    description: 'List of MongoDB Packages'
+    type: array
+    value: [
+      'mongodb-enterprise',
+      'mongodb-enterprise-mongos',
+      'mongodb-enterprise-server',
+      'mongodb-enterprise-shell',
+      'mongodb-enterprise-tools'
+    ]
+    required: true
 
-# List of authorized users of the admn database
-admin_db_users: []
+  - name: mongodb_service_account
+    description: 'Mongodb Service Account'
+    type: array
+    value: ["mongodb", "mongod"]
 
-# List of authorized users of the admn database
-config_db_users: []
+  - name: mongodb_service_group
+    description: 'Mongodb Service Group'
+    type: array
+    value: ["mongodb", "mongod"]
 
-# List of authorized users of the admn database
-myUserAdmin_allowed_role: []
+  - name: is_sensitive
+    description: 'Set to true if target is sensitive as described in control V-81875 and V-81919'
+    type: boolean
+    value: true
 
-# List of authorized users of the admn database
-mongoadmin_allowed_role: []
-
-# List of authorized users of the admn database
-mongodb_admin_allowed_role: []
-
-# List of authorized users of the admn database
-appAdmin_allowed_role: []
-
-# List of authorized users of the admn database
-accountAdmin01_allowed_role: []
+  - name: certificate_key_file
+    description: 'Path to server certificate key file'
+    type: string
+    value: "/etc/ssl/mongodb.pem"
 ```
 
 # Running This Baseline Directly from Github
@@ -124,6 +160,8 @@ The JSON InSpec results file may also be loaded into a __[full heimdall server](
 
 ## Authors
 * Alicia Sturtevant - [asturtevant](https://github.com/asturtevant)
+* Mohamed El-Sharkawi - [HackerShark](https://github.com/HackerShark)
+* Rony Xavier - [rx294](https://github.com/rx294)
 
 ## Special Thanks 
 * Mohamed El-Sharkawi - [HackerShark](https://github.com/HackerShark)

@@ -52,7 +52,7 @@ inputs:
     value: null
 
   - name: authentication_mechanism
-    description: 'Flag for authenticaiton mechanism'
+    description: 'Flag for authentication mechanism'
     value: null
 
   - name: mongod_conf
