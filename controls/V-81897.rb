@@ -61,7 +61,7 @@ control 'V-81897' do
   tag "severity": 'medium'
   tag "gtitle": 'SRG-APP-000311-DB-000308'
   tag "satisfies": %w(SRG-APP-000311-DB-000308 SRG-APP-000313-DB-000309
-                    SRG-APP-000313-DB-000310)
+                      SRG-APP-000313-DB-000310)
   tag "gid": 'V-81897'
   tag "rid": 'SV-96611r1_rule'
   tag "stig_id": 'MD3X-00-000540'

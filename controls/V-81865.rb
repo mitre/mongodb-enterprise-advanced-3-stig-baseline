@@ -45,13 +45,19 @@ control 'V-81865' do
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe 'MongoDB Server should be configured with a non-default authentication Mechanism' do
-    subject { processes('mongod') }
-    its('commands.join') { should match /authenticationMechanisms/ }
-  end
+  if processes('mongod').commands.join =~ /GSSAPI|PLAIN/
+    describe 'Manually verify MongoDB server enforces the DoD standards for password complexity and lifetime' do
+      skip
+    end
+  else
+    describe 'MongoDB Server should be configured with a non-default authentication Mechanism' do
+      subject { processes('mongod') }
+      its('commands.join') { should match /authenticationMechanisms/ }
+    end
 
-  describe 'MongoDB Server authentication Mechanism' do
-    subject { processes('mongod').commands.join }
-    it { should_not match /SCRAM-SHA1|MONGODB-CR|PLAIN/ }
+    describe 'MongoDB Server authentication Mechanism' do
+      subject { processes('mongod').commands.join }
+      it { should_not match /SCRAM-SHA|MONGODB-CR/ }
+    end
   end
 end

@@ -91,7 +91,7 @@ control 'V-81849' do
   tag "severity": 'medium'
   tag "gtitle": 'SRG-APP-000118-DB-000059'
   tag "satisfies": %w(SRG-APP-000118-DB-000059 SRG-APP-000119-DB-000060
-                    SRG-APP-000120-DB-000061)
+                      SRG-APP-000120-DB-000061)
   tag "gid": 'V-81849'
   tag "rid": 'SV-96563r1_rule'
   tag "stig_id": 'MD3X-00-000190'
@@ -101,21 +101,27 @@ control 'V-81849' do
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  mongodb_auditlog_dir = yaml(input('mongod_conf'))['auditLog', 'path']
-  mongodb_service_account = input('mongodb_service_account')
-  mongodb_service_group = input('mongodb_service_group')
+  if yaml(input('mongod_conf'))['auditLog', 'destination'].eql?('file')
+    mongodb_auditlog_path = command("dirname #{yaml(input('mongod_conf'))['auditLog', 'path']}").stdout
+    mongodb_service_account = input('mongodb_service_account')
+    mongodb_service_group = input('mongodb_service_group')
 
-  describe file(mongodb_auditlog_dir) do
-    it { should exist }
-  end
+    describe "AuditLog destination path: #{mongodb_auditlog_path}" do
+      subject { directory(mongodb_auditlog_path) }
+      it { should exist }
+    end
 
-  describe file(mongodb_auditlog_dir) do
-    it { should_not be_more_permissive_than('0700') }
-    its('owner') { should be_in mongodb_service_account }
-    its('group') { should be_in mongodb_service_group }
-  end
-
-  describe command("dirname #{mongodb_auditlog_dir}") do
-    it { should cmp '/var/lib/mongo' }
+    if directory(mongodb_auditlog_path).exist?
+      describe directory(command("dirname #{mongodb_auditlog_path}")) do
+        it { should_not be_more_permissive_than('0700') }
+        its('owner') { should be_in mongodb_service_account }
+        its('group') { should be_in mongodb_service_group }
+      end
+    end
+  else
+    impact 0.0
+    describe 'Auditlog destination type `file` not in use; Control Non Applicable;' do
+      skip
+    end
   end
 end

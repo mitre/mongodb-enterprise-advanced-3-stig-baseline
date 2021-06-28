@@ -60,8 +60,14 @@ control 'V-81905' do
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe yaml(input('mongod_conf')) do
-    its(%w(auditLog destination)) { should_not cmp 'file' }
-    its(%w(auditLog destination)) { should_not be_nil }
+  if yaml(input('mongod_conf'))['auditLog', 'destination'].eql?('file')
+    describe "Manually verify sufficient space is allocated to the storage volume hosting the file identified in the MongoDB configuration #{yaml(input('mongod_conf'))['auditLog', 'path']} to support audit file peak demand." do
+      skip
+    end
+  else
+    impact 0.0
+    describe 'Auditlog destination type `file` not in use; Control Non Applicable;' do
+      skip
+    end
   end
 end

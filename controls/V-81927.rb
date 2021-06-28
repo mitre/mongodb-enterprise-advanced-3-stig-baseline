@@ -73,9 +73,7 @@ control 'V-81927' do
   installed_tools = []
 
   tools.each do |tool|
-    if command(tool).exist?
-      installed_tools << tool
-    end
+    installed_tools << tool if command(tool).exist?
   end
 
   describe "Manually review that the use presence of tools `#{installed_tools}.to_s` is authorized and the users have the required training." do

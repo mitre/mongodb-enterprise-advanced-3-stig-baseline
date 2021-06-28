@@ -76,7 +76,7 @@ control 'V-81877' do
   tag "severity": 'medium'
   tag "gtitle": 'SRG-APP-000180-DB-000115'
   tag "satisfies": %w(SRG-APP-000180-DB-000115 SRG-APP-000211-DB-000122
-                    SRG-APP-000211-DB-000124)
+                      SRG-APP-000211-DB-000124)
   tag "gid": 'V-81877'
   tag "rid": 'SV-96591r1_rule'
   tag "stig_id": 'MD3X-00-000390'

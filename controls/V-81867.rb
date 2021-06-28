@@ -57,10 +57,8 @@ control 'V-81867' do
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe yaml(input('mongod_conf')) do
-    its(%w(security authorization)) { should cmp 'enabled' }
-  end
-  describe yaml(input('mongod_conf')) do
-    its(%w(security clusterAuthMode)) { should cmp 'x509' }
+  describe 'MongoDB Server authentication Mechanism' do
+    subject { processes('mongod').commands.join }
+    it { should match /MONGODB-X509/ }
   end
 end

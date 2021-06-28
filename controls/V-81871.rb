@@ -64,23 +64,31 @@ control 'V-81871' do
   mongodb_service_account = input('mongodb_service_account')
   mongodb_service_group = input('mongodb_service_group')
 
-  describe file(mongod_pem) do
+  describe "Mongod SSL PEMKeyFile: #{mongod_pem}" do
+    subject { file(mongod_pem) }
     it { should exist }
   end
 
-  describe file(mongod_pem) do
-    it { should_not be_more_permissive_than('0600') }
-    its('owner') { should be_in mongodb_service_account }
-    its('group') { should be_in mongodb_service_group }
+  if file(mongod_pem).exist?
+    describe "Mongod SSL PEMKeyFile: #{mongod_pem}" do
+      subject { file(mongod_pem) }
+      it { should_not be_more_permissive_than('0600') }
+      its('owner') { should be_in mongodb_service_account }
+      its('group') { should be_in mongodb_service_group }
+    end
   end
 
-  describe file(mongod_cafile) do
+  describe "Mongod SSL CAFile: #{mongod_cafile}" do
+    subject { file(mongod_cafile) }
     it { should exist }
   end
 
-  describe file(mongod_cafile) do
-    it { should_not be_more_permissive_than('0600') }
-    its('owner') { should be_in mongodb_service_account }
-    its('group') { should be_in mongodb_service_group }
+  if file(mongod_cafile).exist?
+    describe "Mongod SSL CAFile: #{mongod_cafile}" do
+      subject { file(mongod_cafile) }
+      it { should_not be_more_permissive_than('0600') }
+      its('owner') { should be_in mongodb_service_account }
+      its('group') { should be_in mongodb_service_group }
+    end
   end
 end

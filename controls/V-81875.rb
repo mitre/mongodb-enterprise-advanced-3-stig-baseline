@@ -63,8 +63,8 @@ control 'V-81875' do
   tag "severity": 'high'
   tag "gtitle": 'SRG-APP-000179-DB-000114'
   tag "satisfies": %w(SRG-APP-000179-DB-000114 SRG-APP-000514-DB-000381
-                    SRG-APP-000514-DB-000382 SRG-APP-000514-DB-000383
-                    SRG-APP-000416-DB-000380)
+                      SRG-APP-000514-DB-000382 SRG-APP-000514-DB-000383
+                      SRG-APP-000416-DB-000380)
   tag "gid": 'V-81875'
   tag "rid": 'SV-96589r1_rule'
   tag "stig_id": 'MD3X-00-000380'
@@ -77,6 +77,10 @@ control 'V-81875' do
   if input('is_sensitive')
     describe yaml(input('mongod_conf')) do
       its(%w(net ssl FIPSMode)) { should cmp 'true' }
+    end
+
+    describe file('/proc/sys/crypto/fips_enabled') do
+      its('content') { should cmp 1 }
     end
   else
     describe 'The system is not a classified environment, therefore for this control is NA' do

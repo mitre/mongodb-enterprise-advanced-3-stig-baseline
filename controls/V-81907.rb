@@ -49,8 +49,14 @@ control 'V-81907' do
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe yaml(input('mongod_conf')) do
-    its(%w(auditLog destination)) { should_not cmp 'file' }
-    its(%w(auditLog destination)) { should_not be_nil }
+  if yaml(input('mongod_conf'))['auditLog', 'destination'].eql?('file')
+    describe 'Manually verify MongoDB must provide a warning to appropriate support staff when allocated audit record storage volume reaches 75% of maximum audit record storage capacity.' do
+      skip
+    end
+  else
+    impact 0.0
+    describe 'Auditlog destination type `file` not in use; Control Non Applicable;' do
+      skip
+    end
   end
 end

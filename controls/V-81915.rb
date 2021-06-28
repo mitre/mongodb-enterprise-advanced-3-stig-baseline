@@ -41,7 +41,7 @@ control 'V-81915' do
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  if input('mongo_use_saslauthd') == 'true' && input('mongo_use_ldap') == 'true'
+  if input('mongo_use_saslauthd') == true && input('mongo_use_ldap') == true
     describe processes('saslauthd') do
       its('commands.join') { should match /-t\s/ }
     end

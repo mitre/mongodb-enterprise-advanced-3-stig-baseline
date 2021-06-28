@@ -43,15 +43,15 @@ control 'V-81917' do
   tag "severity_override_guidance": false
 
   # Process flag takes precedence over the conf file
-  x509_conf = yaml(input('mongod_conf'))['net', 'tls', 'certificateKeyFile']
-  x509_process_flag = processes('mongod').commands.join.gsub('--tlsCertificateKeyFile', '').strip
+  certificate_key_file_conf = yaml(input('mongod_conf'))['net', 'tls', 'certificateKeyFile']
+  certificate_key_file_flag = processes('mongod').commands.join.scan(/--tlsCertificateKeyFile\s([^:]*?)\s/).join
 
-  x509_cert_file = input('x509_cert_file') unless input('x509_cert_file').nil?
-  x509_cert_file = x509_conf unless x509_conf.nil?
-  x509_cert_file = x509_process_flag unless x509_process_flag.nil?
+  certificate_key_file = input('certificate_key_file') unless input('certificate_key_file').nil?
+  certificate_key_file = certificate_key_file_conf unless certificate_key_file_conf.nil?
+  certificate_key_file = certificate_key_file_flag unless certificate_key_file_flag.empty?
 
-  if file(x509_cert_file).exist?
-    describe x509_certificate(x509_cert_file) do
+  if file(certificate_key_file).exist?
+    describe x509_certificate(certificate_key_file) do
       its('issuer_dn') { should eq input('authorized_certificate_authority') }
     end
   else

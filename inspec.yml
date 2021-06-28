@@ -69,14 +69,14 @@ inputs:
 
   - name: mongo_use_ldap
     description: 'MongoDB is Using LDAP - True/False'
-    type: string
-    value: 'false'
+    type: boolean
+    value: false
     required: true
 
   - name: mongo_use_saslauthd
     description: 'MongoDB is Using SASLAUTHD - True/False'
-    type: string
-    value: 'false'
+    type: boolean
+    value: false
     required: true
 
   - name: approved_mongo_packages

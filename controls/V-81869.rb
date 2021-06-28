@@ -71,10 +71,8 @@ allowInvalidCertificates: true"
   describe yaml(input('mongod_conf')) do
     its(%w(net ssl mode)) { should cmp 'requireSSL' }
   end
+
   describe yaml(input('mongod_conf')) do
-    its(%w(net ssl PEMKeyFile)) { should cmp '/etc/ssl/mongodb.pem' }
-  end
-  describe yaml(input('mongod_conf')) do
-    its(%w(net ssl CAFile)) { should cmp '/etc/ssl/mongodbca.pem' }
+    its(%w(net ssl CAFile)) { should_not be_nil }
   end
 end

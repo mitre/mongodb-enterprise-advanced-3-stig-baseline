@@ -60,21 +60,27 @@ control 'V-81919' do
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe.one do
-    describe yaml(input('mongod_conf')) do
-      its(%w(security kmip serverName)) { should_not be_nil }
-      its(%w(security kmip port)) { should_not be_nil }
-      its(%w(security kmip port)) { should_not be_nil }
-      its(%w(security kmip serverCAFile)) { should_not be_nil }
-      its(%w(security kmip clientCertificateFile)) { should_not be_nil }
-      its(%w(security enableEncryption)) { should cmp 'true' }
+  if input('is_sensitive')
+    describe.one do
+      describe yaml(input('mongod_conf')) do
+        its(%w(security kmip serverName)) { should_not be_nil }
+        its(%w(security kmip port)) { should_not be_nil }
+        its(%w(security kmip port)) { should_not be_nil }
+        its(%w(security kmip serverCAFile)) { should_not be_nil }
+        its(%w(security kmip clientCertificateFile)) { should_not be_nil }
+        its(%w(security enableEncryption)) { should cmp 'true' }
+      end
+      describe processes('mongod') do
+        its('commands.join') { should match /--enableEncryption/ }
+        its('commands.join') { should match /--kmipServerName/ }
+        its('commands.join') { should match /--kmipPort/ }
+        its('commands.join') { should match /--kmipServerCAFile/ }
+        its('commands.join') { should match /--kmipClientCertificateFile/ }
+      end
     end
-    describe processes('mongod') do
-      its('commands.join') { should match /--enableEncryption/ }
-      its('commands.join') { should match /--kmipServerName/ }
-      its('commands.join') { should match /--kmipPort/ }
-      its('commands.join') { should match /--kmipServerCAFile/ }
-      its('commands.join') { should match /--kmipClientCertificateFile/ }
+  else
+    describe 'The system is not a classified environment, therefore for this control is NA' do
+      skip 'The system is not a classified environment, therefore for this control is NA'
     end
   end
 end
