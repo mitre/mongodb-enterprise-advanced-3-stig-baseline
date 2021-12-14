@@ -5,7 +5,7 @@ copyright: (c) 2020, The MITRE Corporation
 copyright_email: saf@groups.mitre.org
 license: Apache-2.0 
 summary: "Inspec Validation Profile for MongoDB Enterprise Advanced 3.x STIG"
-version: 1.2.0
+version: 1.2.1
 inspec_version: ">= 4.0"
 
 inputs:

@@ -2,8 +2,9 @@
 
 InSpec profile to validate the secure configuration of MongoDB Enterprised Advanced 3, against [DISA](https://iase.disa.mil/stigs/)'s MongoDB Enterprise Advanced 3.x Security Technical Implementation Guide (STIG) Version 1, Release 2.
 
+#### Container-Ready: Profile updated to adapt checks when the running against a containerized instance of MongoDB, based on reference container: (docker pull mongo)
+
 ## Getting Started  
-It is intended and recommended that InSpec run this profile from a __"runner"__ host (such as a DevOps orchestration server, an administrative management system, or a developer's workstation/laptop) against the target remotely over __ssh__.
 
 __For the best security of the runner, always install on the runner the _latest version_ of InSpec and supporting Ruby language components.__ 
 
@@ -82,9 +83,14 @@ accountAdmin01_allowed_role: []
 
 # Running This Baseline Directly from Github
 
+Against a _**locally-hosted**_ instance (i.e., InSpec installed on the target)
+```bash
+inspec exec https://github.com/mitre/mongodb-enterprise-advanced-3-stig-baseline/archive/master.tar.gz --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
-# How to run
-inspec exec https://github.com/mitre/mongodb-enterprise-advanced-stig-baseline/archive/master.tar.gz -t ssh://<hostip> --user '<admin-account>' --password=<password> --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
+
+Against a _**docker-containerized**_ instance (i.e., InSpec installed on the node hosting the container):
+```bash
+inspec exec https://github.com/mitre/mongodb-enterprise-advanced-3-stig-baseline/archive/master.tar.gz -t docker://instance_id --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json> 
 ```
 
 ### Different Run Options
@@ -102,18 +108,18 @@ When the __"runner"__ host uses this profile baseline for the first time, follow
 ```
 mkdir profiles
 cd profiles
-git clone https://github.com/mitre/mongodb-enterprise-advanced-stig-baseline
-inspec archive mongodb-enterprise-advanced-stig-baseline
-inspec exec <name of generated archive> -t ssh://<hostip> --user '<admin-account>' --password=<password> --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
+git clone https://github.com/mitre/mongodb-enterprise-advanced-3-stig-baseline
+inspec archive mongodb-enterprise-advanced-3-stig-baseline
+inspec exec <name of generated archive> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
 For every successive run, follow these steps to always have the latest version of this baseline:
 
 ```
-cd mongodb-enterprise-advanced-stig-baseline
+cd mongodb-enterprise-advanced-3-stig-baseline
 git pull
 cd ..
-inspec archive mongodb-enterprise-advanced-stig-baseline --overwrite
-inspec exec <name of generated archive> -t ssh://<hostip> --user '<admin-account>' --password=<password> --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
+inspec archive mongodb-enterprise-advanced-3-stig-baseline --overwrite
+inspec exec <name of generated archive> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
 
 ## Viewing the JSON Results
