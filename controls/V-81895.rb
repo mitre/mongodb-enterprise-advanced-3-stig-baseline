@@ -1,4 +1,4 @@
-  control "V-81895" do
+control 'V-81895' do
   title "MongoDB must reveal detailed error messages only to the ISSO, ISSM,
   SA, and DBA."
   desc "If MongoDB provides too much information in error logs and
@@ -35,8 +35,8 @@
   to obtain assurances from the development organization that this issue has been
   addressed, and must document what has been discovered.
   "
-  
-  desc "check", "A mongod or mongos running with
+
+  desc 'check', "A mongod or mongos running with
   \"security.redactClientLogData\" redacts any message accompanying a given log
   event before logging.
 
@@ -52,7 +52,7 @@
   redactClientLogData: \"true\"
 
   If this parameter is not present, this is a finding."
-  desc "fix", "Edit the MongoDB configuration file (default location:
+  desc 'fix', "Edit the MongoDB configuration file (default location:
   /etc/mongod.conf) and add the following parameter \"redactClientLogData\" in
   the security section of that file:
 
@@ -60,20 +60,20 @@
   redactClientLogData: \"true\"
 
   Stop/start (restart) any mongod or mongos using the MongoDB configuration file."
-  
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000267-DB-000163"
-  tag "gid": "V-81895"
-  tag "rid": "SV-96609r1_rule"
-  tag "stig_id": "MD3X-00-000530"
-  tag "fix_id": "F-88745r1_fix"
-  tag "cci": ["CCI-001314"]
-  tag "nist": ["SI-11 b"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000267-DB-000163'
+  tag "gid": 'V-81895'
+  tag "rid": 'SV-96609r1_rule'
+  tag "stig_id": 'MD3X-00-000530'
+  tag "fix_id": 'F-88745r1_fix'
+  tag "cci": ['CCI-001314']
+  tag "nist": ['SI-11 b']
   tag "documentable": false
   tag "severity_override_guidance": false
 
   describe yaml(input('mongod_conf')) do
-    its(%w{security redactClientLogData}) { should cmp 'true' }
+    its(%w(security redactClientLogData)) { should cmp 'true' }
   end
 end

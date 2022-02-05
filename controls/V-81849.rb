@@ -1,4 +1,4 @@
-  control "V-81849" do
+control 'V-81849' do
   title "The audit information produced by MongoDB must be protected from
   unauthorized read access."
   desc "If audit data were to become compromised, then competent forensic
@@ -27,7 +27,7 @@
   activity.
   "
 
-  desc "check", "Verify User ownership, Group ownership, and permissions on the
+  desc 'check', "Verify User ownership, Group ownership, and permissions on the
   \"<MongoDB auditLog directory>\":
 
   > ls –ald <MongoDB auditLog data directory>
@@ -59,7 +59,7 @@
   the output will be the \"<MongoDB auditLog directory>\"
 
   /var/lib/mongo"
-  desc "fix", "Run these commands:
+  desc 'fix', "Run these commands:
 
   \"chown mongod <MongoDB auditLog directory>\"
   \"chgrp mongod <MongoDB auditLog directory>\"
@@ -88,31 +88,40 @@
   /var/lib/mongo"
 
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000118-DB-000059"
-  tag "satisfies": ["SRG-APP-000118-DB-000059", "SRG-APP-000119-DB-000060",
-                    "SRG-APP-000120-DB-000061"]
-  tag "gid": "V-81849"
-  tag "rid": "SV-96563r1_rule"
-  tag "stig_id": "MD3X-00-000190"
-  tag "fix_id": "F-88699r1_fix"
-  tag "cci": ["CCI-000162", "CCI-000163", "CCI-000164"]
-  tag "nist": ["AU-9"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000118-DB-000059'
+  tag "satisfies": %w(SRG-APP-000118-DB-000059 SRG-APP-000119-DB-000060
+                      SRG-APP-000120-DB-000061)
+  tag "gid": 'V-81849'
+  tag "rid": 'SV-96563r1_rule'
+  tag "stig_id": 'MD3X-00-000190'
+  tag "fix_id": 'F-88699r1_fix'
+  tag "cci": %w(CCI-000162 CCI-000163 CCI-000164)
+  tag "nist": ['AU-9']
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  if file(input('mongod_auditlog')).exist?
-    mongodb_auditlog_dir = command("dirname #{input('mongod_auditlog')}").stdout.strip
-    describe file(mongodb_auditlog_dir) do
-      it { should_not be_more_permissive_than('0700') } 
-      its('owner') { should be_in input('mongodb_service_account') }
-      its('group') { should be_in input('mongodb_service_group') }
+  if yaml(input('mongod_conf'))['auditLog', 'destination'].eql?('file')
+    mongodb_auditlog_path = command("dirname #{yaml(input('mongod_conf'))['auditLog', 'path']}").stdout
+    mongodb_service_account = input('mongodb_service_account')
+    mongodb_service_group = input('mongodb_service_group')
+
+    describe "AuditLog destination path: #{mongodb_auditlog_path}" do
+      subject { directory(mongodb_auditlog_path) }
+      it { should exist }
+    end
+
+    if directory(mongodb_auditlog_path).exist?
+      describe directory(command("dirname #{mongodb_auditlog_path}")) do
+        it { should_not be_more_permissive_than('0700') }
+        its('owner') { should be_in mongodb_service_account }
+        its('group') { should be_in mongodb_service_group }
+      end
     end
   else
-    describe file('/var/log') do
-      it { should_not be_more_permissive_than('0755') } 
-      its('owner') { should eq 'root' }
-      its('group') { should eq 'root' }
+    impact 0.0
+    describe 'Auditlog destination type `file` not in use; Control Non Applicable;' do
+      skip
     end
   end
 end

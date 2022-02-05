@@ -1,7 +1,7 @@
-  control "V-81897" do
+control 'V-81897' do
   title "MongoDB must associate organization-defined types of security labels
   having organization-defined security label values with information in storage."
-  desc  "Without the association of security labels to information, there is no
+  desc "Without the association of security labels to information, there is no
   basis for MongoDB to make security-related access-control decisions.
 
     Security labels are abstractions representing the basic properties or
@@ -24,7 +24,7 @@
   product, a third-party product, or custom application code.
   "
 
-  desc "check", "MongoDB supports role-based access control at the collection
+  desc 'check', "MongoDB supports role-based access control at the collection
   level. If enabled, the database process should be started with
   \"security.authorization:enabled\" in the config file or with \"--auth\" in the
   command line.
@@ -45,7 +45,7 @@
 
   If desired and aggregation queries in the application code are not using the
   $redact stage with appropriate logic, this is a finding."
-  desc "fix", "Follow the documentation page to setup
+  desc 'fix', "Follow the documentation page to setup
   RBAC:https://docs.mongodb.com/manual/core/authorization/.
 
   For the required collections, create specific read-only views that allow access
@@ -56,18 +56,18 @@
   Use the \"$redact\" operator to restrict the contents of the documents based on
   information stored in the documents themselves as documented here:
   https://docs.mongodb.com/master/reference/operator/aggregation/redact/"
-  
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000311-DB-000308"
-  tag "satisfies": ["SRG-APP-000311-DB-000308", "SRG-APP-000313-DB-000309",
-                    "SRG-APP-000313-DB-000310"]
-  tag "gid": "V-81897"
-  tag "rid": "SV-96611r1_rule"
-  tag "stig_id": "MD3X-00-000540"
-  tag "fix_id": "F-88747r1_fix"
-  tag "cci": ["CCI-002262", "CCI-002263", "CCI-002264"]
-  tag "nist": ["AC-16 a"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000311-DB-000308'
+  tag "satisfies": %w(SRG-APP-000311-DB-000308 SRG-APP-000313-DB-000309
+                      SRG-APP-000313-DB-000310)
+  tag "gid": 'V-81897'
+  tag "rid": 'SV-96611r1_rule'
+  tag "stig_id": 'MD3X-00-000540'
+  tag "fix_id": 'F-88747r1_fix'
+  tag "cci": %w(CCI-002262 CCI-002263 CCI-002264)
+  tag "nist": ['AC-16 a']
   tag "documentable": false
   tag "severity_override_guidance": false
 

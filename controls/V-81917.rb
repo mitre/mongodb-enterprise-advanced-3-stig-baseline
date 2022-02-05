@@ -1,4 +1,4 @@
-  control "V-81917" do
+control 'V-81917' do
   title "MongoDB must only accept end entity certificates issued by DoD PKI or
   DoD-approved PKI Certification Authorities (CAs) for the establishment of all
   encrypted sessions."
@@ -16,7 +16,7 @@
   rather than for the network packet.
   "
 
-  desc "check", "To run MongoDB in SSL mode, you have to obtain a valid
+  desc 'check', "To run MongoDB in SSL mode, you have to obtain a valid
   certificate singed by a single certificate authority.
 
   Before starting the MongoDB database in SSL mode, verify that certificate used
@@ -25,25 +25,38 @@
 
   If there is any issuer present in the certificate that is not a DoD approved
   certificate authority, this is a finding."
-  desc "fix", "Remove any certificate that was not issued by an approved DoD
+  desc 'fix', "Remove any certificate that was not issued by an approved DoD
   certificate authority. Contact the organization's certificate issuer and
   request a new certificate that is issued by a valid DoD certificate
   authorities."
-  
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000427-DB-000385"
-  tag "gid": "V-81917"
-  tag "rid": "SV-96631r1_rule"
-  tag "stig_id": "MD3X-00-000730"
-  tag "fix_id": "F-88767r1_fix"
-  tag "cci": ["CCI-002470"]
-  tag "nist": ["SC-23 (5)"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000427-DB-000385'
+  tag "gid": 'V-81917'
+  tag "rid": 'SV-96631r1_rule'
+  tag "stig_id": 'MD3X-00-000730'
+  tag "fix_id": 'F-88767r1_fix'
+  tag "cci": ['CCI-002470']
+  tag "nist": ['SC-23 (5)']
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe 'The mongodb ssl certificate issuer' do
-    subject { command("openssl x509 -in /etc/ssl/mongodb.pem -text | grep -i 'issuer'").stdout }
-    it { should include 'DoD' }
+  # Process flag takes precedence over the conf file
+  certificate_key_file_conf = yaml(input('mongod_conf'))['net', 'tls', 'certificateKeyFile']
+  certificate_key_file_flag = processes('mongod').commands.join.scan(/--tlsCertificateKeyFile\s([^:]*?)\s/).join
+
+  certificate_key_file = input('certificate_key_file') unless input('certificate_key_file').nil?
+  certificate_key_file = certificate_key_file_conf unless certificate_key_file_conf.nil?
+  certificate_key_file = certificate_key_file_flag unless certificate_key_file_flag.empty?
+
+  if file(certificate_key_file).exist?
+    describe x509_certificate(certificate_key_file) do
+      its('issuer_dn') { should eq input('authorized_certificate_authority') }
+    end
+  else
+    describe 'x509 file not found, manual review required' do
+      skip 'x509 file not found, manual review required'
+    end
   end
 end

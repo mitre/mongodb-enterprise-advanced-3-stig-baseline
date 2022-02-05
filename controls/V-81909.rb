@@ -1,4 +1,4 @@
-  control "V-81909" do
+control 'V-81909' do
   title "MongoDB must prohibit user installation of logic modules (stored
   procedures, functions, triggers, views, etc.) without explicit privileged
   status."
@@ -25,7 +25,7 @@
   procedures, functions, triggers, views, etc.
   "
 
-  desc "check", "If MongoDB supports only software development, experimentation,
+  desc 'check', "If MongoDB supports only software development, experimentation,
   and/or developer-level testing (that is, excluding production systems,
   integration testing, stress testing, and user acceptance testing), this is not
   a finding.
@@ -40,106 +40,44 @@
 
   If any such permissions exist and are not documented and approved, this is a
   finding."
-  desc "fix", "Revoke any roles with unnecessary privileges to privileged
+  desc 'fix', "Revoke any roles with unnecessary privileges to privileged
   functionality by executing the revoke command.
 
   Revoke any unnecessary privileges from any roles by executing the revoke
   command.
 
   Create, as needed, new role(s) with associated privileges."
-  
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000378-DB-000365"
-  tag "gid": "V-81909"
-  tag "rid": "SV-96623r1_rule"
-  tag "stig_id": "MD3X-00-000650"
-  tag "fix_id": "F-88759r1_fix"
-  tag "cci": ["CCI-001812"]
-  tag "nist": ["CM-11 (2)"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000378-DB-000365'
+  tag "gid": 'V-81909'
+  tag "rid": 'SV-96623r1_rule'
+  tag "stig_id": 'MD3X-00-000650'
+  tag "fix_id": 'F-88759r1_fix'
+  tag "cci": ['CCI-001812']
+  tag "nist": ['CM-11 (2)']
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  a = []
-  dbnames = []
+  mongo_session = mongo_command(username: input('username'), password: input('password'), host: input('mongod_hostname'), port: input('mongod_port'), ssl: input('ssl'), verify_ssl: input('verify_ssl'), ssl_pem_key_file: input('mongod_client_pem'), ssl_ca_file: input('mongod_cafile'), authentication_database: input('authentication_database'), authentication_mechanism: input('authentication_mechanism'))
+  dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map { |x| x['name'] }
 
-  if input('mongo_use_pki') == 'true'
-    get_databases = command("sudo mongo --ssl --sslPEMKeyFile #{input('mongod_client_pem')} --sslCAFile #{input('mongod_cafile')} \
-    --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 --host #{input('mongod_hostname')} \
-    --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
-  else
-    get_databases = command("mongo -u '#{input('user')}' -p '#{input('password')}' \
-    --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
-  end 
+  dbs.each do |db|
+    db_command = "db = db.getSiblingDB('#{db}');db.getRoles({rolesInfo: 1,showPrivileges:true,showBuiltinRoles: true})"
+    results = mongo_session.query(db_command)
 
-  if get_databases.grep(/error/).empty? == false
-    describe 'Verify the correct credentials or a valid client certificate is used to execute the query.' do
-      skip 'Verify the correct credentials or a valid client certificate is used to execute the query.'
-    end
-  else
-    get_databases.each do |db|
-      if db.include? 'databases'
-
-        a.push(db)
-        get_databases.delete(db)
+    results.each do |entry|
+      describe "Manually verify privileges for Role: `#{entry['role']}` within Database: `#{db}`
+      Privileges: #{entry['privileges']}" do
+        skip
       end
     end
+  end
 
-    get_databases.each do |db|
-
-      loc_colon = db.index('"')
-      names = db[0, loc_colon]
-      dbnames.push(names)
-    end
-
-    if dbnames.empty?
-      describe 'There are no mongo databases, therefore for this control is NA' do
-        skip 'There are no mongo databases, therefore for this control is NA'
-      end
-    end
-
-    if !dbnames.empty?
-      dbnames.each do |dbs|
-
-        if input('mongo_use_pki') == 'true'
-          users = command("sudo mongo admin --ssl --sslPEMKeyFile #{input('mongod_client_pem')} --sslCAFile #{input('mongod_cafile')} \
-          --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 --host #{input('mongod_hostname')} \
-          --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-        else
-          users = command("mongo admin -u '#{input('user')}' -p '#{input('password')}' \
-          --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-        end 
-        users.each do |t|
-
-          loc_colon = t.index(':')
-
-          user = t[loc_colon+3..-1]
-
-          loc_quote = user.index('"')
-
-          username = user[0, loc_quote]
-
-          if input('mongo_use_pki') == 'true'
-            getdb_roles = command("mongo admin --ssl --sslPEMKeyFile #{input('mongod_client_pem')} --sslCAFile #{input('mongod_cafile')} \
-            --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 --host #{input('mongod_hostname')} \
-            --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"}, {roles: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-          else
-            getdb_roles = command("mongo admin -u '#{input('user')}' -p '#{input('password')}' \
-            --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"}, {roles: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-          end 
-
-          getdb_roles.each do |r|
-            remove_role = r.index('[')
-            rr = r[remove_role..-1]
-
-            allowed_role = username
-            describe "The database role for user: #{username}" do
-              subject { rr }
-              it { should be_in input("#{allowed_role}_allowed_role") }
-            end
-          end
-        end
-      end
+  if dbs.empty?
+    describe 'No databases found on the target' do
+      skip
     end
   end
 end

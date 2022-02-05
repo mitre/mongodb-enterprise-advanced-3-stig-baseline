@@ -1,4 +1,4 @@
-  control "V-81927" do
+control 'V-81927' do
   title "MongoDB must obscure feedback of authentication information during the
   authentication process to protect the information from possible
   exploitation/use by unauthorized individuals."
@@ -30,7 +30,7 @@
   addressed, and must document what has been discovered.
   "
 
-  desc "check", "For the MongoDB command-line tools \"mongo shell\",
+  desc 'check', "For the MongoDB command-line tools \"mongo shell\",
   \"mongodump\", \"mongorestore\", \"mongoimport\", \"mongoexport\", which cannot
   be configured not to accept a plain-text password, and any other essential tool
   with the same limitation, verify that the system documentation explains the
@@ -45,7 +45,7 @@
   this practice.
 
   If evidence of training does not exist, this is a finding."
-  desc "fix", "For the \"mongo shell\", \"mongodump\", \"mongorestore\",
+  desc 'fix', "For the \"mongo shell\", \"mongodump\", \"mongorestore\",
   \"mongoimport\", \"mongoexport\", which can accept a plain-text password, and
   any other essential tool with the same limitation:
 
@@ -55,24 +55,28 @@
   Train all users of the tool in the nature of using the plain-text password
   option and in how to keep the password protected from unauthorized
   viewing/capture and document they have been trained."
-  
+
   impact 0.7
-  tag "severity": "high"
-  tag "gtitle": "SRG-APP-000178-DB-000083"
-  tag "gid": "V-81927"
-  tag "rid": "SV-96641r1_rule"
-  tag "stig_id": "MD3X-00-000800"
-  tag "fix_id": "F-88777r1_fix"
-  tag "cci": ["CCI-000206"]
-  tag "nist": ["IA-6"]
+  tag "severity": 'high'
+  tag "gtitle": 'SRG-APP-000178-DB-000083'
+  tag "gid": 'V-81927'
+  tag "rid": 'SV-96641r1_rule'
+  tag "stig_id": 'MD3X-00-000800'
+  tag "fix_id": 'F-88777r1_fix'
+  tag "cci": ['CCI-000206']
+  tag "nist": ['IA-6']
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe 'A manual review is required to ensure MongoDB obscures the feedback of authentication information during the
-  authentication process to protect the information from possible
-  exploitation/use by unauthorized individuals.' do
-    skip 'A manual review is required to ensure MongoDB obscures the feedback of authentication information during the
-    authentication process to protect the information from possible
-    exploitation/use by unauthorized individuals.'
+  tools = %w(mongo mongodump mongorestore mongoimport mongoexport)
+
+  installed_tools = []
+
+  tools.each do |tool|
+    installed_tools << tool if command(tool).exist?
+  end
+
+  describe "Manually review that the use presence of tools `#{installed_tools}.to_s` is authorized and the users have the required training." do
+    skip
   end
 end

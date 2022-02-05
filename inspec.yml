@@ -9,6 +9,52 @@ version: 1.2.1
 inspec_version: ">= 4.0"
 
 inputs:
+  - name: username
+    description: 'User to log into the mongo database'
+    value: null
+    sensitive: true
+
+  - name: password
+    description: 'Password to log into the mongo database'
+    value: null
+    sensitive: true
+
+  - name: mongod_hostname
+    description: 'Hostname for mongodb database'
+    type: string
+    value: '127.0.0.1'
+
+  - name: mongod_port
+    description: 'Port number for the mongodb database'
+    type: string
+    value: '27017'
+
+  - name: ssl
+    description: 'Is ssl enabled'
+    type: boolean
+    value: false
+
+  - name: verify_ssl
+    description: 'Flag for sslAllowInvalidCertificates'
+    type: boolean
+    value: false
+
+  - name: mongod_client_pem
+    description: 'PEM file location on the scan target'
+    value: null
+
+  - name: mongod_cafile
+    description: 'CAFILE location on the scan target'
+    value: null
+
+  - name: authentication_database
+    description: 'Flag for authentication database'
+    value: null
+
+  - name: authentication_mechanism
+    description: 'Flag for authentication mechanism'
+    value: null
+
   - name: mongod_conf
     description: 'MongoDB configuration file'
     type: string
@@ -21,74 +67,20 @@ inputs:
     value: '/var/lib/mongo'
     required: true
 
-  - name: mongod_pem
-    description: 'MongoDB Server PEM File'
-    type: string
-    value: '/etc/ssl/mongodb.pem'
-    required: true
-
-  - name: mongod_cafile
-    description: 'MongoDB CA File'
-    type: string
-    value: '/etc/ssl/mongodbca.pem'
-    required: true
-
-  - name: mongod_client_pem
-    description: 'MongoDB Client PEM File'
-    type: string
-    value: '/etc/ssl/client.pem'
-    required: true
-
-  - name: mongod_auditlog
-    description: 'MongoDB Audit Log File'
-    type: string
-    value: '/var/lib/mongo/auditLog.bson'
-    required: true
-
-  - name: saslauthd
-    description: 'MongoDB SASLAUTHD File'
-    type: string
-    value: '/etc/sysconfig/saslauthd'
-    required: true
-
-  - name: is_docker
-    description: 'MongoDB is Running in Docker Environment - True/False'
-    type: string
-    value: 'false'
-    required: true
-
-  - name: mongo_use_pki
-    description: 'MongoDB is Using PKI Authentication - True/False'
-    type: string
-    value: 'true'
-    required: true
-
   - name: mongo_use_ldap
     description: 'MongoDB is Using LDAP - True/False'
-    type: string
-    value: 'false'
+    type: boolean
+    value: false
     required: true
 
   - name: mongo_use_saslauthd
     description: 'MongoDB is Using SASLAUTHD - True/False'
-    type: string
-    value: 'false'
+    type: boolean
+    value: false
     required: true
 
-  - name: mongodb_redhat_packages
-    description: 'List of MongoDB Redhat Packages'
-    type: array
-    value: [
-      'mongodb-enterprise-3.6.20-1.el7',
-      'mongodb-enterprise-mongos-3.6.20-1.el7',
-      'mongodb-enterprise-server-3.6.20-1.el7',
-      'mongodb-enterprise-shell-3.6.20-1.el7',
-      'mongodb-enterprise-tools-3.6.20-1.el7'
-    ]
-    required: true
-
-  - name: mongodb_debian_packages
-    description: 'List of MongoDB Debian Packages'
+  - name: approved_mongo_packages
+    description: 'List of MongoDB Packages'
     type: array
     value: [
       'mongodb-enterprise',
@@ -99,59 +91,22 @@ inputs:
     ]
     required: true
 
-  - name: user
-    description: 'User to log into the mongo database'
+  - name: mongodb_service_account
+    description: 'Mongodb Service Account'
+    type: array
+    value: ["mongodb", "mongod"]
+
+  - name: mongodb_service_group
+    description: 'Mongodb Service Group'
+    type: array
+    value: ["mongodb", "mongod"]
+
+  - name: is_sensitive
+    description: 'Set to true if target is sensitive as described in control V-81875 and V-81919'
+    type: boolean
+    value: true
+
+  - name: certificate_key_file
+    description: 'Path to server certificate key file'
     type: string
-    value: 'mongoadmin'
-    required: true
-    sensitive: true
-
-  - name: password
-    description: 'password to log into the mongo database'
-    type: string
-    value: 'mongoadmin'
-    required: true
-    sensitive: true
-
-  - name: admin_db_users
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ["mongodb_admin"]
-    required: true
-    sensitive: true
-
-  - name: config_db_users
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ["config_admin"]
-    required: true
-    sensitive: true
-
-  - name: myUserAdmin_allowed_role
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ['[ { "role" : "userAdminAnyDatabase", "db" : "admin" } ] }']
-    required: true
-
-  - name: mongoadmin_allowed_role
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ['[ { "role" : "userAdminAnyDatabase", "db" : "admin" } ] }']
-    required: true
-
-  - name: mongodb_admin_allowed_role
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ['[ { "role" : "userAdminAnyDatabase", "db" : "admin" } ] }']
-    required: true
-
-  - name: appAdmin_allowed_role
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ['[ { "role" : "readWrite", "db" : "config" }, { "role" : "clusterAdmin", "db" : "admin" } ] }']
-
-  - name: accountAdmin01_allowed_role
-    description: 'List of authorized users of the admn database'
-    type: array
-    value: ['[ { "role" : "clusterAdmin", "db" : "admin" }, { "role" : "readAnyDatabase", "db" : "admin" }, { "role" : "readWrite", "db" : "config" } ] }']
-
+    value: "/etc/ssl/mongodb.pem"

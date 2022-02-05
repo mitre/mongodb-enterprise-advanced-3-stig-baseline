@@ -1,4 +1,4 @@
-  control "V-81871" do
+control 'V-81871' do
   title "MongoDB must enforce authorized access to all PKI private keys
   stored/utilized by MongoDB."
   desc "The DoD standard for authentication is DoD-approved PKI certificates.
@@ -19,8 +19,8 @@
   use them to impersonate the database on the network or otherwise perform
   unauthorized actions.
   "
-  
-  desc "check", "In the MongoDB database configuration file (default location:
+
+  desc 'check', "In the MongoDB database configuration file (default location:
   /etc/mongod.conf), review the following parameters:
   net:
   ssl:
@@ -41,49 +41,54 @@
   If the user owner is not \"mongod\", this is a finding.
   If the group owner is not \"mongod\", this is a finding.
   IF the file is more permissive than \"600\", this is a finding."
-  desc "fix", "Run these commands:
+  desc 'fix', "Run these commands:
   \"chown mongod:mongod /etc/ssl/mongodb.pem\"
   \"chmod 600 /etc/ssl/mongodb.pem\"
   \"chown mongod:mongod /etc/ssl/mongodbca.pem\"
   \"chmod 600 /etc/ssl/mongodbca.pem\""
 
   impact 0.7
-  tag "severity": "high"
-  tag "gtitle": "SRG-APP-000176-DB-000068"
-  tag "gid": "V-81871"
-  tag "rid": "SV-96585r1_rule"
-  tag "stig_id": "MD3X-00-000360"
-  tag "fix_id": "F-88721r1_fix"
-  tag "cci": ["CCI-000186"]
-  tag "nist": ["IA-5 (2) (b)"]
+  tag "severity": 'high'
+  tag "gtitle": 'SRG-APP-000176-DB-000068'
+  tag "gid": 'V-81871'
+  tag "rid": 'SV-96585r1_rule'
+  tag "stig_id": 'MD3X-00-000360'
+  tag "fix_id": 'F-88721r1_fix'
+  tag "cci": ['CCI-000186']
+  tag "nist": ['IA-5 (2) (b)']
   tag "documentable": false
   tag "severity_override_guidance": false
-  
-  if file(input('mongod_pem')).exist?
-    describe file(input('mongod_pem')) do
-      it { should_not be_more_permissive_than('0600') } 
-      its('owner') { should be_in input('mongodb_service_account') }
-      its('group') { should be_in input('mongodb_service_group') }
-    end
-  else
-    describe 'This control must be reviewed manually because the pem file is not found 
-    at the location specified.' do
-      skip 'This control must be reviewed manually because the pem file is not found 
-      at the location specified.'
-    end 
-  end 
 
-  if file(input('mongod_cafile')).exist?
-    describe file(input('mongod_cafile')) do
-      it { should_not be_more_permissive_than('0600') } 
-      its('owner') { should be_in input('mongodb_service_account') }
-      its('group') { should be_in input('mongodb_service_group') }
+  mongod_pem = yaml(input('mongod_conf'))['net', 'ssl', 'PEMKeyFile']
+  mongod_cafile = yaml(input('mongod_conf'))['net', 'ssl', 'CAFile']
+  mongodb_service_account = input('mongodb_service_account')
+  mongodb_service_group = input('mongodb_service_group')
+
+  describe "Mongod SSL PEMKeyFile: #{mongod_pem}" do
+    subject { file(mongod_pem) }
+    it { should exist }
+  end
+
+  if file(mongod_pem).exist?
+    describe "Mongod SSL PEMKeyFile: #{mongod_pem}" do
+      subject { file(mongod_pem) }
+      it { should_not be_more_permissive_than('0600') }
+      its('owner') { should be_in mongodb_service_account }
+      its('group') { should be_in mongodb_service_group }
     end
-  else 
-    describe 'This control must be reviewed manually because the CA file is not found 
-    at the location specified.' do
-      skip 'This control must be reviewed manually because the CA file is not found 
-      at the location specified.'
-    end 
+  end
+
+  describe "Mongod SSL CAFile: #{mongod_cafile}" do
+    subject { file(mongod_cafile) }
+    it { should exist }
+  end
+
+  if file(mongod_cafile).exist?
+    describe "Mongod SSL CAFile: #{mongod_cafile}" do
+      subject { file(mongod_cafile) }
+      it { should_not be_more_permissive_than('0600') }
+      its('owner') { should be_in mongodb_service_account }
+      its('group') { should be_in mongodb_service_group }
+    end
   end
 end

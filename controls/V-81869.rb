@@ -1,4 +1,4 @@
-  control "V-81869" do
+control 'V-81869' do
   title "If passwords are used for authentication, MongoDB must transmit only
   encrypted representations of passwords."
   desc "The DoD standard for authentication is DoD-approved PKI certificates.
@@ -13,7 +13,7 @@
   unauthorized access to the database.
   "
 
-  desc "check", "In the MongoDB database configuration file (default location:
+  desc 'check', "In the MongoDB database configuration file (default location:
 /etc/mongod.conf), review the following parameters:
 
 net:
@@ -29,7 +29,7 @@ If the \"allowInvalidCertificates\" parameter is found, this is a finding.
 net:
 ssl:
 allowInvalidCertificates: true"
-  desc "fix", "In the MongoDB database configuration file (default location:
+  desc 'fix', "In the MongoDB database configuration file (default location:
   /etc/mongod.conf) ensure the following parameters following parameter are set
   and configured correctly:
 
@@ -46,30 +46,33 @@ allowInvalidCertificates: true"
   allowInvalidCertificates: true
 
   Stop/start (restart) the mongod or mongos instance using this configuration."
-  
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000172-DB-000075"
-  tag "satisfies": ["SRG-APP-000172-DB-000075", "SRG-APP-000175-DB-000067"]
-  tag "gid": "V-81869"
-  tag "rid": "SV-96583r1_rule"
-  tag "stig_id": "MD3X-00-000340"
-  tag "fix_id": "F-88719r1_fix"
-  tag "cci": ["CCI-000185", "CCI-000197"]
-  tag "nist": ["IA-5 (2) (a)", "IA-5 (1) (c)"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000172-DB-000075'
+  tag "satisfies": %w(SRG-APP-000172-DB-000075 SRG-APP-000175-DB-000067)
+  tag "gid": 'V-81869'
+  tag "rid": 'SV-96583r1_rule'
+  tag "stig_id": 'MD3X-00-000340'
+  tag "fix_id": 'F-88719r1_fix'
+  tag "cci": %w(CCI-000185 CCI-000197)
+  tag "nist": ['IA-5 (2) (a)', 'IA-5 (1) (c)']
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  describe yaml(input('mongod_conf')) do
-    its(%w{net ssl allowInvalidCertificates}) { should be nil }
+  describe.one do
+    describe yaml(input('mongod_conf')) do
+      its(%w(net ssl allowInvalidCertificates)) { should be nil }
+    end
+    describe yaml(input('mongod_conf')) do
+      its(%w(net ssl allowInvalidCertificates)) { should be false }
+    end
   end
   describe yaml(input('mongod_conf')) do
-    its(%w{net ssl mode}) { should cmp 'requireSSL' }
+    its(%w(net ssl mode)) { should cmp 'requireSSL' }
   end
+
   describe yaml(input('mongod_conf')) do
-    its(%w{net ssl PEMKeyFile}) { should cmp '/etc/ssl/mongodb.pem' }
-  end
-  describe yaml(input('mongod_conf')) do
-    its(%w{net ssl CAFile}) { should cmp '/etc/ssl/mongodbca.pem' }
+    its(%w(net ssl CAFile)) { should_not be_nil }
   end
 end

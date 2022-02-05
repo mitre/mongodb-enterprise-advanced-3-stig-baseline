@@ -1,6 +1,6 @@
 ---
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.7
   Exclude:
   - Gemfile
   - Rakefile
@@ -16,7 +16,7 @@ AllCops:
   - 'vendor/**/*'
   - 'lib/bundles/inspec-init/templates/**/*'
   - 'www/demo/**/*'
-AlignParameters:
+Layout/ParameterAlignment:
   Enabled: true
 BlockDelimiters:
   Enabled: false
@@ -30,7 +30,7 @@ HashSyntax:
   Enabled: true
 LineLength:
   Enabled: false
-Layout/AlignHash:
+Layout/HashAlignment:
   Enabled: false
 Layout/EmptyLineAfterMagicComment:
   Enabled: false
@@ -56,8 +56,6 @@ NumericLiterals:
 Security/YAMLLoad:
   Enabled: false
 Style/AndOr:
-  Enabled: false
-Style/BracesAroundHashParameters:
   Enabled: false
 Style/ClassAndModuleChildren:
   Enabled: false

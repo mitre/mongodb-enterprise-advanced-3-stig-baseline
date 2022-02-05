@@ -1,4 +1,4 @@
-  control "V-81863" do
+control 'V-81863' do
   title "MongoDB must uniquely identify and authenticate organizational users
   (or processes acting on behalf of organizational users)."
   desc "To assure accountability and prevent unauthenticated access,
@@ -19,7 +19,7 @@
   accountability of individual activity.
   "
 
-  desc "check", "To view another user’s information, you must have the
+  desc 'check', "To view another user’s information, you must have the
   \"viewUser\" action on the other user’s database.
 
   For each database in the system, run the following command:
@@ -39,7 +39,7 @@
   authorization: \"enabled\"
 
   If this parameter is not present, this is a finding."
-  desc "fix", "Prereq: To drop a user from a database, must have the
+  desc 'fix', "Prereq: To drop a user from a database, must have the
   \"dropUser\" action on the database.
 
   For any user not a member of an appropriate organization and has access to a
@@ -58,81 +58,22 @@
   any mongod or mongos process using this MongoDB configuration file."
 
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000148-DB-000103"
-  tag "gid": "V-81863"
-  tag "rid": "SV-96577r1_rule"
-  tag "stig_id": "MD3X-00-000310"
-  tag "fix_id": "F-88713r1_fix"
-  tag "cci": ["CCI-000764"]
-  tag "nist": ["IA-2"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000148-DB-000103'
+  tag "gid": 'V-81863'
+  tag "rid": 'SV-96577r1_rule'
+  tag "stig_id": 'MD3X-00-000310'
+  tag "fix_id": 'F-88713r1_fix'
+  tag "cci": ['CCI-000764']
+  tag "nist": ['IA-2']
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  a = []
-  dbnames = []
-
-  if input('mongo_use_pki') == 'true'
-    get_databases = command("sudo mongo --ssl --sslPEMKeyFile #{input('mongod_client_pem')} --sslCAFile #{input('mongod_cafile')} \
-    --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 --host #{input('mongod_hostname')} \
-    --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
-  else
-    get_databases = command("mongo -u '#{input('user')}' -p '#{input('password')}' \
-    --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
-  end 
-
-  if get_databases.grep(/error/).empty? == false
-    describe 'Verify the correct credentials or a valid client certificate is used to execute the query.' do
-      skip 'Verify the correct credentials or a valid client certificate is used to execute the query.'
-    end
-  else
-    get_databases.each do |db|
-      if db.include? 'databases'
-
-        a.push(db)
-        get_databases.delete(db)
-      end
-
-    end
-
-    get_databases.each do |db|
-
-      loc_colon = db.index('"')
-      names = db[0, loc_colon]
-      dbnames.push(names)
-    end
-
-    dbnames.each do |dbs|
-
-      if input('mongo_use_pki') == 'true'
-        users = command("sudo mongo admin --ssl --sslPEMKeyFile #{input('mongod_client_pem')} --sslCAFile #{input('mongod_cafile')} \
-        --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 --host #{input('mongod_hostname')} \
-        --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-      else
-        users = command("mongo admin -u '#{input('user')}' -p '#{input('password')}' \
-        --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-      end 
-
-      users.each do |t|
-
-        loc_colon = t.index(':')
-
-        user = t[loc_colon+3..-1]
-
-        loc_quote = user.index('"')
-
-        username = user[0, loc_quote]
-        allowed_db = dbs
-        describe "Database users of database: #{dbs}" do
-          subject { username }
-          it { should be_in input("#{allowed_db}_db_users") }
-        end
-      end
-    end
-  end 
-
-  describe yaml(input('mongod_conf')) do
-    its(%w{security authorization}) { should cmp 'enabled' }
+  describe 'A manual review is required to determine if a user is found not be a memer or an appropriate organization that can access the database.' do
+    skip 'A manual review is required to determine if a user is found not be a memer or an appropriate organization that can access the database.'
   end
 
+  describe yaml(input('mongod_conf')) do
+    its(%w(security authorization)) { should cmp 'enabled' }
+  end
 end
