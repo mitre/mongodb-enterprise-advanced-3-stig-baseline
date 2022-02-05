@@ -293,6 +293,7 @@
 
 - name: generate and copy certficate for KMIP
   shell: |
+    sudo chown -R 1000:1000 /home/kitchen/.cache/pip
     pip3 install pykmip
     pip install pyOpenSSL -U
     echo "127.0.0.1 MONGODB" >> /etc/hosts
