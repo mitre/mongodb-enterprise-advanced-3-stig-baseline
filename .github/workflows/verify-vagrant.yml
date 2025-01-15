@@ -24,15 +24,15 @@ jobs:
       - name: Add jq for output formatting
         run: brew install jq
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup Ruby
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '3.1'
       - name: Disable ri and rdoc
         run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
       - name: Setup caching
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
@@ -56,6 +56,7 @@ jobs:
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         run: bundle exec inspec_tools compliance -j spec/results/${{ matrix.suite }}-test-result.json -f threshold.${{ matrix.suite }}.yml
       - name: Save Test Result JSON
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
+          name: ${{ matrix.suite }}-results
           path: spec/results
