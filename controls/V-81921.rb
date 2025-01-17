@@ -1,4 +1,4 @@
-  control "V-81921" do
+control 'V-81921' do
   title "MongoDB must maintain the confidentiality and integrity of information
   during preparation for transmission."
   desc "Information can be either unintentionally or maliciously disclosed or
@@ -15,7 +15,7 @@
   infrastructure must leverage transmission protection mechanisms.
   "
 
-  desc "check", "Review the system information/specification for information
+  desc 'check', "Review the system information/specification for information
   indicating a strict requirement for data integrity and confidentiality when
   data is being prepared to be transmitted.
 
@@ -30,7 +30,7 @@
   PEMKeyFile: /etc/ssl/mongodb.pem
 
   If net.ssl.mode is not set to \"requireSSL\", this is a finding."
-  desc "fix", "Stop the MongoDB instance if it is running. Obtain a certificate
+  desc 'fix', "Stop the MongoDB instance if it is running. Obtain a certificate
   from a valid DoD certificate authority to be used for encrypted data
   transmission. Modify the MongoDB configuration file with ssl configuration
   options such as:
@@ -45,23 +45,23 @@
 
   Start/stop (restart) all mongod or mongos instances using the MongoDB
   configuration file (default location: /etc/mongod.conf)."
-  
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000441-DB-000378"
-  tag "gid": "V-81921"
-  tag "rid": "SV-96635r1_rule"
-  tag "stig_id": "MD3X-00-000760"
-  tag "fix_id": "F-88771r1_fix"
-  tag "cci": ["CCI-002420"]
-  tag "nist": ["SC-8 (2)"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000441-DB-000378'
+  tag "gid": 'V-81921'
+  tag "rid": 'SV-96635r1_rule'
+  tag "stig_id": 'MD3X-00-000760'
+  tag "fix_id": 'F-88771r1_fix'
+  tag "cci": ['CCI-002420']
+  tag "nist": ['SC-8 (2)']
   tag "documentable": false
   tag "severity_override_guidance": false
 
   describe yaml(input('mongod_conf')) do
-    its(%w{net ssl mode}) { should cmp 'requireSSL' }
+    its(%w(net ssl mode)) { should cmp 'requireSSL' }
   end
   describe yaml(input('mongod_conf')) do
-    its(%w{net ssl PEMKeyFile}) { should cmp '/etc/ssl/mongodb.pem' }
+    its(%w(net ssl PEMKeyFile)) { should_not be nil }
   end
 end

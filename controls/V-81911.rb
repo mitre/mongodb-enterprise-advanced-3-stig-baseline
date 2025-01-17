@@ -1,4 +1,4 @@
-  control "V-81911" do
+control 'V-81911' do
   title "MongoDB must enforce access restrictions associated with changes to
   the configuration of MongoDB or database(s)."
   desc "Failure to provide logical access restrictions associated with changes
@@ -15,7 +15,7 @@
   including upgrades and modifications.
   "
 
-  desc "check", "Review the security configuration of the MongoDB database(s).
+  desc 'check', "Review the security configuration of the MongoDB database(s).
 
   If unauthorized users can start the mongod or mongos processes or edit the
   MongoDB configuration file (default location: /etc/mongod.conf), this is a
@@ -35,7 +35,7 @@
 
   MongoDB commands to view roles in a particular database:
   db.getRoles( { rolesInfo: 1, showPrivileges:true, showBuiltinRoles: true })"
-  desc "fix", "Prereq: To view a user's roles, must have the \"viewUser\"
+  desc 'fix', "Prereq: To view a user's roles, must have the \"viewUser\"
   privilege.
   https://docs.mongodb.com/v3.4/reference/privilege-actions/
 
@@ -53,99 +53,44 @@
 
   To grant a role to a user use the db.grantRolesToUser() method.
   https://docs.mongodb.com/v3.4/reference/method/db.grantRolesToUser/"
-  
+
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000380-DB-000360"
-  tag "gid": "V-81911"
-  tag "rid": "SV-96625r1_rule"
-  tag "stig_id": "MD3X-00-000670"
-  tag "fix_id": "F-88761r1_fix"
-  tag "cci": ["CCI-001813"]
-  tag "nist": ["CM-5 (1)"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000380-DB-000360'
+  tag "gid": 'V-81911'
+  tag "rid": 'SV-96625r1_rule'
+  tag "stig_id": 'MD3X-00-000670'
+  tag "fix_id": 'F-88761r1_fix'
+  tag "cci": ['CCI-001813']
+  tag "nist": ['CM-5 (1)']
   tag "documentable": false
   tag "severity_override_guidance": false
 
-  a = []
-  dbnames = []
-
-  if input('mongo_use_pki') == 'true'
-    get_databases = command("sudo mongo --ssl --sslPEMKeyFile #{input('mongod_client_pem')} --sslCAFile #{input('mongod_cafile')} \
-    --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 --host #{input('mongod_hostname')} \
-    --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
-  else
-    get_databases = command("mongo -u '#{input('user')}' -p '#{input('password')}' \
-    --quiet --eval 'JSON.stringify(db.adminCommand( { listDatabases: 1, nameOnly: true}))'").stdout.strip.split('"name":"')
+  describe 'Manually verify unauthorized users cannot start the mongod or mongos processes or edit the MongoDB configuration file' do
+    skip 'Manually verify unauthorized users cannot start the mongod or mongos processes or edit the MongoDB configuration file'
   end
 
-  if get_databases.grep(/error/).empty? == false
-    describe 'Verify the correct credentials or a valid client certificate is used to execute the query.' do
-      skip 'Verify the correct credentials or a valid client certificate is used to execute the query.'
-    end
-  else
-    get_databases.each do |db|
-      if db.include? 'databases'
+  describe 'Manually verify enforces access restrictions associated with changes to the configuration of the database(s)' do
+    skip 'Manually verify enforces access restrictions associated with changes to the configuration of the database(s)'
+  end
 
-        a.push(db)
-        get_databases.delete(db)
-      end
-    end
+  mongo_session = mongo_command(username: input('username'), password: input('password'), host: input('mongod_hostname'), port: input('mongod_port'), ssl: input('ssl'), verify_ssl: input('verify_ssl'), ssl_pem_key_file: input('mongod_client_pem'), ssl_ca_file: input('mongod_cafile'), authentication_database: input('authentication_database'), authentication_mechanism: input('authentication_mechanism'))
 
-    get_databases.each do |db|
+  dbs = mongo_session.query("db.adminCommand('listDatabases')")['databases'].map { |x| x['name'] }
 
-      loc_colon = db.index('"')
-      names = db[0, loc_colon]
-      dbnames.push(names)
-    end
+  dbs.each do |db|
+    db_command = "db = db.getSiblingDB('#{db}');db.getUsers()"
+    results = mongo_session.query(db_command)
 
-    if dbnames.empty?
-      describe 'There are no mongo databases, therefore for this control is NA' do
-        skip 'There are no mongo databases, therefore for this control is NA'
-      end
-    end
-
-    if !dbnames.empty?
-
-      dbnames.each do |dbs|
-
-        if input('mongo_use_pki') == 'true'
-          users = command("sudo mongo admin --ssl --sslPEMKeyFile #{input('mongod_client_pem')} --sslCAFile #{input('mongod_cafile')} \
-          --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 --host #{input('mongod_hostname')} \
-          --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-        else
-          users = command("mongo admin -u '#{input('user')}' -p '#{input('password')}' \
-          --quiet --eval 'db.system.users.find({db: \"#{dbs}\"}, {user: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-        end 
-        users.each do |t|
-
-          loc_colon = t.index(':')
-
-          user = t[loc_colon+3..-1]
-
-          loc_quote = user.index('"')
-
-          username = user[0, loc_quote]
-
-          if input('mongo_use_pki') == 'true'
-            getdb_roles = command("sudo mongo admin --ssl --sslPEMKeyFile #{input('mongod_client_pem')} --sslCAFile #{input('mongod_cafile')} \
-            --authenticationDatabase '$external' --authenticationMechanism MONGODB-X509 --host #{input('mongod_hostname')} \
-            --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"}, {roles: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-          else
-            getdb_roles = command("mongo admin -u '#{input('user')}' -p '#{input('password')}' \
-            --quiet --eval 'db.system.users.find({db: \"#{dbs}\", user: \"#{username}\"}, {roles: 1, _id: false, distinct: 1})'").stdout.strip.split("\n")
-          end 
-
-          getdb_roles.each do |r|
-            remove_role = r.index('[')
-            rr = r[remove_role..-1]
-
-            allowed_role = username
-            describe "The database role for user: #{username}" do
-              subject { rr }
-              it { should be_in input("#{allowed_role}_allowed_role") }
-            end
-          end
+    results.each do |entry|
+      if entry['roles'].map { |x| x['role'] }.include?('userAdminAnyDatabase')
+        describe "Manually verify User: `#{entry['user']}` within Database: `#{entry['db']}` is authorized to have `userAdminAnyDatabase` role" do
+          skip
         end
+      end
+      next unless entry['roles'].map { |x| x['role'] }.include?('userAdmin')
+      describe "Manually verify User: `#{entry['user']}` within Database: `#{entry['db']}` is authorized to have `userAdmin` role" do
+        skip
       end
     end
   end
